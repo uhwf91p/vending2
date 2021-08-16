@@ -11,6 +11,7 @@ import com.example.order.AppState
 import com.example.order.Data.MainList
 import com.example.order.Data.Order
 import com.example.order.R
+import com.example.order.Repository.Repository
 import com.example.order.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -21,13 +22,16 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance() = MainFragment()
     }
+
     private var _binding: MainFragmentBinding? = null
     private val binding
         get() = _binding!!
     private val adapter = MainFragmentAdapter()
 
+
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)  }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,19 +41,20 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val observer=Observer<AppState>{ renderData(it)}
-
-        binding.mainFragmentRecyclerView.adapter=adapter
-        viewModel.getData().observe(viewLifecycleOwner,observer)
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding=null
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        /*super.onViewCreated(view, savedInstanceState)*/
+        val observer=Observer<AppState>{ renderData(it)}
+
+        binding.mainFragmentRecyclerView.adapter=adapter
+        viewModel.getData().observe(viewLifecycleOwner,observer)
+        viewModel.getMainListViewModel()
+    }
+
     private fun renderData(data: AppState) {
         when (data){
             is AppState.loadMainList->{

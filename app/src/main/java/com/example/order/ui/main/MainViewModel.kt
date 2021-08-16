@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.order.AppState
 import com.example.order.Repository.Repository
 import com.example.order.Repository.RepositoryImpl
+import com.google.android.material.snackbar.Snackbar
 
 class MainViewModel(private val repository: Repository = RepositoryImpl()) :
     ViewModel() {
@@ -13,12 +14,13 @@ class MainViewModel(private val repository: Repository = RepositoryImpl()) :
     fun getData():LiveData<AppState>{
         return  liveDataToObserve
     }
+    fun getMainListViewModel()=requestData()
 
-    fun requestData(data:AppState){
+    private fun requestData(){
         Thread{
+            Thread.sleep(3000)
             liveDataToObserve.postValue(AppState.loadMainList(repository.getMainList()))
 
         }.start()
     }
-
 }
