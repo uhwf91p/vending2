@@ -18,7 +18,7 @@ class MainViewModel(private val repository: Repository = RepositoryImpl()) :
 
     private fun requestData(){
         Thread{
-            Thread.sleep(3000)
+            
             liveDataToObserve.postValue(AppState.loadMainList(repository.getMainList()))
 
         }.start()

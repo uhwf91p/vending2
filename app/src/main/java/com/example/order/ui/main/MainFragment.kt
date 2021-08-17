@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.AppState
 import com.example.order.Data.MainList
 import com.example.order.Data.Order
@@ -47,9 +48,20 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        /*super.onViewCreated(view, savedInstanceState)*/
-        val observer=Observer<AppState>{ renderData(it)}
+        adapter.setOnItemClickListener(object: OnItemClickListener{
+            override fun onItemClick(mainList: MainList) {mainList->
+                activity?.supportFragmentManager?.apply {
+                    beginTransaction().add(R.id.container,)
+                }
 
+            }
+
+        })
+
+
+
+        val observer=Observer<AppState>{ renderData(it)}
+        binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter=adapter
         viewModel.getData().observe(viewLifecycleOwner,observer)
         viewModel.getMainListViewModel()
@@ -66,7 +78,9 @@ class MainFragment : Fragment() {
 
 
     }
-
+    interface OnItemClickListener {
+        fun onItemClick(mainList: MainList)
+    }
    /* override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
