@@ -4,7 +4,7 @@ import android.os.Bundle
 
 class DetailsFragment {
 
-
+/*
     companion object {
         const val BUNDLE_EXTRA = "weather"
 
@@ -12,5 +12,5 @@ class DetailsFragment {
             val fragment = DetailsFragment()
             fragment.arguments = bundle
             return fragment
-        }
+        }*/
 }

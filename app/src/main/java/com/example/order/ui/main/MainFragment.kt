@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter.setOnItemClickListener(object: OnItemClickListener{
+      /*  adapter.setOnItemClickListener(object: OnItemClickListener{
             override fun onItemClick(mainList: MainList) {mainList->
                 activity?.supportFragmentManager?.apply {
                     beginTransaction().add(R.id.container,)
@@ -56,7 +56,7 @@ class MainFragment : Fragment() {
 
             }
 
-        })
+        })*/
 
 
 
