@@ -48,15 +48,19 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-      /*  adapter.setOnItemClickListener(object: OnItemClickListener{
-            override fun onItemClick(mainList: MainList) {mainList->
-                activity?.supportFragmentManager?.apply {
-                    beginTransaction().add(R.id.container,)
+        adapter.setOnItemViewClickListener(object: OnItemViewClickListener {
+            override fun onItemViewClick(weather: Weather) {
+                val manager = activity?.supportFragmentManager
+                if (manager != null) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
+                    manager.beginTransaction()
+                        .add(R.id.container, DetailsFragment.newInstance(bundle))
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
                 }
-
             }
-
-        })*/
+        })
 
 
 
@@ -78,8 +82,8 @@ class MainFragment : Fragment() {
 
 
     }
-    interface OnItemClickListener {
-        fun onItemClick(mainList: MainList)
+    interface OnItemViewClickListener {
+        fun onItemViewClick(mainList: MainList)
     }
    /* override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -17,6 +17,13 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         notifyDataSetChanged()
 
     }
+    fun setOnItemViewClickListener(onItemViewClickListener: MainFragment.OnItemViewClickListener){
+        this.onItemViewClickListener = onItemViewClickListener
+    }
+
+    fun removeOnItemViewClickListener() {
+        onItemViewClickListener = null
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -42,4 +49,3 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
 
 
     }
-}
