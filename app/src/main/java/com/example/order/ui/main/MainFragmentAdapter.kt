@@ -8,9 +8,9 @@ import com.example.order.databinding.MainItemBinding
 
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
     private var mainListData:List<MainList> = listOf()
-    private var onItemClickListener: MainFragment.OnItemClickListener? =null
-    fun setOnItemClickListener (onItemClickListener: MainFragment.OnItemClickListener){
-        this.onItemClickListener=onItemClickListener
+    private var onItemViewClickListener: MainFragment.OnItemViewClickListener? =null
+    fun setOnItemClickListener (onItemClickListener: MainFragment.OnItemViewClickListener){
+        this.onItemViewClickListener=onItemClickListener
     }
     fun setMainList(data:List<MainList>){
         mainListData=data
@@ -42,7 +42,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         fun bind(mainList: MainList){
             binding.apply {
                 mainItemRecyclerTextView.text=mainList.name
-                onItemClickListener?.onItemClick(mainList)
+                onItemViewClickListener?.onItemViewClick(mainList)
             }
 
         }
