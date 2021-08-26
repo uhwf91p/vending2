@@ -1,5 +1,6 @@
 package com.example.order.ui.main
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,10 +10,9 @@ import com.example.order.databinding.MainItemBinding
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
     private var mainListData: List<MainList> = listOf()
     private var onItemViewClickListener: MainFragment.OnItemViewClickListener? = null
-  /*  fun setOnItemClickListener(onItemClickListener: MainFragment.OnItemViewClickListener) {
-        this.onItemViewClickListener = onItemClickListener
-    }*/
 
+
+    @SuppressLint("NotifyDataSetChanged")
     fun setMainList(data: List<MainList>) {
         mainListData = data
         notifyDataSetChanged()

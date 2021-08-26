@@ -43,6 +43,8 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding=null
+        adapter.removeOnItemViewClickListener()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,10 +85,5 @@ class MainFragment : Fragment() {
     interface OnItemViewClickListener {
         fun onItemViewClick(mainList: MainList)
     }
-   /* override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
-    }*/
 
 }

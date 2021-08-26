@@ -16,7 +16,7 @@ class DetailsFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = DetailsFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -25,7 +25,7 @@ class DetailsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val weather = arguments?.getParcelable<MainList>(BUNDLE_EXTRA)
         if (weather != null){
-           /* binding.test.text="ggggg"*/
+
 
         }
     }
