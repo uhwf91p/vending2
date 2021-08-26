@@ -25,7 +25,7 @@ class DetailsFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val weather = arguments?.getParcelable<MainList>(BUNDLE_EXTRA)
         if (weather != null){
-            binding.test.text="ggggg"
+           /* binding.test.text="ggggg"*/
 
         }
     }
