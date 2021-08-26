@@ -1,18 +1,16 @@
 package com.example.order.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.AppState
 import com.example.order.Data.MainList
-import com.example.order.Data.Order
 import com.example.order.R
-import com.example.order.Repository.Repository
 import com.example.order.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -49,13 +47,13 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.setOnItemViewClickListener(object: OnItemViewClickListener {
-            override fun onItemViewClick(weather: Weather) {
+            override fun onItemViewClick(mainList: MainList) {
                 val manager = activity?.supportFragmentManager
                 if (manager != null) {
                     val bundle = Bundle()
-                    bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
+                    bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, mainList)
                     manager.beginTransaction()
-                        .add(R.id.container, DetailsFragment.newInstance(bundle))
+                        .replace(R.id.container, DetailsFragment.newInstance(bundle))
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }
