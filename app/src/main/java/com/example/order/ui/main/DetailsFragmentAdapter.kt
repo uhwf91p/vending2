@@ -30,7 +30,7 @@ private var detailsListData:List<MainList> = listOf()
     override fun getItemCount(): Int {
         return detailsListData.size
     }
-    inner class MainViewHolder(val binding: DetailsItemBinding):
+    inner class MainViewHolder(private val binding: DetailsItemBinding):
     RecyclerView.ViewHolder(binding.root){
         fun bind(mainList: MainList){
             binding.detailsItem.text=mainList.name
