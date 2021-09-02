@@ -4,7 +4,7 @@ import com.example.order.Data.MainList
 
 
 interface Repository {
-   fun getMainList():List<MainList>
+   fun getMainList(key:Int):List<MainList>
    /*fun getDetails ():List<MainList>*/
  /*  fun getNumbers():List<Int>
    fun getDate():List<Int>*/

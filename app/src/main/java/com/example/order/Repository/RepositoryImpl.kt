@@ -2,22 +2,24 @@ package com.example.order.Repository
 
 import com.example.order.Data.MainList
 
-
 class RepositoryImpl:Repository {
     /*var listDetails: List<MainList>? = listOf(MainList(0," "))*/
-    override fun getMainList(): List<MainList> {
-        return listOf(
-            MainList(1,0,"Работа"),
-            MainList(2,0,"Трактор"),
-            MainList(3,0,"Тракторист"),
-            MainList(4,0,"Участок"),
-            MainList(5,0,"Объем в га"),
-            MainList(6,0,"Человеко-часы"),
-            MainList(7,0,"Дата"),
-            MainList(8,0,"Вид работ"),
+    override fun getMainList(key:Int): List<MainList> {
+        val mainRepisitory:MainRepisitory=MainRepositoryImpl()
+      val listFrom1C=mainRepisitory.getListFrom1C()
+        var tempList:MutableList<MainList> = mutableListOf()
+        for (mainList in listFrom1C) {
+            if (mainList.id1 == key) {
+                tempList.add(mainList)
 
+            }
 
-        )
+        }
+
+        return tempList
+
+        }
+
     }
 
    /* override fun getDetails(): List<MainList> {
@@ -51,6 +53,6 @@ class RepositoryImpl:Repository {
         listDetails?.forEach{if listDetails[]
 
         }*/
-    }
+
 
 

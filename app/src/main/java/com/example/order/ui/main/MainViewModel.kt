@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.order.AppState
+import com.example.order.Repository.Keys
 import com.example.order.Repository.Repository
 import com.example.order.Repository.RepositoryImpl
 
@@ -18,7 +19,7 @@ class MainViewModel(private val repository: Repository = RepositoryImpl()) :
     private fun requestData(){
         Thread{
             
-            liveDataToObserve.postValue(AppState.loadMainList(repository.getMainList()))
+            liveDataToObserve.postValue(AppState.loadMainList(repository.getMainList(Keys.LIST_KEY)))
 
         }.start()
     }

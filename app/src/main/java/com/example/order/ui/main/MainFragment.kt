@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.AppState
 import com.example.order.Data.MainList
 import com.example.order.R
+import com.example.order.Repository.Keys
 import com.example.order.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -68,6 +69,7 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter=adapter
         viewModel.getData().observe(viewLifecycleOwner,observer)
+        Keys.LIST_KEY=1
         viewModel.getMainListViewModel()
     }
 
