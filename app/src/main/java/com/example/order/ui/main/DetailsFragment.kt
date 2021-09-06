@@ -36,8 +36,8 @@ class DetailsFragment: Fragment() {
     companion object {
         const val BUNDLE_EXTRA = "mainList"
 
-        fun newInstance(bundle: Bundle): DetailsFragment {
-            val fragment = DetailsFragment()
+        fun newInstance(bundle: Bundle): MainFragment {
+            val fragment = MainFragment()
             fragment.arguments = bundle
             return fragment
         }

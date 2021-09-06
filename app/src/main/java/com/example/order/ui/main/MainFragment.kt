@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.example.order.AppState
 import com.example.order.Data.MainList
 import com.example.order.R
 import com.example.order.Repository.Keys
+import com.example.order.Repository.Keys.count
 import com.example.order.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -51,16 +53,19 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.setOnItemViewClickListener(object: OnItemViewClickListener {
             override fun onItemViewClick(mainList: MainList) {
-                val manager = activity?.supportFragmentManager
-                if (manager != null) {
-                    val bundle = Bundle()
-                    bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, mainList)
-                    manager.beginTransaction()
-                        .replace(R.id.container, DetailsFragment.newInstance(bundle))
-                        .addToBackStack("")
-                        .commitAllowingStateLoss()
+                if (count == 0) {
+                    Keys.LIST_KEY = mainList.id2
+                    count = count +1
+                    val manager = activity?.supportFragmentManager
+                    makeDetails(manager, mainList)
+                } else {
+                    count = 0;Keys.LIST_KEY = Keys.DEFAULT_VALUE
+                    val manager = activity?.supportFragmentManager
+                    makeDetails(manager, mainList)
+
                 }
             }
+
         })
 
 
@@ -69,8 +74,23 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter=adapter
         viewModel.getData().observe(viewLifecycleOwner,observer)
-        Keys.LIST_KEY=1
+
         viewModel.getMainListViewModel()
+    }
+
+    private fun makeDetails(
+        manager: FragmentManager?,
+        mainList: MainList
+    ) {
+        if (manager != null) {
+            val bundle = Bundle()
+
+            bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, mainList)
+            manager.beginTransaction()
+                .replace(R.id.container, DetailsFragment.newInstance(bundle))
+                .addToBackStack("")
+                .commitAllowingStateLoss()
+        }
     }
 
     private fun renderData(data: AppState) {
