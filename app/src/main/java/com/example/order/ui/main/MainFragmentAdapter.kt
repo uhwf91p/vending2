@@ -42,9 +42,10 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
     override fun getItemCount() = mainListData.size
     inner class MainViewHolder(private val binding: MainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(mainList: MainList) {
             binding.apply {
-                mainItemRecyclerTextView.text = mainList.name
+                mainItemRecyclerTextView.text = mainList.name+" "+mainList.value
                 binding.root.setOnClickListener {
                     onItemViewClickListener?.onItemViewClick(mainList)
                 }

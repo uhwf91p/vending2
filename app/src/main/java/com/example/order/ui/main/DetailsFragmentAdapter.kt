@@ -33,8 +33,7 @@ private var detailsListData:List<MainList> = listOf()
     inner class MainViewHolder(private val binding: DetailsItemBinding):
     RecyclerView.ViewHolder(binding.root){
         fun bind(mainList: MainList){
-            binding.detailsItem.text=mainList.name
-        }
+            binding.detailsItem.text=mainList.name       }
 
 
     }

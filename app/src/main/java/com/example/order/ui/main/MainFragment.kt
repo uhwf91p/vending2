@@ -14,6 +14,7 @@ import com.example.order.Data.MainList
 import com.example.order.R
 import com.example.order.Repository.Keys
 import com.example.order.Repository.Keys.count
+import com.example.order.Repository.RepositoryUpload
 import com.example.order.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
@@ -29,6 +30,7 @@ class MainFragment : Fragment() {
     private val binding
         get() = _binding!!
     private val adapter = MainFragmentAdapter()
+
 
 
     private val viewModel: MainViewModel by lazy {
@@ -59,7 +61,9 @@ class MainFragment : Fragment() {
                     val manager = activity?.supportFragmentManager
                     makeDetails(manager, mainList)
                 } else {
-                    count = 0;Keys.LIST_KEY = Keys.DEFAULT_VALUE
+
+                    count = 0;
+                    Keys.LIST_KEY = Keys.DEFAULT_VALUE
                     val manager = activity?.supportFragmentManager
                     makeDetails(manager, mainList)
 
