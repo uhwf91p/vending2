@@ -15,11 +15,12 @@ import com.example.order.R
 import com.example.order.Repository.Keys
 import com.example.order.Repository.Keys.count
 import com.example.order.Repository.RepositoryUpload
+import com.example.order.Repository.RepositoryUploadImpl
 import com.example.order.databinding.MainFragmentBinding
 
 class MainFragment : Fragment() {
 
-
+ var repositoryUpload:RepositoryUpload=RepositoryUploadImpl()
 
 
     companion object {
@@ -65,6 +66,7 @@ class MainFragment : Fragment() {
                     count = 0;
                     Keys.LIST_KEY = Keys.DEFAULT_VALUE
                     val manager = activity?.supportFragmentManager
+                    repositoryUpload.rememberMainList(mainList)
                     makeDetails(manager, mainList)
 
                 }

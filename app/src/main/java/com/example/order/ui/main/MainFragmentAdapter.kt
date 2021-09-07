@@ -44,8 +44,11 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(mainList: MainList) {
+            var textForItem:String=mainList.name+mainList.value
             binding.apply {
-                mainItemRecyclerTextView.text = mainList.name+" "+mainList.value
+
+                mainItemRecyclerTextView.text = textForItem
+
                 binding.root.setOnClickListener {
                     onItemViewClickListener?.onItemViewClick(mainList)
                 }
