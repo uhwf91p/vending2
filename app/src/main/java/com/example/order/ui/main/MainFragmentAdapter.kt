@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.order.Data.MainList
+import com.example.order.Repository.Keys
 import com.example.order.databinding.MainItemBinding
 
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
@@ -44,7 +45,13 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(mainList: MainList) {
-            var textForItem:String=mainList.name+mainList.value
+            var textForItem:String=""
+            textForItem = if (Keys.LIST_KEY == 0) {
+                mainList.name+mainList.value
+            } else{
+                mainList.name
+            }
+
             binding.apply {
 
                 mainItemRecyclerTextView.text = textForItem
