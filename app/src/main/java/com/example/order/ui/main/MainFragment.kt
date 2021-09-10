@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.AppState
 import com.example.order.Data.MainList
 import com.example.order.R
-import com.example.order.Repository.Keys
-import com.example.order.Repository.Keys.count
+import com.example.order.Data.Keys
+import com.example.order.Data.Keys.count
 import com.example.order.Repository.RepositoryUpload
 import com.example.order.Repository.RepositoryUploadImpl
 import com.example.order.databinding.MainFragmentBinding
@@ -56,14 +56,14 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.setOnItemViewClickListener(object: OnItemViewClickListener {
             override fun onItemViewClick(mainList: MainList) {
-                if (count == 0) {
+                if (count == Keys.KEY_FOR_INFLATE_MAIN_LIST) {
                     Keys.LIST_KEY = mainList.id2
                     count = count +1
                     val manager = activity?.supportFragmentManager
                     makeDetails(manager, mainList)
                 } else {
 
-                    count = 0;
+                    count = Keys.KEY_FOR_INFLATE_MAIN_LIST;
                     Keys.LIST_KEY = Keys.DEFAULT_VALUE
                     val manager = activity?.supportFragmentManager
                     repositoryUpload.rememberMainList(mainList)

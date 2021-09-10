@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.order.Data.MainList
-import com.example.order.Repository.Keys
+import com.example.order.Data.Keys
 import com.example.order.databinding.MainItemBinding
 
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
