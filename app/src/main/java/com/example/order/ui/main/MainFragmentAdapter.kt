@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.order.Data.MainList
 import com.example.order.Data.Keys
 import com.example.order.databinding.MainItemBinding
+import com.google.android.material.chip.Chip
 
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
     private var mainListData: List<MainList> = listOf()
@@ -47,7 +48,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         fun bind(mainList: MainList) {
             var textForItem:String=""
             textForItem = if (Keys.LIST_KEY == 0) {
-                mainList.name+mainList.value
+                mainList.name+": "+mainList.value
             } else{
                 mainList.name
             }
@@ -56,7 +57,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
 
                 mainItemRecyclerTextView.text = textForItem
 
-                binding.root.setOnClickListener {
+                binding.mainItemRecyclerTextView.setOnClickListener {
                     onItemViewClickListener?.onItemViewClick(mainList)
                 }
             }
