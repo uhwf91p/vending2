@@ -3,7 +3,7 @@ package com.example.order.Repository
 import com.example.order.Data.MainList
 
 
-interface Repository {
+interface RepositoryGetMainList {
    fun getMainList(key:Int):List<MainList>
    /*fun getDetails ():List<MainList>*/
  /*  fun getNumbers():List<Int>

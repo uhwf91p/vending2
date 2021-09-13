@@ -5,11 +5,11 @@ import androidx.annotation.RequiresApi
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
 
-class RepositoryImpl:Repository {
+class RepositoryGetMainListImpl:RepositoryGetMainList {
     /*var listDetails: List<MainList>? = listOf(MainList(0," "))*/
     @RequiresApi(Build.VERSION_CODES.N)
     override fun getMainList(key:Int): List<MainList> {
-        val mainRepisitory:MainRepisitory=MainRepositoryImpl()
+        val mainRepisitory:MainRepisitoryFrom1C=MainRepositoryFrom1CImpl()
 
     var rememberedList:MutableList<MainList> = Keys.MAIN_REMEMEBERED_LIST
       val listFrom1C=mainRepisitory.getListFrom1C()

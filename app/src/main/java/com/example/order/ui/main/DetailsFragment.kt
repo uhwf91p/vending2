@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.order.Data.MainList
-import com.example.order.Repository.Repository
 import com.example.order.databinding.DetailsFragmentBinding
 
 class DetailsFragment: Fragment() {

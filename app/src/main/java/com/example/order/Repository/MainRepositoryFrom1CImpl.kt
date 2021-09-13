@@ -2,7 +2,7 @@ package com.example.order.Repository
 
 import com.example.order.Data.MainList
 
-class MainRepositoryImpl:MainRepisitory {
+class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
     override fun getListFrom1C(): List<MainList> {
         return listOf(
             MainList(0,1,"Работа","0"),
@@ -20,7 +20,14 @@ class MainRepositoryImpl:MainRepisitory {
             MainList(2,13,"МТЗ 921","0"),
             MainList(2,14,"Джон дир","0"),
             MainList(2,15,"Фентд","0"),
-            MainList(2,16,"Валтра","0")
+            MainList(2,16,"Валтра","0"),
+            MainList(3,17,"Иванов","0"),
+            MainList(4,18,"123","0"),
+            MainList(5,19,"123","0"),
+            MainList(6,16,"8","0"),
+            MainList(7,16,"Вид работ","0"),
+            MainList(8,16,"Уходные работы на плодоносящих виноградниках","0")
+
         )
     }
 
