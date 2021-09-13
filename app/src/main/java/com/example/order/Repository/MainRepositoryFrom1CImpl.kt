@@ -25,7 +25,7 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
             MainList(4,18,"123","0"),
             MainList(5,19,"123","0"),
             MainList(6,16,"8","0"),
-            MainList(7,16,"Вид работ","0"),
+            MainList(7,16,"1","0"),
             MainList(8,16,"Уходные работы на плодоносящих виноградниках","0")
 
         )
