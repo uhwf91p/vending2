@@ -9,12 +9,12 @@ import com.example.order.Data.MainList
 class RepositoryUploadImpl: RepositoryUpload {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun rememberMainList(mainList: MainList): MutableList<MainList> {
-        /*val mainRepository:Repository=RepositoryImpl()*/
-      /*  mainRepository.getMainList(Keys.KEY_FOR_INFLATE_MAIN_LIST)*/
         var  rememberedMainList:MutableList<MainList> = Keys.MAIN_REMEMEBERED_LIST
-        for (remList in rememberedMainList) {
-            if (remList.id1 == mainList.id1) {
-                rememberedMainList.removeAt(rememberedMainList.indexOf(remList))
+        val iterator=rememberedMainList.iterator()
+        while (iterator.hasNext()) {
+            val item=iterator.next()
+            if (item.id1 == mainList.id1) {
+                iterator.remove()
             }
 
         }
