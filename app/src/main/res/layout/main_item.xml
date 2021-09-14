@@ -8,19 +8,27 @@
 
 
 
-    <com.google.android.material.chip.Chip
-
-        android:id="@+id/mainItemRecyclerTextView"
-        style="@style/Widget.MaterialComponents.Chip.Action"
-        android:theme="@style/Widget.MaterialComponents.Chip.Action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/font_size_main"
-        app:chipIcon="@drawable/ic_launcher_foreground"
-        tools:text="Работа">
 
 
-    </com.google.android.material.chip.Chip>
+
+        >
+        <com.google.android.material.button.MaterialButton
+            android:layout_margin="2dp"
+            android:id="@+id/mainItemRecyclerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+
+
+            tools:text="Работаааааааааааааааааааааааааааааааааааааа"
+            android:textSize="@dimen/font_size_main">
+
+        </com.google.android.material.button.MaterialButton>
+
+
+
+
 
 
 
