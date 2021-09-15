@@ -1,36 +1,97 @@
 package com.example.order.Repository
 
+import android.net.sip.SipErrorCode.SERVER_ERROR
+import androidx.lifecycle.MutableLiveData
+import com.example.order.AppState
+import com.example.order.BuildConfig
 import com.example.order.Data.MainList
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
-    override fun getListFrom1C(): List<MainList> {
+    val detailsLiveData: MutableLiveData<AppState> = MutableLiveData()
+    private val retrofit1C: Retrofit1C = Retrofit1C()
+    override fun getListForChoice(): List<MainList> {
         return listOf(
-            MainList(0,1,"Вид работ","0"),
-            MainList(0,8,"Работа","0"),
-            MainList(0,2,"Трактор","0"),
-            MainList(0,3,"Тракторист","0"),
-            MainList(0,4,"Участок","0"),
-            MainList(0,5,"Объем в га","0"),
-            MainList(0,6,"Человеко-часы","0"),
-            MainList(0,7,"Дата","0"),
-            MainList(8,9,"Обрезка","0"),
-            MainList(8,10,"Чизелевание","0"),
+            MainList(0, 1, "Вид работ", "0"),
+            MainList(0, 8, "Работа", "0"),
+            MainList(0, 2, "Трактор", "0"),
+            MainList(0, 3, "Тракторист", "0"),
+            MainList(0, 4, "Участок", "0"),
+            MainList(0, 5, "Объем в га", "0"),
+            MainList(0, 6, "Человеко-часы", "0"),
+            MainList(0, 7, "Дата", "0"),
+            MainList(8, 9, "Обрезка", "0"),
+            MainList(8, 10, "Чизелевание", "0"),
 
-            MainList(8,12,"Культивация","0"),
-            MainList(2,13,"МТЗ 921","0"),
-            MainList(2,14,"Джон дир","0"),
-            MainList(2,15,"Фентд","0"),
-            MainList(2,16,"Валтра","0"),
-            MainList(3,17,"Иванов","0"),
-            MainList(4,18,"123","0"),
-            MainList(5,19,"123","0"),
-            MainList(6,20,"8","0"),
-            MainList(7,21,"1","0"),
-            MainList(1,22,"Уходные работы на плодоносящих виноградниках","0"),
-            MainList(1,23,"Уход за однолеткой","0")
+            MainList(8, 12, "Культивация", "0"),
+            MainList(2, 13, "МТЗ 921", "0"),
+            MainList(2, 14, "Джон дир", "0"),
+            MainList(2, 15, "Фентд", "0"),
+            MainList(2, 16, "Валтра", "0"),
+            MainList(3, 17, "Иванов", "0"),
+            MainList(4, 18, "123", "0"),
+            MainList(5, 19, "123", "0"),
+            MainList(6, 20, "8", "0"),
+            MainList(7, 21, "1", "0"),
+            MainList(1, 22, "Уходные работы на плодоносящих виноградниках", "0"),
+            MainList(1, 23, "Уход за однолеткой", "0")
 
 
         )
     }
 
+    override fun getLastSavedListForChoice(): List<MainList> {
+        return listOf(
+            MainList(0, 1, "Вид работ", "0"),
+            MainList(0, 8, "Работа", "0"),
+            MainList(0, 2, "Трактор", "0"),
+            MainList(0, 3, "Тракторист", "0"),
+            MainList(0, 4, "Участок", "0"),
+            MainList(0, 5, "Объем в га", "0"),
+            MainList(0, 6, "Человеко-часы", "0"),
+            MainList(0, 7, "Дата", "0"),
+            MainList(8, 9, "Обрезка", "0"),
+            MainList(8, 10, "Чизелевание", "0"),
+
+            MainList(8, 12, "Культивация", "0"),
+            MainList(2, 13, "МТЗ 921", "0"),
+            MainList(2, 14, "Джон дир", "0"),
+            MainList(2, 15, "Фентд", "0"),
+            MainList(2, 16, "Валтра", "0"),
+            MainList(3, 17, "Иванов", "0"),
+            MainList(4, 18, "123", "0"),
+            MainList(5, 19, "123", "0"),
+            MainList(6, 20, "8", "0"),
+            MainList(7, 21, "1", "0"),
+            MainList(1, 22, "Уходные работы на плодоносящих виноградниках", "0"),
+            MainList(1, 23, "Уход за однолеткой", "0")
+
+
+        )
+    }
+
+    override fun getListFrom1C() {
+        val apiKey: String = BuildConfig.APIKEY_FROM_1C
+        retrofit1C.getRetrofit().getDataFrom1C(apiKey).enqueue(object :
+            retrofit2.Callback<ServerResponseData> {
+            override fun onResponse(call: Call<ServerResponseData>,response: Response<ServerResponseData>) {
+               /* val serverResponse: ServerResponseData? = response.body()
+                detailsLiveData.postValue(
+                    if (response.isSuccessful && serverResponse != null) {
+                        checkResponse(serverResponse)
+                    } else {
+                        AppState.Error(Throwable(SERVER_ERROR))
+                    }
+                )*/
+            }
+
+            override fun onFailure(call: Call<ServerResponseData>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
+    }
 }

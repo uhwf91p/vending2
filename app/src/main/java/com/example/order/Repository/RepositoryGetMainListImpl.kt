@@ -12,7 +12,7 @@ class RepositoryGetMainListImpl:RepositoryGetMainList {
         val mainRepisitory:MainRepisitoryFrom1C=MainRepositoryFrom1CImpl()
 
     var rememberedList:MutableList<MainList> = Keys.MAIN_REMEMEBERED_LIST
-      val listFrom1C=mainRepisitory.getListFrom1C()
+      val listFrom1C=mainRepisitory.getListForChoice()
         var tempList:MutableList<MainList> = mutableListOf()
         for (mainList in listFrom1C) {
             if (mainList.id1 == key) {

@@ -5,31 +5,33 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
 
+
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.example.order"
-        minSdkVersion 16
-        targetSdkVersion 30
+        applicationId "geekbarains.material"
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    buildTypes.each{
-        Properties properties=new Properties()
-        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
-        def apikeyFrom1C=properties.getProperty("APIKEY_FROM_1C","")
-        it.buildConfigField "String","APIKEY_FROM_1C",apikeyFrom1C
 
-    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    buildTypes.each {
+
+        Properties properties=new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def apikeyFrom1C=properties.getProperty("APIKEY_From1C", "")
+        it.buildConfigField "String","APIKEY_FROM_1C",apikeyFrom1C
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

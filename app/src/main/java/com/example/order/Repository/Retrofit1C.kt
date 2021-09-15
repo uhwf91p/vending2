@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-class Retrofit {
+class Retrofit1C {
     private val baseUrl="https://api.nasa.gov/"
     fun getRetrofit():API{
         val retrofit1C =Retrofit.Builder()
