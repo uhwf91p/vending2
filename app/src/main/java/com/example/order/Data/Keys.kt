@@ -6,5 +6,6 @@ object Keys {
     var count:Int=0
     var KEY_FOR_INFLATE_MAIN_LIST=0
     var MAIN_REMEMEBERED_LIST: MutableList<MainList> = mutableListOf()
+    var WORK_SELECTION:Int=0
 
 }

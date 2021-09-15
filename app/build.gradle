@@ -17,6 +17,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    buildTypes.each{
+        Properties properties=new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def apikeyFrom1C=properties.getProperty("APIKEY_FROM_1C","")
+        it.buildConfigField "String","APIKEY_FROM_1C",apikeyFrom1C
+
+    }
 
     buildTypes {
         release {
