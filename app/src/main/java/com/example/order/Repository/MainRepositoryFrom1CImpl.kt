@@ -35,7 +35,7 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
             MainList(5, 19, "123", "0"),
             MainList(6, 20, "8", "0"),
             MainList(7, 21, "1", "0"),
-            MainList(1, 22, "Уходные работы на плодоносящих виноградниках", "0"),
+            MainList(1, 22, "Уходные работы на плодоносящих виноградниках Уходные работы на плодоносящих виноградниках Уходные работы на плодоносящих виноградниках Уходные работы на плодоносящих виноградниках Уходные работы на плодоносящих виноградниках", "0"),
             MainList(1, 23, "Уход за однолеткой", "0")
 
 
@@ -65,7 +65,7 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
             MainList(5, 19, "123", "0"),
             MainList(6, 20, "8", "0"),
             MainList(7, 21, "1", "0"),
-            MainList(1, 22, "Уходные работы на плодоносящих виноградниках", "0"),
+            MainList(1, 22, "Уходные работы на плодоносящих виноградниках Уходные работы на плодоносящих виноградниках Уходные работы на плодоносящих виноградниках", "0"),
             MainList(1, 23, "Уход за однолеткой", "0")
 
 
@@ -73,24 +73,7 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
     }
 
     override fun getListFrom1C() {
-        val apiKey: String = BuildConfig.APIKEY_FROM_1C
-        retrofit1C.getRetrofit().getDataFrom1C(apiKey).enqueue(object :
-            retrofit2.Callback<ServerResponseData> {
-            override fun onResponse(call: Call<ServerResponseData>,response: Response<ServerResponseData>) {
-               /* val serverResponse: ServerResponseData? = response.body()
-                detailsLiveData.postValue(
-                    if (response.isSuccessful && serverResponse != null) {
-                        checkResponse(serverResponse)
-                    } else {
-                        AppState.Error(Throwable(SERVER_ERROR))
-                    }
-                )*/
-            }
 
-            override fun onFailure(call: Call<ServerResponseData>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
 
 
     }

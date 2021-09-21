@@ -1,9 +1,8 @@
 package com.example.order.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -14,14 +13,18 @@ import com.example.order.Data.MainList
 import com.example.order.R
 import com.example.order.Data.Keys
 import com.example.order.Data.Keys.count
+import com.example.order.MainActivity
 import com.example.order.Repository.RepositoryUpload
 import com.example.order.Repository.RepositoryUploadImpl
 import com.example.order.databinding.MainFragmentBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.main_fragment.*
 
 
 class MainFragment : Fragment() {
 
  var repositoryUpload:RepositoryUpload=RepositoryUploadImpl()
+    private lateinit var bottomSheetBehavor:BottomSheetBehavior<ConstraintLayout>
 
 
     companion object {
@@ -55,6 +58,9 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setBottomSheetBehavor(view.findViewById(R.id.bottom_sheet_container))
+        setBottomAppBar(view)
+
         adapter.setOnItemViewClickListener(object: OnItemViewClickListener {
             override fun onItemViewClick(mainList: MainList) {
                 if (count == Keys.KEY_FOR_INFLATE_MAIN_LIST) {
@@ -85,6 +91,24 @@ class MainFragment : Fragment() {
         viewModel.getMainListViewModel()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_main_botom_bar,menu)
+    }
+
+    private fun setBottomAppBar(view: View) {
+        val context=activity as MainActivity
+        context.setSupportActionBar(view.findViewById(R.id.bottom_bar_main))
+        setHasOptionsMenu(true)
+
+    }
+
+    private fun setBottomSheetBehavor (bottomSeet:ConstraintLayout){
+        bottomSheetBehavor=BottomSheetBehavior.from(bottomSeet)
+        bottomSheetBehavor.state=BottomSheetBehavior.STATE_COLLAPSED
+
+    }
+
     private fun makeDetails(
         manager: FragmentManager?,
         mainList: MainList
@@ -102,7 +126,7 @@ class MainFragment : Fragment() {
 
     private fun renderData(data: AppState) {
         when (data){
-            is AppState.loadMainList->{
+            is AppState.Success->{
                 adapter.setMainList(data.mainList)
 
             }
