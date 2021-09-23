@@ -1,11 +1,16 @@
 package com.example.order.Data
 
+import com.example.order.Room.ExchangeDAO
+
 object Keys {
-    val DEFAULT_VALUE: Int = 0
+    const val DEFAULT_VALUE: Int = 0
     var LIST_KEY: Int = DEFAULT_VALUE
     var count:Int=0
     var KEY_FOR_INFLATE_MAIN_LIST=0
     var MAIN_REMEMEBERED_LIST: MutableList<MainList> = mutableListOf()
     var WORK_SELECTION:Int=0
+    var EXCHAGE_DATABASE_NAME:String="ExchangeDatabase.db"
+
+
 
 }

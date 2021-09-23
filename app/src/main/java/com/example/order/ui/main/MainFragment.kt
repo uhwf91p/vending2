@@ -109,6 +109,12 @@ class MainFragment : Fragment() {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun makeDetails(
         manager: FragmentManager?,
         mainList: MainList
