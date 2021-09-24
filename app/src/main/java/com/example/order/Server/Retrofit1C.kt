@@ -1,5 +1,6 @@
-package com.example.order.Repository
+package com.example.order.Server
 
+import com.example.order.Repository.API
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -7,11 +8,10 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 class Retrofit1C {
     private val baseUrl="https://api.nasa.gov/"
-    fun getRetrofit():API{
+    fun getRetrofit(): API {
         val retrofit1C =Retrofit.Builder()
             .baseUrl((baseUrl))
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))

@@ -1,12 +1,11 @@
 package com.example.order.Repository
 
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
 
-class RepositoryUploadImpl: RepositoryUpload {
+class RepositoryResultImpl: RepositoryResult {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun rememberMainList(mainList: MainList): MutableList<MainList> {
         var  rememberedMainList:MutableList<MainList> = Keys.MAIN_REMEMEBERED_LIST

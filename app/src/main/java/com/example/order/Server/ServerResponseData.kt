@@ -1,4 +1,4 @@
-package com.example.order.Repository
+package com.example.order.Server
 
 import com.google.gson.annotations.SerializedName
 

@@ -8,7 +8,7 @@ const val ID2 = "Iid2"
 const val NAME = "name"
 const val VALUE="value"
 @Entity
-data class ExchageEntity(
+data class ExchangeEntity(
     @PrimaryKey(autoGenerate = true)
     val id1:Int,
     val id2:Int,

@@ -1,4 +1,4 @@
-package com.example.order.ui.main
+package com.example.order.ViewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,13 +9,13 @@ import com.example.order.BuildConfig
 import com.example.order.Data.Keys
 import com.example.order.Repository.RepositoryGetMainList
 import com.example.order.Repository.RepositoryGetMainListImpl
-import com.example.order.Repository.Retrofit1C
+import com.example.order.Server.Retrofit1C
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGetMainListImpl()) :
     ViewModel() {
-    private val retrofit1C:Retrofit1C= Retrofit1C()
+    private val retrofit1C: Retrofit1C = Retrofit1C()
     private val liveDataToObserve:MutableLiveData<AppState> = MutableLiveData()
     fun getData():LiveData<AppState>{
         return  liveDataToObserve

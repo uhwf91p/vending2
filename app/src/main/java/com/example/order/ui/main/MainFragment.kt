@@ -14,16 +14,16 @@ import com.example.order.R
 import com.example.order.Data.Keys
 import com.example.order.Data.Keys.count
 import com.example.order.MainActivity
-import com.example.order.Repository.RepositoryUpload
-import com.example.order.Repository.RepositoryUploadImpl
+import com.example.order.Repository.RepositoryResult
+import com.example.order.Repository.RepositoryResultImpl
+import com.example.order.ViewModel.MainViewModel
 import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.main_fragment.*
 
 
 class MainFragment : Fragment() {
 
- var repositoryUpload:RepositoryUpload=RepositoryUploadImpl()
+ var repositoryUpload:RepositoryResult=RepositoryResultImpl()
     private lateinit var bottomSheetBehavor:BottomSheetBehavior<ConstraintLayout>
 
 

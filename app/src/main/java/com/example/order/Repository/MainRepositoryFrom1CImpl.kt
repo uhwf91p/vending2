@@ -1,13 +1,9 @@
 package com.example.order.Repository
 
-import android.net.sip.SipErrorCode.SERVER_ERROR
 import androidx.lifecycle.MutableLiveData
 import com.example.order.AppState
-import com.example.order.BuildConfig
 import com.example.order.Data.MainList
-import retrofit2.Call
-import retrofit2.Response
-import javax.security.auth.callback.Callback
+import com.example.order.Server.Retrofit1C
 
 class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
     val detailsLiveData: MutableLiveData<AppState> = MutableLiveData()

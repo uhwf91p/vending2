@@ -1,9 +1,8 @@
 package com.example.order.Repository
 
-import retrofit2.Call
+import com.example.order.Server.ServerResponseData
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface API {
