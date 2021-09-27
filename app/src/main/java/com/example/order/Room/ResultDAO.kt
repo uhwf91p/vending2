@@ -3,7 +3,7 @@ package com.example.order.Room
 import android.database.Cursor
 import androidx.room.*
 @Dao
-interface ExchangeDAO {
+interface ResultDAO {
 
         @Query("SELECT*FROM ExchangeEntity")
         fun all():List<ExchangeEntity>

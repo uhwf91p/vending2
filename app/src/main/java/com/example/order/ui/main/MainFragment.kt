@@ -14,8 +14,8 @@ import com.example.order.R
 import com.example.order.Data.Keys
 import com.example.order.Data.Keys.count
 import com.example.order.MainActivity
-import com.example.order.Repository.RepositoryResult
-import com.example.order.Repository.RepositoryResultImpl
+import com.example.order.Repository.RepositoryMakeResult
+import com.example.order.Repository.RepositoryMskeResultImpl
 import com.example.order.ViewModel.MainViewModel
 import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -23,7 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MainFragment : Fragment() {
 
- var repositoryUpload:RepositoryResult=RepositoryResultImpl()
+ var repositoryUpload:RepositoryMakeResult=RepositoryMskeResultImpl()
     private lateinit var bottomSheetBehavor:BottomSheetBehavior<ConstraintLayout>
 
 

@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
 
-class RepositoryResultImpl: RepositoryResult {
+class RepositoryMskeResultImpl: RepositoryMakeResult {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun rememberMainList(mainList: MainList): MutableList<MainList> {
         var  rememberedMainList:MutableList<MainList> = Keys.MAIN_REMEMEBERED_LIST

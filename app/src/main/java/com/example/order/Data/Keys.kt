@@ -1,7 +1,5 @@
 package com.example.order.Data
 
-import com.example.order.Room.ExchangeDAO
-
 object Keys {
     const val DEFAULT_VALUE: Int = 0
     var LIST_KEY: Int = DEFAULT_VALUE

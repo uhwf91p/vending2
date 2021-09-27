@@ -2,7 +2,7 @@ package com.example.order.Repository
 
 import com.example.order.Data.MainList
 
-interface RepositoryResult {
+interface RepositoryMakeResult {
     fun rememberMainList(mainList: MainList):MutableList<MainList>
 
 
