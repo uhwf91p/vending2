@@ -46,6 +46,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel.getDataFromServer()
         _binding= MainFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }

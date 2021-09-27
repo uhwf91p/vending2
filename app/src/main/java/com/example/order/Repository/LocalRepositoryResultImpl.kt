@@ -1,4 +1,4 @@
 package com.example.order.Repository
 
-class LocalRepositoryImpl {
+class LocalRepositoryResultImpl {
 }
