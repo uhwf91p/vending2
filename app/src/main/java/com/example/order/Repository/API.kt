@@ -6,8 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface API {
-    @GET()
-    suspend fun getDataFrom1C(@Query("api_key")apiKey:String): Response<ServerResponseData>
+    @GET("adMobileExchange")
+    suspend fun getDataFrom1C(@Query("ТранспортныеСредства")apiKey:String): Response<ServerResponseData>
 
 
 

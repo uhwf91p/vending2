@@ -11,6 +11,7 @@ object Keys {
     var DATABASE1C_NAME:String="Database1C.db"
     val SWITCH:Int=1//технический переключатель для выбора работы со статического списка или с базы данных
     var defaultList= listOf(1.2)
+    val baseurl: String="http://anatoliy/YUB_AF_PL/hs/adMobileExchange/"
 
 
 

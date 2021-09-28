@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ServerDTO (
 @SerializedName("ВидОбъекта") val id1:String?,
 @SerializedName("КОД") val id2:String?,
-@SerializedName("КОД") val name:String?
+@SerializedName("Наименование") val name:String?
 )
 /*
 "ВидОбъекта": "ТранспортныеСредства",

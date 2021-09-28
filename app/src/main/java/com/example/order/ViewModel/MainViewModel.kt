@@ -21,7 +21,7 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
     Converters() {
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
-    private val localRepository1C:LocalRepository1C= LocalRepository1CImpl(App.get1CDAO())
+    //private val localRepository1C:LocalRepository1C= LocalRepository1CImpl(App.get1CDAO())
     fun getData(): LiveData<AppState> {
         return liveDataToObserve
     }
