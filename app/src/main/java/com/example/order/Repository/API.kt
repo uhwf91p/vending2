@@ -6,8 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface API {
-    @GET("planetary/apod")
-    fun getDataFrom1C(@Query("api_key")apiKey:String): Response<ServerResponseData>
+    @GET()
+    suspend fun getDataFrom1C(@Query("api_key")apiKey:String): Response<ServerResponseData>
 
 
 

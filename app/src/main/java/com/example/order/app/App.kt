@@ -12,6 +12,7 @@ import java.lang.IllegalStateException
 class App: Application() {
     override fun onCreate() {
         super.onCreate()
+        appInstance = this
     }
 
     companion object {

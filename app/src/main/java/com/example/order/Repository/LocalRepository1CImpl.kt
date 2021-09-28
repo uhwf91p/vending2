@@ -12,9 +12,9 @@ class LocalRepository1CImpl(private val localDataSource: DatabaseFrom1CDAO) : Lo
         }
     }
 
-    override fun getAllData():List<MainList> {
+    /*override fun getAllData():List<MainList> {
         return converter.convertEntityDB1CToMainList(localDataSource.all())
-    }
+    }*/
 
 
 }

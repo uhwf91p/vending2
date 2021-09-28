@@ -7,7 +7,26 @@ import com.example.order.Server.ServerResponseData
 
 open class Converters : ViewModel() {
     fun converterFromResponseServerToMainList(serverResponse: ServerResponseData?): List<MainList> {
-        return listOf(MainList(serverResponse!!.id1, serverResponse.id2, serverResponse.name, ""))
+        val convertedList:List<MainList> = listOf()
+        val x=0
+        if (serverResponse != null) {
+            for (serverDTO in serverResponse.listFromServer) {
+                for(i in convertedList){
+
+                    convertedList[x].name= serverDTO.name.toString()
+                    convertedList[x].id1= serverDTO.id1.toString()
+                    convertedList[x].id2= serverDTO.id2.toString()
+                    convertedList[x].value= "0"
+                    x+1
+
+
+
+
+            }
+        }
+
+        }
+        return convertedList
 
     }
     fun convertMainListToEntityDB1C(mainList: MainList):DatabaseFrom1CEntity{

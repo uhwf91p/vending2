@@ -47,7 +47,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         @SuppressLint("SetTextI18n")
         fun bind(mainList: MainList) {
             var textForItem:String=""
-            textForItem = if (Keys.LIST_KEY == 0) {
+            textForItem = if (Keys.LIST_KEY == "0") {
                 mainList.name+": "+mainList.value
             } else{
                 mainList.name

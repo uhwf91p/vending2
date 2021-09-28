@@ -9,9 +9,9 @@ interface DatabaseFrom1CDAO {
         @Query("SELECT*FROM DatabaseFrom1CEntity")
         fun all():List<DatabaseFrom1CEntity>
 
-        @Query("SELECT*FROM DatabaseFrom1CEntity WHERE name LIKE:name")
+        /*@Query("SELECT*FROM DatabaseFrom1CEntity WHERE name LIKE:name")
         fun getDataByWord(name:String):List<DatabaseFrom1CEntity>
-
+*/
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(entity: DatabaseFrom1CEntity)
 

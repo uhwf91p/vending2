@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
             override fun onItemViewClick(mainList: MainList) {
                 if (count == Keys.KEY_FOR_INFLATE_MAIN_LIST) {
                     Keys.LIST_KEY = mainList.id2
-                    count = count +1
+                    count += 1
                     val manager = activity?.supportFragmentManager
                     makeDetails(manager, mainList)
                 } else {

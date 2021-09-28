@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class Retrofit1C {
-    private val baseUrl="https://api.nasa.gov/"
+    private val baseUrl="http://anatoliy/YUB_AF_PL/hs/adMobileExchange"
     fun getRetrofit(): API {
         val retrofit1C =Retrofit.Builder()
             .baseUrl((baseUrl))
@@ -33,5 +33,6 @@ class Retrofit1C {
         }
 
     }
+
 
 }

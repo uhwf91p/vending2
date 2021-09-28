@@ -16,7 +16,6 @@ import com.example.order.Server.ServerResponseData
 import com.example.order.app.App
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.concurrent.thread
 
 class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGetMainListImpl()) :
     Converters() {
@@ -45,7 +44,7 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
             val data:List<MainList> = converterFromResponseServerToMainList(serverResponse)
             if (res.isSuccessful && res.body() != null) {
                 liveDataToObserve.postValue(AppState.Success(data))
-                localRepository1C.putDataFromServer1CToLocalDatabase(data)
+                /*localRepository1C.putDataFromServer1CToLocalDatabase(data)*/
             }
             else {
                 liveDataToObserve.value = AppState.Error(Throwable())
