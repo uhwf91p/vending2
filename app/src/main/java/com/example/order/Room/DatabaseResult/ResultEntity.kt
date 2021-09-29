@@ -12,7 +12,7 @@ data class ResultEntity(
     @PrimaryKey(autoGenerate = true)
     val id1:Int,
     val id2:Int,
-    /*var id3:Int,*/
+
     var name:String,
     var value:String
 

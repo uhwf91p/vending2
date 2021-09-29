@@ -45,9 +45,9 @@ class App: Application() {
             }
 
         fun get1CDAO(): DatabaseFrom1CDAO {
-            if (dbResult == null) {
+            if (db1C == null) {
                 synchronized(DatabaseFrom1C::class.java){
-                    if (dbResult==null){
+                    if (db1C==null){
                         if (appInstance == null) {
                             throw IllegalStateException("Application ids null meanwhile creating database")
 

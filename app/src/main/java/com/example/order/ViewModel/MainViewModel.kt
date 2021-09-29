@@ -13,6 +13,9 @@ import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGetMainListImpl()) :
     Converters() {
@@ -33,27 +36,59 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
         }.start()
     }
 
-    fun getDataFromServer(): LiveData<AppState> {
+    fun getDataFromServer() {
+        liveDataToObserve.value = AppState.Loading(null)
+        val apiKey: String = BuildConfig.APIKEY_FROM_1C
+        if (apiKey.isBlank()) {
+            AppState.Error(Throwable("You need API key"))
+        } else {
+            retrofit1C.getRetrofit().getDataFrom1C(apiKey).enqueue(object :
+                Callback<ServerResponseData> {
+                override fun onResponse(
+                    call: Call<ServerResponseData>,
+                    response: Response<ServerResponseData>
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        val serverResponse: ServerResponseData?=response.body()!!
+                        val data:List<MainList> = converterFromResponseServerToMainList(serverResponse)
+                        liveDataToObserve.value =
+                            AppState.Success(data)
+                    } else {
+                        val message = response.message()
+                        if (message.isNullOrEmpty()) {
+                            liveDataToObserve.value =
+                                AppState.Error(Throwable("Unidentified error"))
+                        } else {
+                            liveDataToObserve.value =
+                                AppState.Error(Throwable(message))
+                        }
+                    }
+                }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val res = retrofit1C.getRetrofit().getDataFrom1C(BuildConfig.APIKEY_FROM_1C)
-            val serverResponse: ServerResponseData? = res.body()
-            val data:List<MainList> = converterFromResponseServerToMainList(serverResponse)
-            if (res.isSuccessful && res.body() != null) {
-                liveDataToObserve.postValue(AppState.Success(data))
-                /*localRepository1C.putDataFromServer1CToLocalDatabase(data)*/
-            }
-            else {
-                liveDataToObserve.value = AppState.Error(Throwable())
-            }
+                override fun onFailure(call: Call<ServerResponseData>, t: Throwable) {
+                    liveDataToObserve.value = AppState.Error(t)
+                }
+            })
         }
-        return liveDataToObserve
+
     }
 
 
 }
 
-
-
+/*
+viewModelScope.launch(Dispatchers.IO) {
+    val res = retrofit1C.getRetrofit().getDataFrom1C(BuildConfig.APIKEY_FROM_1C)
+    val serverResponse: ServerResponseData? = res.body()
+    val data:List<MainList> = converterFromResponseServerToMainList(serverResponse)
+    if (res.isSuccessful && res.body() != null) {
+        liveDataToObserve.postValue(AppState.Success(data))
+        *//*localRepository1C.putDataFromServer1CToLocalDatabase(data)*//*
+    }
+    else {
+        liveDataToObserve.value = AppState.Error(Throwable())
+    }
+}
+return liveDataToObserve*/
 
 

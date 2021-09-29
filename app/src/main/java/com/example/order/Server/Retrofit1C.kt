@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class Retrofit1C {
-    private val baseUrl="http://anatoliy/YUB_AF_PL/hs/"
+    private val baseUrl="http://192.168.8.8/YUB_AF_PL/hs/"
     fun getRetrofit(): API {
         val retrofit1C =Retrofit.Builder()
             .baseUrl((baseUrl))
