@@ -5,13 +5,13 @@ import com.example.order.Data.MainList
 import com.example.order.app.App
 
 class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
-    private val localRepository1C:LocalRepository1C=LocalRepository1CImpl(App.get1CDAO())
+
     override fun getListForChoice(): List<MainList> {
-        if (Keys.SWITCH == 0) {
+    /*    if (Keys.SWITCH == 0) {
           return  localRepository1C.getAllData()
 
         }
-        else
+        else*/
             return listOf(
             MainList("0", "1", "Вид работ", "0"),
             MainList("0", "8", "Работа", "0"),

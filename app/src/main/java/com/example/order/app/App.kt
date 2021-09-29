@@ -25,10 +25,10 @@ class App: Application() {
             if (dbResult == null) {
                 synchronized(ResultDatabase::class.java){
                     if (dbResult==null){
-                        if (appInstance == null) {
+                       /* if (appInstance == null) {
                             throw IllegalStateException("Application ids null meanwhile creating database")
 
-                        }
+                        }*/
                         dbResult= Room.databaseBuilder(
                             appInstance!!.applicationContext,
                             ResultDatabase::class.java, DB_RESULT_NAME_)
