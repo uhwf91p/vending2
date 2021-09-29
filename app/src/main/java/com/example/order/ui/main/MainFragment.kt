@@ -145,7 +145,11 @@ class MainFragment : Fragment() {
     private fun renderData(data: AppState) {
         when (data){
             is AppState.Success->{
+                viewModel.getDataFromServer()//запросить данные, проверить есть ли на выходе мейнлист, передать его в базу данных, базу данных передать в мейн репозиторий
+
+                /*viewModel.saveDataToDB1C()*/
                 adapter.setMainList(data.mainList)
+
 
             }
 

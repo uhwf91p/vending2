@@ -2,26 +2,33 @@ package com.example.order.ViewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.order.AppState
 import com.example.order.BuildConfig
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
+import com.example.order.Repository.LocalRepository1C
+import com.example.order.Repository.LocalRepository1CImpl
 import com.example.order.Repository.RepositoryGetMainList
 import com.example.order.Repository.RepositoryGetMainListImpl
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
+import com.example.order.app.App
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGetMainListImpl()) :
-    Converters() {
+class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGetMainListImpl(),
+private val localRepository1C: LocalRepository1C=LocalRepository1CImpl(App.get1CDAO())
+                    ) :
+    ViewModel() {
+    private val converters:Converters= Converters()
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
-    //private val localRepository1C:LocalRepository1C= LocalRepository1CImpl(App.get1CDAO())
+
     fun getData(): LiveData<AppState> {
         return liveDataToObserve
     }
@@ -36,8 +43,10 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
         }.start()
     }
 
+
+
     fun getDataFromServer() {
-        liveDataToObserve.value = AppState.Loading(null)
+        liveDataToObserve.value = AppState.Loading
         val apiKey: String = BuildConfig.APIKEY_FROM_1C
         if (apiKey.isBlank()) {
             AppState.Error(Throwable("You need API key"))
@@ -50,7 +59,7 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         val serverResponse: ServerResponseData?=response.body()!!
-                        val data:List<MainList> = converterFromResponseServerToMainList(serverResponse)
+                        val data:List<MainList> = converters.converterFromResponseServerToMainList(serverResponse)
                         liveDataToObserve.value =
                             AppState.Success(data)
                     } else {
