@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId "geekbarains.material"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -66,8 +66,14 @@ allprojects {
         annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
 
-        implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-        implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+
+
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+
+
+        implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
         implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

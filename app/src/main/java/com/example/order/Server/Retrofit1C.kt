@@ -14,7 +14,7 @@ class Retrofit1C {
     fun getRetrofit(): API {
         val retrofit1C =Retrofit.Builder()
             .baseUrl((baseUrl))
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))//.addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(createOkHttpClient(Interceptor1C()))
             .build()
         return retrofit1C.create(API::class.java)

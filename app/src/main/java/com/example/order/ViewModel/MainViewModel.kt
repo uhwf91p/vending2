@@ -7,13 +7,10 @@ import com.example.order.AppState
 import com.example.order.BuildConfig
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
-import com.example.order.Repository.LocalRepository1C
-import com.example.order.Repository.LocalRepository1CImpl
 import com.example.order.Repository.RepositoryGetMainList
 import com.example.order.Repository.RepositoryGetMainListImpl
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
-import com.example.order.app.App
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
