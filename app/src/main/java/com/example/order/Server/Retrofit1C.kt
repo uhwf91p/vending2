@@ -1,6 +1,5 @@
 package com.example.order.Server
 
-import com.example.order.Repository.API
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

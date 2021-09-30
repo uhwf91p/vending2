@@ -12,6 +12,7 @@ import com.example.order.Repository.LocalRepository1C
 import com.example.order.Repository.LocalRepository1CImpl
 import com.example.order.Repository.RepositoryGetMainList
 import com.example.order.Repository.RepositoryGetMainListImpl
+import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
 import com.example.order.app.App
@@ -23,8 +24,7 @@ import retrofit2.Response
 
 class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGetMainListImpl(),
 private val localRepository1C: LocalRepository1C=LocalRepository1CImpl(App.get1CDAO())
-                    ) :
-    ViewModel() {
+                    ) :ViewModel() {
     private val converters:Converters= Converters()
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
@@ -45,7 +45,7 @@ private val localRepository1C: LocalRepository1C=LocalRepository1CImpl(App.get1C
 
 
 
-    fun getDataFromServer() {
+    fun getDataFromServerToLocalDB() {
         liveDataToObserve.value = AppState.Loading
         val apiKey: String = BuildConfig.APIKEY_FROM_1C
         if (apiKey.isBlank()) {
@@ -60,6 +60,7 @@ private val localRepository1C: LocalRepository1C=LocalRepository1CImpl(App.get1C
                     if (response.isSuccessful && response.body() != null) {
                         val serverResponse: ServerResponseData?=response.body()!!
                         val data:List<MainList> = converters.converterFromResponseServerToMainList(serverResponse)
+                        localRepository1C.putDataFromServer1CToLocalDatabase(data)
                         liveDataToObserve.value =
                             AppState.Success(data)
                     } else {

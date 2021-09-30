@@ -14,12 +14,9 @@ import com.example.order.R
 import com.example.order.Data.Keys
 import com.example.order.Data.Keys.count
 import com.example.order.MainActivity
-import com.example.order.Repository.LocalRepository1C
-import com.example.order.Repository.LocalRepository1CImpl
 import com.example.order.Repository.RepositoryMakeResult
 import com.example.order.Repository.RepositoryMskeResultImpl
 import com.example.order.ViewModel.MainViewModel
-import com.example.order.app.App
 import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -28,7 +25,7 @@ class MainFragment : Fragment() {
 
  var repositoryUpload:RepositoryMakeResult=RepositoryMskeResultImpl()
     private lateinit var bottomSheetBehavor:BottomSheetBehavior<ConstraintLayout>
-    /*private val localRepository1C: LocalRepository1C = LocalRepository1CImpl(App.get1CDAO())*/
+
 
 
     companion object {
@@ -50,8 +47,14 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        /*viewModel.getDataFromServer()*/
+        viewModel.getDataFromServerToLocalDB()
+
+
         _binding= MainFragmentBinding.inflate(inflater,container,false)
+
+
+
+
 
 
 
@@ -145,7 +148,7 @@ class MainFragment : Fragment() {
     private fun renderData(data: AppState) {
         when (data){
             is AppState.Success->{
-                viewModel.getDataFromServer()//запросить данные, проверить есть ли на выходе мейнлист, передать его в базу данных, базу данных передать в мейн репозиторий
+                viewModel.getDataFromServerToLocalDB()//запросить данные, проверить есть ли на выходе мейнлист, передать его в базу данных, базу данных передать в мейн репозиторий
 
                 /*viewModel.saveDataToDB1C()*/
                 adapter.setMainList(data.mainList)

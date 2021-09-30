@@ -2,16 +2,17 @@ package com.example.order.Repository
 
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
+import com.example.order.ViewModel.Database1CViewModel
 import com.example.order.app.App
 
 class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
-
+ private val dataBase1CviewModel:Database1CViewModel= Database1CViewModel()
     override fun getListForChoice(): List<MainList> {
-    /*    if (Keys.SWITCH == 0) {
-          return  localRepository1C.getAllData()
+        if (Keys.SWITCH == 0) {
+          return  dataBase1CviewModel.getAllDataFromDB1C()
 
         }
-        else*/
+        else
             return listOf(
             MainList("0", "1", "Вид работ", "0"),
             MainList("0", "8", "Работа", "0"),
