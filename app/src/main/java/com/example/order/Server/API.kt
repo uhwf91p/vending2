@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface API {
     @GET("adMobileExchange")
-    fun getDataFrom1C(@Query("ТранспортныеСредства")apiKey:String): Call<ServerResponseData>
+    fun getDataFrom1C(@Query("ТранспортныеСредства")apiKey:String): Call<List<ServerResponseData>>
 
 
 }

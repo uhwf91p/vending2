@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.order.AppState
+import com.example.order.AppStateForDB
 import com.example.order.BuildConfig
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
@@ -23,13 +24,18 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGetMainListImpl(),
-private val localRepository1C: LocalRepository1C=LocalRepository1CImpl(App.get1CDAO())
-                    ) :ViewModel() {
+
+                    private val retrofit1C:Retrofit1C= Retrofit1C()
+
+) :ViewModel() {
     private val converters:Converters= Converters()
-    private val retrofit1C: Retrofit1C = Retrofit1C()
+    /*private val retrofit1C: Retrofit1C = Retrofit1C()*/
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
+    private val liveDataToObserveDB: MutableLiveData<AppStateForDB> = MutableLiveData()
 
     fun getData(): LiveData<AppState> {
+        getDataFromServerToLocalDB()
+
         return liveDataToObserve
     }
 
@@ -38,7 +44,9 @@ private val localRepository1C: LocalRepository1C=LocalRepository1CImpl(App.get1C
     private fun requestData() {
         Thread {
 
-            liveDataToObserve.postValue(AppState.Success(repository.getMainList(Keys.LIST_KEY)))
+
+
+            liveDataToObserveDB.postValue(AppStateForDB.Success(repository.getMainList(Keys.LIST_KEY)))
 
         }.start()
     }
@@ -46,23 +54,21 @@ private val localRepository1C: LocalRepository1C=LocalRepository1CImpl(App.get1C
 
 
     fun getDataFromServerToLocalDB() {
-        liveDataToObserve.value = AppState.Loading
+        liveDataToObserve.value = AppState.Loading(null)
         val apiKey: String = BuildConfig.APIKEY_FROM_1C
         if (apiKey.isBlank()) {
             AppState.Error(Throwable("You need API key"))
         } else {
             retrofit1C.getRetrofit().getDataFrom1C(apiKey).enqueue(object :
-                Callback<ServerResponseData> {
+                Callback<List<ServerResponseData>> {
                 override fun onResponse(
-                    call: Call<ServerResponseData>,
-                    response: Response<ServerResponseData>
+                    call: Call<List<ServerResponseData>>,
+                    response: Response<List<ServerResponseData>>
                 ) {
                     if (response.isSuccessful && response.body() != null) {
-                        val serverResponse: ServerResponseData?=response.body()!!
-                        val data:List<MainList> = converters.converterFromResponseServerToMainList(serverResponse)
-                        localRepository1C.putDataFromServer1CToLocalDatabase(data)
+
                         liveDataToObserve.value =
-                            AppState.Success(data)
+                            AppState.Success(response.body()!!)
                     } else {
                         val message = response.message()
                         if (message.isNullOrEmpty()) {
@@ -75,7 +81,7 @@ private val localRepository1C: LocalRepository1C=LocalRepository1CImpl(App.get1C
                     }
                 }
 
-                override fun onFailure(call: Call<ServerResponseData>, t: Throwable) {
+                override fun onFailure(call: Call<List<ServerResponseData>>, t: Throwable) {
                     liveDataToObserve.value = AppState.Error(t)
                 }
             })

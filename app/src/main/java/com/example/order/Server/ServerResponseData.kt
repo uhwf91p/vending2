@@ -5,11 +5,9 @@ import com.google.gson.annotations.SerializedName
 data class ServerResponseData(
 
 
-    @SerializedName("ТранспортныеСредства") val listFromServer:List<ServerDTO>
-
-
-
-
+    @SerializedName("ВидОбъекта") var id1: String?,
+    @SerializedName("КОД") var id2: String?,
+    @SerializedName("Наименование") val name: String?
 
 
 )

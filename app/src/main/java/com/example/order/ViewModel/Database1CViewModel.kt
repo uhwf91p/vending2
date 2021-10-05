@@ -18,7 +18,7 @@ class Database1CViewModel (
 
     fun getAllDataFromDB1C():List<MainList> {
         //resultLiveData.value = AppState.Loading
-        return localRepository1C.getAllData()+ listOf(MainList("0","1","test","0"))//resultLiveData.value = AppState.Success(localRepository1C.getAllData())
+        return localRepository1C.getAllData()//resultLiveData.value = AppState.Success(localRepository1C.getAllData())
 
 
     }
