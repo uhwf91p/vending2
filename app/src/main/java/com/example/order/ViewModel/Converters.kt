@@ -9,35 +9,19 @@ import com.example.order.Server.ServerResponseData
 open class Converters : ViewModel() {
     fun converterFromResponseServerToMainList(serverResponse: List<ServerResponseData?>): List<MainList> {
         val convertedList: MutableList<MainList> = mutableListOf()
-        val mainList = MainList("", "", "", "")
 
-
-            val f = serverResponse.size
-            for (k in 1..f) {
-                convertedList.add(mainList)
+        for (list in serverResponse) {
+            if (list != null) {
+                convertedList.add(convertmakeMainListFromStrings(list.id1,list.id2,list.name))
             }
 
-
-
-
-
-        convertedList[10].id2= "1"
-        convertedList[20].id2= "2"
-
-
-
-
-
-
-
+        }
 
         return convertedList
 
-
-
-
-
-
+    }
+    fun convertmakeMainListFromStrings (id1:String?, id2:String?, name:String?):MainList{
+        return MainList(id1!!,id2!!,name!!,"0")
 
     }
 
