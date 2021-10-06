@@ -21,8 +21,8 @@ open class Converters : ViewModel() {
 
 
 
-        convertedList[10].id2= serverResponse[10]?.id2.toString()
-        convertedList[20].id2= serverResponse[20]?.id2.toString()
+        convertedList[10].id2= "1"
+        convertedList[20].id2= "2"
 
 
 
