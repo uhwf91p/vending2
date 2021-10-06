@@ -6,7 +6,6 @@ import com.example.order.Data.Keys
 import com.example.order.Data.MainList
 
 class RepositoryGetMainListImpl:RepositoryGetMainList {
-    /*var listDetails: List<MainList>? = listOf(MainList(0," "))*/
     @RequiresApi(Build.VERSION_CODES.N)
     override fun getMainList(key: String): List<MainList> {
         val mainRepisitory:MainRepisitoryFrom1C=MainRepositoryFrom1CImpl()

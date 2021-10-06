@@ -53,7 +53,7 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
 
 
 
-    fun getDataFromServerToLocalDB() {
+    private fun getDataFromServerToLocalDB() {
         liveDataToObserve.value = AppState.Loading(null)
         val apiKey: String = BuildConfig.APIKEY_FROM_1C
         if (apiKey.isBlank()) {

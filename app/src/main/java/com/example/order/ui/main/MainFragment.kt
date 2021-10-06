@@ -60,20 +60,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //viewModel.getDataFromServerToLocalDB()
-
-
         _binding = MainFragmentBinding.inflate(inflater, container, false)
-
-
-
-
-
-
-
-
-
-
         return binding.root
     }
 
@@ -108,17 +95,9 @@ class MainFragment : Fragment() {
             }
 
         })
-
-
-            //val observer = Observer<AppState> { renderData(it) }
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter = adapter
 
-
-        //viewModel.getData().observe(viewLifecycleOwner,observer)
-
-
-        //localRepository1C.getAllData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -176,6 +155,7 @@ class MainFragment : Fragment() {
             is AppState.Error -> {
 
                 toast(data.error.message)
+
                 adapter.setMainList(localRepository1C.getAllData())
                 viewModel.getMainListViewModel()
 

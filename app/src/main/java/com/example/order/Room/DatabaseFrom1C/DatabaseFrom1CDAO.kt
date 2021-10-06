@@ -19,8 +19,8 @@ interface DatabaseFrom1CDAO {
         @Delete
         fun delete (entity: DatabaseFrom1CEntity)
 
-        @Query("DELETE FROM DatabaseFrom1CEntity WHERE id1=:id1&id2=:id2")
-        fun deleteById(id1:Int,id2:Int)
+        @Query("DELETE FROM DatabaseFrom1CEntity")
+        fun deleteall()
 
         @Query("SELECT id1, id2, name FROM DatabaseFrom1CEntity")
         fun getHistoryCursor(): Cursor

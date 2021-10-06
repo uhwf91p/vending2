@@ -20,15 +20,18 @@ open class Converters : ViewModel() {
         return convertedList
 
     }
-    fun convertmakeMainListFromStrings (id1:String?, id2:String?, name:String?):MainList{
+    private fun convertmakeMainListFromStrings (id1:String?, id2:String?, name:String?):MainList{
         return MainList(id1!!,id2!!,name!!,"0")
 
     }
-
-    fun convertMainListToEntityDB1C(mainList: MainList): DatabaseFrom1CEntity {
-        return DatabaseFrom1CEntity(mainList.id1, mainList.id2, mainList.name, "")
+    fun convertMainListToEntityDB1C(id1:String, id2:String, name: String, value:String): DatabaseFrom1CEntity {
+        val databaseFrom1CEntity= DatabaseFrom1CEntity("","","","")
+        databaseFrom1CEntity.id1=id1
+        databaseFrom1CEntity.id2=id2
+        databaseFrom1CEntity.name=name
+        databaseFrom1CEntity.value=value
+        return databaseFrom1CEntity
     }
-
     fun convertEntityDB1CToMainList(entityList: List<DatabaseFrom1CEntity>): List<MainList> {
         return entityList.map {
             MainList(it.id1, it.id2, it.name, it.value)

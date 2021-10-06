@@ -4,11 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
-@Entity(primaryKeys = ["id1"])
+@Entity(primaryKeys = ["id1","id2","name"])
 data class DatabaseFrom1CEntity(
 
-    val id1: String,
-    val id2: String,
+    var id1: String,
+    var id2: String,
     var name:String,
     var value:String
 
