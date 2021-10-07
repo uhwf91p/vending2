@@ -16,10 +16,7 @@ import com.example.order.R
 import com.example.order.Data.Keys
 import com.example.order.Data.Keys.count
 import com.example.order.MainActivity
-import com.example.order.Repository.LocalRepository1C
-import com.example.order.Repository.LocalRepository1CImpl
-import com.example.order.Repository.RepositoryMakeResult
-import com.example.order.Repository.RepositoryMskeResultImpl
+import com.example.order.Repository.*
 import com.example.order.ViewModel.Converters
 import com.example.order.ViewModel.MainViewModel
 import com.example.order.app.App
@@ -31,6 +28,7 @@ class MainFragment : Fragment() {
 
     var repositoryUpload: RepositoryMakeResult = RepositoryMskeResultImpl()
     private lateinit var bottomSheetBehavor: BottomSheetBehavior<ConstraintLayout>
+    private val repository: RepositoryGetMainList = RepositoryGetMainListImpl()
 
 
     companion object {
@@ -39,12 +37,11 @@ class MainFragment : Fragment() {
 
     val converters: Converters = Converters()
     private val localRepository1C: LocalRepository1C = LocalRepository1CImpl(App.get1CDAO())
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        viewModel.getData()
-            .observe(viewLifecycleOwner, Observer { renderData(it) })
     }
+
 
     private var _binding: MainFragmentBinding? = null
     private val binding
@@ -96,11 +93,13 @@ class MainFragment : Fragment() {
             }
 
         })
-        val observer=Observer<AppState>{ renderData2(it)}
+        //val observer=Observer<AppState>{ renderData2(it)}
+        viewModel.getData()
+            .observe(viewLifecycleOwner, { renderData(it) })
 
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter = adapter
-        viewModel.getData().observe(viewLifecycleOwner,observer)
+        /*viewModel.getData().observe(viewLifecycleOwner,observer)*/
         viewModel.getMainListViewModel()
 
 
@@ -150,18 +149,14 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                 val serverResponseData = data.serverResponseData
                 localRepository1C.putDataFromServer1CToLocalDatabase(serverResponseData)
-
-
-
-
+                adapter.setMainList(repository.getMainList(Keys.LIST_KEY))
             }
             is AppState.Loading -> {
             }
             is AppState.Error -> {
 
                 toast(data.error.message)
-
-
+                adapter.setMainList(repository.getMainList(Keys.LIST_KEY))
 
 
 
@@ -171,7 +166,7 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun renderData2(data: AppState) {
+    /*private fun renderData2(data: AppState) {
         when (data) {
             is AppState.Success -> {
                 adapter.setMainList(data.serverResponseData)
@@ -193,7 +188,7 @@ class MainFragment : Fragment() {
 
         }
 
-    }
+    }*/
 
     interface OnItemViewClickListener {
         fun onItemViewClick(mainList: MainList)
