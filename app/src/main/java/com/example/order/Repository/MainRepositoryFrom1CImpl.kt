@@ -9,8 +9,10 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
  private val dataBase1CviewModel:Database1CViewModel= Database1CViewModel()
     override fun getListForChoice(): List<MainList> {
         if (Keys.SWITCH == 0) {
+            val dataFrom1C:List<MainList> = dataBase1CviewModel.getAllDataFromDB1C()
+            val startList=makeStartList(dataFrom1C)
 
-          return  dataBase1CviewModel.getAllDataFromDB1C()+makeStartList(dataBase1CviewModel.getAllDataFromDB1C())
+          return  dataFrom1C+startList
 
         }
         else
@@ -41,9 +43,10 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
 
         )
     }
-    fun makeStartList(mainList:List<MainList>):List<MainList>{
+    private fun makeStartList(mainList:List<MainList>):List<MainList>{
         val startList:List<MainList> = mainList.distinctBy { it.id1 }
         for (list in startList) {
+            list.id2=list.id1
             list.id1="0"
 
         }

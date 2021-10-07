@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.AppState
+import com.example.order.AppStateForDB
 import com.example.order.Data.MainList
 import com.example.order.R
 import com.example.order.Data.Keys
@@ -95,8 +96,13 @@ class MainFragment : Fragment() {
             }
 
         })
+        val observer=Observer<AppState>{ renderData2(it)}
+
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter = adapter
+        viewModel.getData().observe(viewLifecycleOwner,observer)
+        viewModel.getMainListViewModel()
+
 
     }
 
@@ -143,11 +149,10 @@ class MainFragment : Fragment() {
         when (data) {
             is AppState.Success -> {
                 val serverResponseData = data.serverResponseData
-                val dataFromServer: List<MainList> =
-                    converters.converterFromResponseServerToMainList(serverResponseData)
-                localRepository1C.putDataFromServer1CToLocalDatabase(dataFromServer)
-                adapter.setMainList(localRepository1C.getAllData())
-                viewModel.getMainListViewModel()
+                localRepository1C.putDataFromServer1CToLocalDatabase(serverResponseData)
+
+
+
 
             }
             is AppState.Loading -> {
@@ -156,8 +161,32 @@ class MainFragment : Fragment() {
 
                 toast(data.error.message)
 
-                adapter.setMainList(localRepository1C.getAllData())
-                viewModel.getMainListViewModel()
+
+
+
+
+            }
+
+        }
+
+    }
+
+    private fun renderData2(data: AppState) {
+        when (data) {
+            is AppState.Success -> {
+                adapter.setMainList(data.serverResponseData)
+
+
+
+            }
+            is AppState.Loading -> {
+            }
+            is AppState.Error -> {
+
+                toast(data.error.message)
+
+
+
 
 
             }

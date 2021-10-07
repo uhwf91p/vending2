@@ -9,7 +9,7 @@ object Keys {
 
     var RESULT_DATABASE_NAME:String="ExchangeDatabase.db"
     var DATABASE1C_NAME:String="Database1C.db"
-    val SWITCH:Int=1//технический переключатель для выбора работы со статического списка или с базы данных
+    val SWITCH:Int=0//технический переключатель для выбора работы со статического списка или с базы данных
 
 
 

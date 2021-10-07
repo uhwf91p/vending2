@@ -3,22 +3,14 @@ package com.example.order.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.order.AppState
 import com.example.order.AppStateForDB
 import com.example.order.BuildConfig
 import com.example.order.Data.Keys
-import com.example.order.Data.MainList
-import com.example.order.Repository.LocalRepository1C
-import com.example.order.Repository.LocalRepository1CImpl
 import com.example.order.Repository.RepositoryGetMainList
 import com.example.order.Repository.RepositoryGetMainListImpl
-import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
-import com.example.order.app.App
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,7 +23,7 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
     private val converters:Converters= Converters()
     /*private val retrofit1C: Retrofit1C = Retrofit1C()*/
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
-    private val liveDataToObserveDB: MutableLiveData<AppStateForDB> = MutableLiveData()
+
 
     fun getData(): LiveData<AppState> {
         getDataFromServerToLocalDB()
@@ -46,7 +38,7 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
 
 
 
-            liveDataToObserveDB.postValue(AppStateForDB.Success(repository.getMainList(Keys.LIST_KEY)))
+            liveDataToObserve.postValue(AppState.Success(repository.getMainList(Keys.LIST_KEY)))
 
         }.start()
     }
@@ -68,7 +60,7 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
                     if (response.isSuccessful && response.body() != null) {
 
                         liveDataToObserve.value =
-                            AppState.Success(response.body()!!)
+                            AppState.Success(converters.converterFromResponseServerToMainList(response.body()!!))
                     } else {
                         val message = response.message()
                         if (message.isNullOrEmpty()) {
