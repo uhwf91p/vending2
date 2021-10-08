@@ -26,7 +26,11 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
 
 
     fun getData(): LiveData<AppState> {
-        getDataFromServerToLocalDB()
+
+        return liveDataToObserve
+    }
+    fun getDataForDBRequest(): LiveData<AppState> {
+        liveDataToObserve.value = AppState.Loading(null)
 
         return liveDataToObserve
     }
@@ -35,6 +39,7 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
 
     private fun requestData() {
         Thread {
+            getDataFromServerToLocalDB()
 
 
 

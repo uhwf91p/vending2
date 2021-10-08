@@ -10,12 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.AppState
-import com.example.order.AppStateForDB
-import com.example.order.Data.MainList
-import com.example.order.R
 import com.example.order.Data.Keys
 import com.example.order.Data.Keys.count
+import com.example.order.Data.MainList
 import com.example.order.MainActivity
+import com.example.order.R
 import com.example.order.Repository.*
 import com.example.order.ViewModel.Converters
 import com.example.order.ViewModel.MainViewModel
@@ -37,10 +36,13 @@ class MainFragment : Fragment() {
 
     val converters: Converters = Converters()
     private val localRepository1C: LocalRepository1C = LocalRepository1CImpl(App.get1CDAO())
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
+
+    /*override fun onActivityCreate(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+    }*/
 
 
     private var _binding: MainFragmentBinding? = null
@@ -58,8 +60,10 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onDestroyView() {
@@ -70,6 +74,12 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        val observer= Observer<AppState> {renderData(it)  }
+
+        viewModel.getData()
+            .observe(viewLifecycleOwner, observer)
+
 
         setBottomSheetBehavor(view.findViewById(R.id.bottom_sheet_container))
         setBottomAppBar(view)
@@ -94,15 +104,15 @@ class MainFragment : Fragment() {
 
         })
         //val observer=Observer<AppState>{ renderData2(it)}
-        viewModel.getData()
-            .observe(viewLifecycleOwner, { renderData(it) })
-
+        /* viewModel.getData()
+             .observe(viewLifecycleOwner, { renderData(it) })*/
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter = adapter
         /*viewModel.getData().observe(viewLifecycleOwner,observer)*/
+        /*viewModel.getMainListViewModel()*/
+        val observerForRender = Observer<AppState> { renderData2(it) }
+        viewModel.getDataForDBRequest().observe(viewLifecycleOwner, observerForRender)
         viewModel.getMainListViewModel()
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -148,15 +158,15 @@ class MainFragment : Fragment() {
         when (data) {
             is AppState.Success -> {
                 val serverResponseData = data.serverResponseData
+                localRepository1C.deleteAllData()
                 localRepository1C.putDataFromServer1CToLocalDatabase(serverResponseData)
-                adapter.setMainList(repository.getMainList(Keys.LIST_KEY))
+
             }
             is AppState.Loading -> {
             }
             is AppState.Error -> {
 
                 toast(data.error.message)
-                adapter.setMainList(repository.getMainList(Keys.LIST_KEY))
 
 
 
@@ -166,29 +176,20 @@ class MainFragment : Fragment() {
 
     }
 
-    /*private fun renderData2(data: AppState) {
+
+    private fun renderData2(data: AppState) {
         when (data) {
             is AppState.Success -> {
                 adapter.setMainList(data.serverResponseData)
-
-
-
             }
             is AppState.Loading -> {
             }
             is AppState.Error -> {
 
                 toast(data.error.message)
-
-
-
-
-
             }
-
         }
-
-    }*/
+    }
 
     interface OnItemViewClickListener {
         fun onItemViewClick(mainList: MainList)
