@@ -61,6 +61,8 @@ class MainViewModel(private val repository: RepositoryGetMainList = RepositoryGe
 
                         liveDataToObserve.value =
                             AppState.Success(converters.converterFromResponseServerToMainList(response.body()!!))
+
+
                     } else {
                         val message = response.message()
                         if (message.isNullOrEmpty()) {
