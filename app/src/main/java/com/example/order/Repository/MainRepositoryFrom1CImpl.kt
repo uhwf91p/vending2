@@ -3,16 +3,14 @@ package com.example.order.Repository
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
 import com.example.order.ViewModel.Database1CViewModel
-import com.example.order.app.App
 
 class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
  private val dataBase1CviewModel:Database1CViewModel= Database1CViewModel()
     override fun getListForChoice(): List<MainList> {
         if (Keys.SWITCH == 0) {
-            val dataFrom1C:List<MainList> = dataBase1CviewModel.getAllDataFromDB1C()
-            val startList=makeStartList(dataFrom1C)
+            val dataFrom1C: List<MainList> = dataBase1CviewModel.getAllDataFromDB1C()
 
-          return  dataFrom1C+startList
+            return makeStartList(dataFrom1C)+dataFrom1C
 
         }
         else
@@ -46,6 +44,7 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
     private fun makeStartList(mainList:List<MainList>):List<MainList>{
         val startList:List<MainList> = mainList.distinctBy { it.id1 }
         for (list in startList) {
+            list.name=list.id1
             list.id2=list.id1
             list.id1="0"
 

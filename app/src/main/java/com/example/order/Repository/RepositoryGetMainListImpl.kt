@@ -29,7 +29,7 @@ class RepositoryGetMainListImpl:RepositoryGetMainList {
 
                 }
 
-        return tempList
+        return tempList.distinctBy { it.id2 }
 
 
                 }

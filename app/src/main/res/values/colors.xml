@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="color_accent">#2962FF</color>
     <color name="color_primary">#212121</color>
+    <color name="loadingBackground">#80FFFFFF</color>
 </resources>
