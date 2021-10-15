@@ -5,7 +5,7 @@ import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CDAO
 import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
 import com.example.order.ViewModel.Converters
 
-class LocalRepository1CImpl(private val localDataSource: DatabaseFrom1CDAO) : LocalRepository1C {
+class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : LocalRepository {
     private val converter: Converters = Converters()
     override fun putDataFromServer1CToLocalDatabase(mainListFromServer: List<MainList>) {
        for (mainList in mainListFromServer) {

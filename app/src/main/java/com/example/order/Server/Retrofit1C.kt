@@ -10,7 +10,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.net.PasswordAuthentication
 import kotlin.jvm.Throws
 
 class Retrofit1C {

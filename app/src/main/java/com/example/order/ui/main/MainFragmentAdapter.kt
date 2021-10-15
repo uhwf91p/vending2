@@ -4,10 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.order.Data.MainList
 import com.example.order.Data.Keys
+import com.example.order.Data.MainList
 import com.example.order.databinding.MainItemBinding
-import com.google.android.material.chip.Chip
 
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
     private var mainListData: List<MainList> = listOf()
@@ -46,8 +45,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(mainList: MainList) {
-            var textForItem:String=""
-            textForItem = if (Keys.LIST_KEY == "0") {
+            val textForItem:String = if (Keys.LIST_KEY == "0") {
                 mainList.name+": "+mainList.value
             } else{
                 mainList.name

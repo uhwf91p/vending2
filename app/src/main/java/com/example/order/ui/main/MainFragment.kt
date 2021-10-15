@@ -1,7 +1,11 @@
 package com.example.order.ui.main
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -18,6 +22,8 @@ import com.example.order.Repository.*
 import com.example.order.ViewModel.MainViewModel
 import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.main_fragment.*
+import java.util.*
 
 
 class MainFragment : Fragment() {
@@ -38,7 +44,13 @@ class MainFragment : Fragment() {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
+
+
+
+
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -47,7 +59,28 @@ class MainFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
+        val textView     = binding.inputEditTextDate
+
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        input_date.setEndIconOnClickListener {
+
+            val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                val month=month+1
+
+                textView.setText("${addZeroToMonthAndDay(dayOfMonth)}.${addZeroToMonthAndDay(month)}.$year")
+            }, year, month, day)
+            dpd.show()
+
+        }
+
         setBottomSheetBehavor(view.findViewById(R.id.bottom_sheet_container))
         setBottomAppBar(view)
         adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
@@ -74,10 +107,6 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecyclerView.adapter = adapter
         viewModel.getData().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getMainListViewModel()
-        /*viewModel.getData().observe(viewLifecycleOwner,observer)*/
-        /*viewModel.getMainListViewModel()*/
-
-
 
     }
 
@@ -100,7 +129,6 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
 
         return super.onOptionsItemSelected(item)
     }
@@ -134,16 +162,11 @@ class MainFragment : Fragment() {
 
                 toast(data.error.message)
 
-
-
             }
 
         }
 
     }
-
-
-
 
     interface OnItemViewClickListener {
         fun onItemViewClick(mainList: MainList)
@@ -155,25 +178,25 @@ class MainFragment : Fragment() {
             show()
         }
     }
+    private fun addZeroToMonthAndDay(dayOrMonth:Int):String{
+
+        if (dayOrMonth <10) {
+            return "0$dayOrMonth"
+
+        }
+        else{
+            return dayOrMonth.toString()
+        }
+
+    }
+
+
 
 
     companion object {
         fun newInstance()= MainFragment()
         }
     }
-    /*private fun makeRequestAndDB()= runBlocking {
-        val serverReqAndWriteDB=launch {
 
-            viewModel.getDataForDBRequest().observe(viewLifecycleOwner)
-            {renderData(it)}  }
-        serverReqAndWriteDB.join()
-
-
-
- //val observer=Observer<AppState>{ renderData2(it)}
-        /* viewModel.getData()
-             .observe(viewLifecycleOwner, { renderData(it) })*/
-
-    }*/
 
 

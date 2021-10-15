@@ -11,8 +11,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.order.AppState
 import com.example.order.R
-import com.example.order.Repository.LocalRepository1C
-import com.example.order.Repository.LocalRepository1CImpl
+import com.example.order.Repository.LocalRepository
+import com.example.order.Repository.LocalRepositoryImpl
 import com.example.order.ViewModel.LoadingViewModel
 import com.example.order.app.App
 import com.example.order.databinding.LoadingFragmentBinding
@@ -21,7 +21,7 @@ class LoadingFragment:Fragment() {
     private var _binding:LoadingFragmentBinding?=null
     private val binding get()=_binding!!
     private val viewModel:LoadingViewModel by lazy { ViewModelProvider(this).get(LoadingViewModel::class.java) }
-    private val localRepository1C: LocalRepository1C = LocalRepository1CImpl(App.get1CDAO())
+    private val localRepository1C: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
 
     override fun onCreateView(
         inflater: LayoutInflater,

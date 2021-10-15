@@ -3,7 +3,6 @@ package com.example.order.ViewModel
 import androidx.lifecycle.ViewModel
 import com.example.order.Data.MainList
 import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
-import com.example.order.Server.ServerDTO
 import com.example.order.Server.ServerResponseData
 
 open class Converters : ViewModel() {

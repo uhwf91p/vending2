@@ -9,6 +9,10 @@ object Keys {
 
     var RESULT_DATABASE_NAME: String = "ExchangeDatabase.db"
     var DATABASE1C_NAME: String = "Database1C.db"
-    val SWITCH: Int =
+    const val SWITCH: Int =
         0//технический переключатель для выбора работы со статического списка или с базы данных
+    const val STEP_FOR_WORK_LIST=0.1
+    const val NUMBERS_OF_VALUES_FOR_WORK_LIST=200
+    const val STEP_FOR_WORKED_HOURS=1.0
+    const val NUMBERS_OF_VALUES_FOR_WORKED_HOURS=80
 }

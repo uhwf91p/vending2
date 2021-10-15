@@ -1,17 +1,12 @@
 package com.example.order.ViewModel
 
-import android.os.Bundle
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.order.AppState
 import com.example.order.BuildConfig
-import com.example.order.Data.MainList
-import com.example.order.R
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
-import com.example.order.ui.main.DetailsFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -31,8 +31,8 @@
             app:endIconCheckable="true"
             app:endIconDrawable="@drawable/ic_launcher_foreground"
             app:endIconMode="custom"
-            app:helperText="Найти"
-            app:layout_constraintBottom_toTopOf="@id/mainFragmentRecyclerView"
+
+            app:layout_constraintBottom_toTopOf="@id/input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -43,14 +43,56 @@
                 android:layout_height="55dp"
                 android:inputType="text" />
 
+
+
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_date"
+
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout"
+
+            android:hint="Дата"
+            app:endIconCheckable="true"
+            app:endIconDrawable="@drawable/ic_baseline_date_range_24"
+            app:endIconMode="custom"
+
+
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:clickable="false"
+                android:longClickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/input_edit_text_date"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:inputType="text">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+
+
+
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
+
             android:id="@+id/mainFragmentRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/main_item"
-            app:layout_constraintTop_toBottomOf="@id/input_layout"
+            app:layout_constraintTop_toBottomOf="@id/input_date"
 
             >
 
