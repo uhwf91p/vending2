@@ -8,17 +8,12 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
-    private val dataBase1CviewModel: Database1CViewModel = Database1CViewModel()
-
-
+    private val dataBase1CViewModel: Database1CViewModel = Database1CViewModel()
     private val amountOfWorkList=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORK_LIST,Keys.STEP_FOR_WORK_LIST,"Фактически отработано в натуре")
     private val hoursWorked=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORKED_HOURS,Keys.STEP_FOR_WORKED_HOURS,"Отработано часов")
-
+    // саделать маски для имен в главном списке
     override fun getListForChoice(): List<MainList> {
-
-
-            val dataFrom1C: List<MainList> = dataBase1CviewModel.getAllDataFromDB1C()
-
+           val dataFrom1C: List<MainList> = dataBase1CViewModel.getAllDataFromDB1C()
            return makeStartList(dataFrom1C+amountOfWorkList+hoursWorked)+dataFrom1C+amountOfWorkList+hoursWorked
 
     }
@@ -32,8 +27,6 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
         }
         return convertList
     }
-
-
 
     private fun changeValues (id1:String, id2:String, name: String, value:String):MainList{
         val objectForChange = MainList(id1,id2,name,value)

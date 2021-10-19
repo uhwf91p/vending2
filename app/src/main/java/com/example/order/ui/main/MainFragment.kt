@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -14,11 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.AppState
 import com.example.order.Data.Keys
+import com.example.order.Data.Keys.KEY_FOR_INFLATE_MAIN_LIST
 import com.example.order.Data.Keys.count
 import com.example.order.Data.MainList
 import com.example.order.MainActivity
 import com.example.order.R
-import com.example.order.Repository.*
+import com.example.order.Repository.RepositoryMakeResult
+import com.example.order.Repository.RepositoryMskeResultImpl
 import com.example.order.ViewModel.MainViewModel
 import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -43,14 +43,7 @@ class MainFragment : Fragment() {
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
-
-
-
-
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -72,7 +65,7 @@ class MainFragment : Fragment() {
 
         input_date.setEndIconOnClickListener {
 
-            val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
                 val month=month+1
 
                 textView.setText("${addZeroToMonthAndDay(dayOfMonth)}.${addZeroToMonthAndDay(month)}.$year")
@@ -83,16 +76,19 @@ class MainFragment : Fragment() {
 
         setBottomSheetBehavor(view.findViewById(R.id.bottom_sheet_container))
         setBottomAppBar(view)
-        adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
+        hideAndShowDate()
+         adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(mainList: MainList) {
-                if (count == Keys.KEY_FOR_INFLATE_MAIN_LIST) {
+                if (count == KEY_FOR_INFLATE_MAIN_LIST) {
+                    binding.inputEditTextDate.hide()
                     Keys.LIST_KEY = mainList.id2
                     count += 1
                     val manager = activity?.supportFragmentManager
                     makeDetails(manager, mainList)
                 } else {
+                    binding.inputEditTextDate.show()
 
-                    count = Keys.KEY_FOR_INFLATE_MAIN_LIST;
+                    count = KEY_FOR_INFLATE_MAIN_LIST;
                     Keys.LIST_KEY = Keys.DEFAULT_VALUE
                     val manager = activity?.supportFragmentManager
                     repositoryUpload.rememberMainList(mainList)
@@ -122,8 +118,8 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun setBottomSheetBehavor(bottomSeet: ConstraintLayout) {
-        bottomSheetBehavor = BottomSheetBehavior.from(bottomSeet)
+    private fun setBottomSheetBehavor(bottomSheet: ConstraintLayout) {
+        bottomSheetBehavor = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavor.state = BottomSheetBehavior.STATE_COLLAPSED
 
     }
@@ -180,15 +176,24 @@ class MainFragment : Fragment() {
     }
     private fun addZeroToMonthAndDay(dayOrMonth:Int):String{
 
-        if (dayOrMonth <10) {
-            return "0$dayOrMonth"
+        return if (dayOrMonth <10) {
+            "0$dayOrMonth"
 
-        }
-        else{
-            return dayOrMonth.toString()
+        } else{
+            dayOrMonth.toString()
         }
 
     }
+    fun hideAndShowDate(){
+        if (count == KEY_FOR_INFLATE_MAIN_LIST) {
+            binding.inputEditTextDate.hide()
+
+        } else {
+            binding.inputEditTextDate.show()
+
+        }
+    }
+
 
 
 
