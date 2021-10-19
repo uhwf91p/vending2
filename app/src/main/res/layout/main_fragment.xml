@@ -48,7 +48,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_date"
+            android:id="@+id/input_date_layout"
 
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -57,6 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_layout"
+
 
             android:hint="Дата"
             app:endIconCheckable="true"
@@ -92,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/main_item"
-            app:layout_constraintTop_toBottomOf="@id/input_date"
+            app:layout_constraintTop_toBottomOf="@id/input_date_layout"
 
             >
 

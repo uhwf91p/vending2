@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.get
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +24,7 @@ import com.example.order.Repository.RepositoryMskeResultImpl
 import com.example.order.ViewModel.MainViewModel
 import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.util.*
 
@@ -63,7 +66,7 @@ class MainFragment : Fragment() {
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        input_date.setEndIconOnClickListener {
+        input_date_layout.setEndIconOnClickListener {
 
             val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
                 val month=month+1
@@ -185,11 +188,18 @@ class MainFragment : Fragment() {
 
     }
     fun hideAndShowDate(){
-        if (count == KEY_FOR_INFLATE_MAIN_LIST) {
-            binding.inputEditTextDate.hide()
+        if (count!= KEY_FOR_INFLATE_MAIN_LIST) {
+            //второй экран
+            binding.inputEditTextDate.isGone=true
+            binding.inputDateLayout.endIconMode=TextInputLayout.END_ICON_NONE
+            val params = binding.mainFragmentRecyclerView.layoutParams as ConstraintLayout.LayoutParams
+            params.topToBottom=binding.inputLayout.id
+
 
         } else {
-            binding.inputEditTextDate.show()
+
+            binding.inputDateLayout.isGone=false
+
 
         }
     }
