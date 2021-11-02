@@ -20,18 +20,19 @@ import com.example.order.Data.MainList
 import com.example.order.MainActivity
 import com.example.order.R
 import com.example.order.Repository.RepositoryMakeResult
-import com.example.order.Repository.RepositoryMskeResultImpl
+import com.example.order.Repository.RepositoryMakeResultImpl
 import com.example.order.ViewModel.MainViewModel
 import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.main_item.view.*
 import java.util.*
 
 
 class MainFragment : Fragment() {
 
-    var repositoryUpload: RepositoryMakeResult = RepositoryMskeResultImpl()
+    var repositoryUpload: RepositoryMakeResult = RepositoryMakeResultImpl()
     private lateinit var bottomSheetBehavor: BottomSheetBehavior<ConstraintLayout>
     private var _binding: MainFragmentBinding? = null
     private val binding
@@ -128,6 +129,12 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+
+
+         /*   R.id.send_main_bottom_bar->*/
+
+        }
 
         return super.onOptionsItemSelected(item)
     }

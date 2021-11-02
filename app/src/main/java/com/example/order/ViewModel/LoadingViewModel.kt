@@ -27,7 +27,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
         if (apiKey.isBlank()) {
             AppState.Error(Throwable("You need API key"))
         } else {
-            retrofit1C.getRetrofit().getDataFrom1C(apiKey).enqueue(object :
+            retrofit1C.getRetrofit().getDataFrom1C(apiKey/*,apiKey,apiKey,apiKey,apiKey,apiKey*/).enqueue(object :
                 Callback<List<ServerResponseData>> {
                 override fun onResponse(
                     call: Call<List<ServerResponseData>>,

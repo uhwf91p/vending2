@@ -3,6 +3,7 @@ package com.example.order.ViewModel
 import androidx.lifecycle.ViewModel
 import com.example.order.Data.MainList
 import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
+import com.example.order.Room.DatabaseResult.ResultEntity
 import com.example.order.Server.ServerResponseData
 
 open class Converters : ViewModel() {
@@ -37,6 +38,11 @@ open class Converters : ViewModel() {
 
         }
 
+
+
+    }
+    fun convertEntityResultToMainList(entityList: List<ResultEntity>):List<MainList>{
+        return entityList.map {  MainList(it.id1, it.id2, it.name, it.value) }
     }
 }
 

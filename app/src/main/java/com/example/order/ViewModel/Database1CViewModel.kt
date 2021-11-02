@@ -11,8 +11,8 @@ class Database1CViewModel (
     private val localRepository1C: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
 ):ViewModel() {
         fun getAllDataFromDB1C():List<MainList> {
-        return localRepository1C.getAllData()
-
+        return localRepository1C.getAllDataDB1CEntity()
 
     }
+
 }

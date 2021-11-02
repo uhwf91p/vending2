@@ -22,8 +22,8 @@ class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : Loca
 
     }
 
-    override fun getAllData():List<MainList> {
-        return converter.convertEntityDB1CToMainList(localDataSource.all())
+    override fun getAllDataDB1CEntity():List<MainList> {
+        return converter.convertEntityDB1CToMainList(localDataSource.all1C())
 
     }
 
@@ -31,9 +31,9 @@ class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : Loca
         localDataSource.deleteall()
     }
 
-
-
-
+    override fun getAllDataDBResultEntity(): List<MainList> {
+        return converter.convertEntityResultToMainList(localDataSource.allResult())
+    }
 
 
 }
