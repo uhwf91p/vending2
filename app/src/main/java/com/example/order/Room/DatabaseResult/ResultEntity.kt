@@ -4,13 +4,14 @@ import androidx.room.Entity
 
 
 
-@Entity(primaryKeys = ["id1","id2","name"])
+@Entity(primaryKeys = ["id1","id2","name"],tableName = "ResultEntity")
 data class ResultEntity(
 
     var id1: String,
     var id2: String,
     var name:String,
-    var value:String
+    var value:String,
+    var uid:String
 
 
 )

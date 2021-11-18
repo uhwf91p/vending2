@@ -3,6 +3,7 @@ package com.example.order.Repository
 import com.example.order.Data.MainList
 import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CDAO
 import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
+import com.example.order.Room.DatabaseResult.ResultEntity
 import com.example.order.ViewModel.Converters
 
 class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : LocalRepository {
@@ -34,6 +35,24 @@ class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : Loca
     override fun getAllDataDBResultEntity(): List<MainList> {
         return converter.convertEntityResultToMainList(localDataSource.allResult())
     }
+
+    override fun putDataToResultDB(resultMainList: List<MainList>) {
+        val data=converter.convertRemListToResultEntity(resultMainList)
+        for (mainList in data) {
+
+            insertToDBResult(mainList)
+
+        }
+    }
+
+    private fun insertToDBResult(data:ResultEntity){
+        localDataSource.insertDataToResult(data)
+
+
+    }
+
+
+
 
 
 }

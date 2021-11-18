@@ -16,4 +16,5 @@ object Keys {
     const val STEP_FOR_WORKED_HOURS=1.0
     const val NUMBERS_OF_VALUES_FOR_WORKED_HOURS=80
     val DEFAULT_FIELDS:List<String> = listOf("Бригадир")
+    val DEFAULT_lIST= listOf(MainList("","","",""))
 }

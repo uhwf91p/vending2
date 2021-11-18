@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.get
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -19,20 +18,23 @@ import com.example.order.Data.Keys.count
 import com.example.order.Data.MainList
 import com.example.order.MainActivity
 import com.example.order.R
+import com.example.order.Repository.LocalRepository
+import com.example.order.Repository.LocalRepositoryImpl
 import com.example.order.Repository.RepositoryMakeResult
 import com.example.order.Repository.RepositoryMakeResultImpl
 import com.example.order.ViewModel.MainViewModel
+import com.example.order.app.App
 import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.main_fragment.*
-import kotlinx.android.synthetic.main.main_item.view.*
 import java.util.*
 
 
 class MainFragment : Fragment() {
 
-    var repositoryUpload: RepositoryMakeResult = RepositoryMakeResultImpl()
+    var repositoryResult: RepositoryMakeResult = RepositoryMakeResultImpl()
+    private val localRepository1C: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
     private lateinit var bottomSheetBehavor: BottomSheetBehavior<ConstraintLayout>
     private var _binding: MainFragmentBinding? = null
     private val binding
@@ -95,7 +97,9 @@ class MainFragment : Fragment() {
                     count = KEY_FOR_INFLATE_MAIN_LIST;
                     Keys.LIST_KEY = Keys.DEFAULT_VALUE
                     val manager = activity?.supportFragmentManager
-                    repositoryUpload.rememberMainList(mainList)
+                    val remList =repositoryResult.rememberMainList(mainList)
+                    localRepository1C.putDataToResultDB(remList)
+
                     makeDetails(manager, mainList)
 
                 }
@@ -132,7 +136,7 @@ class MainFragment : Fragment() {
         when(item.itemId){
 
 
-         /*   R.id.send_main_bottom_bar->*/
+        /* R.id.send_main_bottom_bar->*/
 
         }
 

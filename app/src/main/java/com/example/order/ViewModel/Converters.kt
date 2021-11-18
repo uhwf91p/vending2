@@ -5,6 +5,7 @@ import com.example.order.Data.MainList
 import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
 import com.example.order.Room.DatabaseResult.ResultEntity
 import com.example.order.Server.ServerResponseData
+import java.util.*
 
 open class Converters : ViewModel() {
     fun converterFromResponseServerToMainList(serverResponse: List<ServerResponseData?>): List<MainList> {
@@ -44,6 +45,14 @@ open class Converters : ViewModel() {
     fun convertEntityResultToMainList(entityList: List<ResultEntity>):List<MainList>{
         return entityList.map {  MainList(it.id1, it.id2, it.name, it.value) }
     }
+    fun convertRemListToResultEntity(remList:List<MainList>):List<ResultEntity>{
+        return remList.map { ResultEntity(it.id1,it.id2,it.name,it.value,
+            UUID.randomUUID().toString()
+        ) }
+
+    }
+
+
 }
 
 

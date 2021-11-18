@@ -7,5 +7,6 @@ interface LocalRepository {
     fun getAllDataDB1CEntity(): List<MainList>
     fun deleteAllData()
     fun getAllDataDBResultEntity():List<MainList>
+    fun putDataToResultDB(resultMainList:List<MainList>)
 
 }

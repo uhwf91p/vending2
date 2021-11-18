@@ -8,14 +8,16 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
+
     private val dataBase1CViewModel: Database1CViewModel = Database1CViewModel()
     private val amountOfWorkList=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORK_LIST,Keys.STEP_FOR_WORK_LIST,"Фактически отработано в натуре")
     private val hoursWorked=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORKED_HOURS,Keys.STEP_FOR_WORKED_HOURS,"Отработано часов")
     // саделать маски для имен в главном списке
     override fun getListForChoice(): List<MainList> {
            val dataFrom1C: List<MainList> = dataBase1CViewModel.getAllDataFromDB1C()
-           return makeStartList(dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir)+dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir
 
+        val startList=makeStartList(dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir)+dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir
+    return setDefaultValues(startList)
     }
 
     private fun makeStartList(mainList: List<MainList>): List<MainList> {
@@ -47,6 +49,24 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
             workList.add(MainList(nameOfField,nameOfField+i,roundedNumber.format(valueForWork).toString(),"0"))
         }
         return workList
+
+    }
+    private fun setDefaultValues(startList: List<MainList>):List<MainList>{
+        val listDefaultFromDB: List<MainList> = dataBase1CViewModel.getAllDataFromResultDB()
+        for (mainList in startList) {
+            for (listDefault in listDefaultFromDB){
+                if (mainList.id1 == listDefault.id1) {
+                    mainList.name=listDefault.name
+
+
+                }
+
+            }
+
+        }
+        return startList
+
+
 
     }
 
