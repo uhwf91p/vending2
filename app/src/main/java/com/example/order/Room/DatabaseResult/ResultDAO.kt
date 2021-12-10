@@ -2,7 +2,7 @@ package com.example.order.Room.DatabaseResult
 
 import android.database.Cursor
 import androidx.room.*
-import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
+import com.example.order.Room.LocalDataBase.ResultEntity
 
 @Dao
 interface ResultDAO {

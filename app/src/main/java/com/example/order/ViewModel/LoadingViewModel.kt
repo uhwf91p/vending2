@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.order.AppState
 import com.example.order.BuildConfig
+import com.example.order.Data.MainList
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
 import retrofit2.Call
@@ -27,7 +28,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
         if (apiKey.isBlank()) {
             AppState.Error(Throwable("You need API key"))
         } else {
-            retrofit1C.getRetrofit().getDataFrom1C(apiKey/*,apiKey,apiKey,apiKey,apiKey,apiKey*/).enqueue(object :
+            retrofit1C.getRetrofit().getDataFrom1C().enqueue(object :
                 Callback<List<ServerResponseData>> {
                 override fun onResponse(
                     call: Call<List<ServerResponseData>>,
@@ -58,5 +59,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
         }
 
     }
+
+
 
 }

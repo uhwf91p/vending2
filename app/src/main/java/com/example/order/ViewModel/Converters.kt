@@ -2,8 +2,8 @@ package com.example.order.ViewModel
 
 import androidx.lifecycle.ViewModel
 import com.example.order.Data.MainList
-import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
-import com.example.order.Room.DatabaseResult.ResultEntity
+import com.example.order.Room.LocalDataBase.DatabaseFrom1CEntity
+import com.example.order.Room.LocalDataBase.ResultEntity
 import com.example.order.Server.ServerResponseData
 import java.util.*
 
@@ -43,11 +43,12 @@ open class Converters : ViewModel() {
 
     }
     fun convertEntityResultToMainList(entityList: List<ResultEntity>):List<MainList>{
-        return entityList.map {  MainList(it.id1, it.id2, it.name, it.value) }
+        return entityList.map {  MainList(it.id1, it.id2, it.name, it.uid) }
     }
     fun convertRemListToResultEntity(remList:List<MainList>):List<ResultEntity>{
-        return remList.map { ResultEntity(it.id1,it.id2,it.name,it.value,
-            UUID.randomUUID().toString()
+        val uid=UUID.randomUUID().toString()
+        return remList.map { ResultEntity(it.id1,it.id2,it.name,it.value,uid
+
         ) }
 
     }

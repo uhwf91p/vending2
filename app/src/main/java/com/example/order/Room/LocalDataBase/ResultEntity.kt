@@ -1,10 +1,10 @@
-package com.example.order.Room.DatabaseResult
+package com.example.order.Room.LocalDataBase
 
 import androidx.room.Entity
 
 
 
-@Entity(primaryKeys = ["id1","id2","name"],tableName = "ResultEntity")
+@Entity(primaryKeys = ["id1","id2","name","uid"],tableName = "ResultEntity")
 data class ResultEntity(
 
     var id1: String,

@@ -1,4 +1,4 @@
-package com.example.order.Room.DatabaseFrom1C
+package com.example.order.Room.LocalDataBase
 
 import androidx.room.Entity
 

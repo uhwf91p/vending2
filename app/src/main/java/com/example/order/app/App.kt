@@ -5,9 +5,8 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.order.Data.Keys
-import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1C
-import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CDAO
-import com.example.order.Room.DatabaseResult.ResultDAO
+import com.example.order.Room.LocalDataBase.DatabaseFrom1C
+import com.example.order.Room.LocalDataBase.DatabaseFrom1CDAO
 import com.example.order.Room.DatabaseResult.ResultDatabase
 import java.lang.IllegalStateException
 
@@ -21,31 +20,10 @@ class App: Application() {
         private var appInstance: App? = null
         private var dbResult: ResultDatabase? = null
         private var db1C: DatabaseFrom1C? = null
-        private val DB_RESULT_NAME_ = Keys.RESULT_DATABASE_NAME
+
         private val DB1C_NAME = Keys.DATABASE1C_NAME
 
-        fun getResultDAO(): ResultDAO {
-            if (dbResult == null) {
-                synchronized(ResultDatabase::class.java){
-                    if (dbResult==null){
-                       /* if (appInstance == null) {
-                            throw IllegalStateException("Application ids null meanwhile creating database")
 
-                        }*/
-                        dbResult= Room.databaseBuilder(
-                            appInstance!!.applicationContext,
-                            ResultDatabase::class.java, DB_RESULT_NAME_)
-                            .allowMainThreadQueries()
-                            .build()
-
-
-                    }
-                }
-            }
-            return dbResult!!.ResultDatabaseDAO()
-
-
-            }
 
         fun get1CDAO(): DatabaseFrom1CDAO {
             if (db1C == null) {

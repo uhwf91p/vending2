@@ -1,9 +1,9 @@
 package com.example.order.Repository
 
 import com.example.order.Data.MainList
-import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CDAO
-import com.example.order.Room.DatabaseFrom1C.DatabaseFrom1CEntity
-import com.example.order.Room.DatabaseResult.ResultEntity
+import com.example.order.Room.LocalDataBase.DatabaseFrom1CDAO
+import com.example.order.Room.LocalDataBase.DatabaseFrom1CEntity
+import com.example.order.Room.LocalDataBase.ResultEntity
 import com.example.order.ViewModel.Converters
 
 class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : LocalRepository {
@@ -45,7 +45,7 @@ class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : Loca
         }
     }
 
-    private fun insertToDBResult(data:ResultEntity){
+    private fun insertToDBResult(data: ResultEntity){
         localDataSource.insertDataToResult(data)
 
 

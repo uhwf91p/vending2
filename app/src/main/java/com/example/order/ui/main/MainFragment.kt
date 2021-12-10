@@ -97,8 +97,8 @@ class MainFragment : Fragment() {
                     count = KEY_FOR_INFLATE_MAIN_LIST;
                     Keys.LIST_KEY = Keys.DEFAULT_VALUE
                     val manager = activity?.supportFragmentManager
-                    val remList =repositoryResult.rememberMainList(mainList)
-                    localRepository1C.putDataToResultDB(remList)
+                    repositoryResult.rememberMainList(mainList)
+
 
                     makeDetails(manager, mainList)
 
@@ -133,10 +133,11 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-
-
-        /* R.id.send_main_bottom_bar->*/
+        if (item.itemId == R.id.send_main_bottom_bar) {
+            localRepository1C.putDataToResultDB(Keys.MAIN_REMEMEBERED_LIST)
+            toast("данные записаны успешно")
+            viewModel.pullDataToServer(localRepository1C.getAllDataDBResultEntity())
+            viewModel.getData().observe(viewLifecycleOwner, { renderData2(it) })
 
         }
 
@@ -170,6 +171,25 @@ class MainFragment : Fragment() {
             }
             is AppState.Error -> {
 
+
+                toast(data.error.message)
+
+            }
+
+        }
+
+    }
+    private fun renderData2(data: AppState) {
+        when (data) {
+            is AppState.Success -> {
+             toast("Выгрузка прошла успешно")
+
+            }
+            is AppState.Loading -> {
+            }
+            is AppState.Error -> {
+
+
                 toast(data.error.message)
 
             }
@@ -182,9 +202,9 @@ class MainFragment : Fragment() {
         fun onItemViewClick(mainList: MainList)
     }
 
-    private fun Fragment.toast(string: String?) {
+   private fun Fragment.toast(string: String?) {
         Toast.makeText(context, string, Toast.LENGTH_SHORT).apply {
-            setGravity(Gravity.BOTTOM, 0, 250)
+
             show()
         }
     }
