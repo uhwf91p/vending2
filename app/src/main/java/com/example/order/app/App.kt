@@ -16,7 +16,7 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         appInstance = this
-        /*refreshListOfFinishedOrders()*/
+
     }
 
     companion object {
@@ -25,7 +25,7 @@ class App: Application() {
         private var db1C: DatabaseFrom1C? = null
 
         private val DB1C_NAME = Keys.DATABASE1C_NAME
-        var loafingViewModel: LoadingViewModel = LoadingViewModel()
+
 
 
         fun get1CDAO(): DatabaseFrom1CDAO {
@@ -61,33 +61,7 @@ class App: Application() {
 
         }
 
-        val appCoroutineScope = CoroutineScope(
-            Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, throwable ->
-                handleError(
-                    throwable
-                )
-            })
 
-        private fun handleError(error: Throwable) {}
-
-
-
-        private  fun refreshListOfFinishedOrders() {
-            while (true) {
-
-                appCoroutineScope.launch {
-                    loafingViewModel.getFinishedOrdersFromServer()
-                    println("##")
-                    delay(10000)
-
-
-                }
-
-
-            }
-
-
-        }
 
 
 

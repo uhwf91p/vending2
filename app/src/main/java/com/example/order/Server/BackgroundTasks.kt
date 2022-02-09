@@ -11,10 +11,12 @@ import kotlin.concurrent.schedule
 
 class BackgroundTasks {
 
+
     val viewModelCoroutineScope = CoroutineScope(
         Dispatchers.Default+ SupervisorJob()+ CoroutineExceptionHandler { _, throwable -> handleError(throwable)  })
 
     private fun handleError(error: Throwable){}
+
 
 
 

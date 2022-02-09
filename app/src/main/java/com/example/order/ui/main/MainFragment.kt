@@ -139,6 +139,7 @@ class MainFragment : Fragment() {
 
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.send_main_bottom_bar) {
             val dateFromCalendar= MainList("date","date",dateOfOrder,"1")// убрать хардкод из этой строки

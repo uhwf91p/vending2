@@ -23,11 +23,15 @@ class LoadingFragment:Fragment() {
     private val viewModel:LoadingViewModel by lazy { ViewModelProvider(this).get(LoadingViewModel::class.java) }
     private val localRepository1C: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+
+
         _binding= LoadingFragmentBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -39,6 +43,7 @@ class LoadingFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /*viewModel.refreshListOfFinishedOrders()*/
         binding.loadinglayout.show()
         viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getDataFromServer()
