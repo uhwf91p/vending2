@@ -8,12 +8,15 @@ import com.example.order.Data.Keys
 import com.example.order.Room.LocalDataBase.DatabaseFrom1C
 import com.example.order.Room.LocalDataBase.DatabaseFrom1CDAO
 import com.example.order.Room.DatabaseResult.ResultDatabase
+import com.example.order.ViewModel.LoadingViewModel
+import kotlinx.coroutines.*
 import java.lang.IllegalStateException
 
 class App: Application() {
     override fun onCreate() {
         super.onCreate()
         appInstance = this
+        /*refreshListOfFinishedOrders()*/
     }
 
     companion object {
@@ -22,13 +25,13 @@ class App: Application() {
         private var db1C: DatabaseFrom1C? = null
 
         private val DB1C_NAME = Keys.DATABASE1C_NAME
-
+        var loafingViewModel: LoadingViewModel = LoadingViewModel()
 
 
         fun get1CDAO(): DatabaseFrom1CDAO {
             if (db1C == null) {
-                synchronized(DatabaseFrom1C::class.java){
-                    if (db1C==null){
+                synchronized(DatabaseFrom1C::class.java) {
+                    if (db1C == null) {
                         if (appInstance == null) {
                             throw IllegalStateException("Application ids null meanwhile creating database")
 
@@ -41,9 +44,10 @@ class App: Application() {
                             }
                         }
 
-                        db1C= Room.databaseBuilder(
+                        db1C = Room.databaseBuilder(
                             appInstance!!.applicationContext,
-                            DatabaseFrom1C::class.java, DB1C_NAME)
+                            DatabaseFrom1C::class.java, DB1C_NAME
+                        )
                             .allowMainThreadQueries()
                             /*.addMigrations(MIGRATION_1_2)*/
                             .build()
@@ -57,12 +61,38 @@ class App: Application() {
 
         }
 
+        val appCoroutineScope = CoroutineScope(
+            Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, throwable ->
+                handleError(
+                    throwable
+                )
+            })
+
+        private fun handleError(error: Throwable) {}
+
+
+
+        private  fun refreshListOfFinishedOrders() {
+            while (true) {
+
+                appCoroutineScope.launch {
+                    loafingViewModel.getFinishedOrdersFromServer()
+                    println("##")
+                    delay(10000)
+
+
+                }
+
+
+            }
+
+
+        }
+
 
 
     }
-
-}
-/*  public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+}/*  public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
     @Override
     public void migrate(SupportSQLiteDatabase database) {
         database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, "

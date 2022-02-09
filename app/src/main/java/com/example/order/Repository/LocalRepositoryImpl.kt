@@ -33,7 +33,7 @@ class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : Loca
     }
 
     override fun getAllDataDBResultEntity(): List<MainList> {
-        return converter.convertEntityResultToMainList(localDataSource.allResult())
+        return converter.convertEntityResultToMainList(localDataSource.getAllUnfinishedResult())
     }
 
     override fun putDataToResultDB(resultMainList: List<MainList>) {

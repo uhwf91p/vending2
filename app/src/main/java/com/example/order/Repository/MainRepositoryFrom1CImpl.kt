@@ -8,25 +8,63 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
+    private val repository: RepositoryGetMainList = RepositoryGetMainListImpl()
 
     private val dataBase1CViewModel: Database1CViewModel = Database1CViewModel()
     private val amountOfWorkList=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORK_LIST,Keys.STEP_FOR_WORK_LIST,"Фактически отработано в натуре")
     private val hoursWorked=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORKED_HOURS,Keys.STEP_FOR_WORKED_HOURS,"Отработано часов")
     // саделать маски для имен в главном списке
     override suspend fun getListForChoice(): List<MainList> {
-        var dataFrom1C: List<MainList>
+        val dataFrom1C: List<MainList>
+        var testListBrigadir:MutableList<MainList> = mutableListOf()
+        var testListTrakctorDriver:List<MainList> = listOf()
+
         if (Keys.LIST_KEY != "0") {
             dataFrom1C = Keys.START_LIST
+
+
 
         }
         else {
 
             dataFrom1C = dataBase1CViewModel.getAllDataFromDB1C()
+
+
+
             Keys.START_LIST=dataFrom1C
+
+
         }
 
-        val startList=makeStartList(dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir)+dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir
+
+        /*testListBrigadir=makeListFromDB("ФизическиеЛица",dataFrom1C)
+              testListTrakctorDriver=makeListFromDB("ФизическиеЛица",dataFrom1C)*/
+
+        val startList=makeStartList(dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir+testListTrakctorDriver)+dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir+testListTrakctorDriver
     return /*setDefaultValues(startList)*/startList
+    }
+    private fun makeListFromDB(key: String, list:List<MainList>): List<MainList> {
+
+
+
+        val tempList: MutableList<MainList> = mutableListOf()
+        for (mainList in list) {
+            if (mainList.id1 == key) {
+                tempList.add(mainList)
+            }
+        }
+        for (mainList in tempList) {
+             mainList.value = mainList.name
+
+                }
+
+
+
+
+
+        return tempList.distinctBy { it.name to it.id1 to it.id2 }
+
+
     }
 
     private fun makeStartList(mainList: List<MainList>): List<MainList> {
@@ -39,7 +77,7 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
         return convertList
     }
 
-    private fun changeValues (id1:String, id2:String, name: String, value:String):MainList{
+    fun changeValues (id1:String, id2:String, name: String, value:String):MainList{
         val objectForChange = MainList(id1,id2,name,value)
 
         objectForChange.name=objectForChange.id1
@@ -85,9 +123,8 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
 
 
 
-val testListBrigadir= listOf(
-MainList("Бригадир", "Иванов", "Иванов", "0"),
-    MainList("Бригадир", "Петров", "Петров", "0"))
+
+
 
 
 

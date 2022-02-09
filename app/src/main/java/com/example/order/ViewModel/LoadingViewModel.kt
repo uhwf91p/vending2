@@ -60,6 +60,46 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
 
     }
 
+    suspend fun getFinishedOrdersFromServer()  {
+        liveDataToObserve.value = AppState.Loading(null)
+        val apiKey: String = BuildConfig.APIKEY_FROM_1C
+        if (apiKey.isBlank()) {
+            AppState.Error(Throwable("You need API key"))
+        } else {
+            retrofit1C.getRetrofit().getListOfFinishedOrders().enqueue(object :
+                Callback<List<ServerResponseData>> {
+                override fun onResponse(
+                    call: Call<List<ServerResponseData>>,
+                    response: Response<List<ServerResponseData>>
+                ) {
+                    if (response.isSuccessful && response.body() != null) {
+                        liveDataToObserve.value =
+                            AppState.Success(
+                                converters.converterFromResponseServerToMainList(
+                                    response.body()!!
+                                )
+                            )
+                    } else {
+                        val message = response.message()
+                        if (message.isNullOrEmpty()) {
+                            liveDataToObserve.value =
+                                AppState.Error(Throwable("Unidentified error"))
+                        } else {
+                            liveDataToObserve.value =
+                                AppState.Error(Throwable(message))
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<List<ServerResponseData>>, t: Throwable) {
+                    liveDataToObserve.value = AppState.Error(t)
+                }
+            })
+        }
+
+    }
+
+
+
 
 
 }

@@ -43,6 +43,7 @@ class LoadingFragment:Fragment() {
         viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getDataFromServer()
 
+
     }
 
 

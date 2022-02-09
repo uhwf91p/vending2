@@ -43,6 +43,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
+    var dateOfOrder=""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,6 +63,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
+
         val textView     = binding.inputEditTextDate
 
         val c = Calendar.getInstance()
@@ -73,12 +75,17 @@ class MainFragment : Fragment() {
 
             val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
                 val month=month+1
+                dateOfOrder="${addZeroToMonthAndDay(dayOfMonth)}.${addZeroToMonthAndDay(month)}.$year"
 
-                textView.setText("${addZeroToMonthAndDay(dayOfMonth)}.${addZeroToMonthAndDay(month)}.$year")
+                textView.setText(dateOfOrder)
             }, year, month, day)
             dpd.show()
 
+
+
+
         }
+
 
         setBottomSheetBehavor(view.findViewById(R.id.bottom_sheet_container))
         setBottomAppBar(view)
@@ -134,8 +141,13 @@ class MainFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.send_main_bottom_bar) {
+            val dateFromCalendar= MainList("date","date",dateOfOrder,"1")// убрать хардкод из этой строки
+
+            repositoryResult.rememberMainList(dateFromCalendar)
             localRepository1C.putDataToResultDB(Keys.MAIN_REMEMEBERED_LIST)
+
             toast("данные записаны успешно")
+            /*viewModel.getFinishedOrdersFromServer()*/
             viewModel.pullDataToServer(localRepository1C.getAllDataDBResultEntity())
             viewModel.getData().observe(viewLifecycleOwner, { renderData2(it) })
 

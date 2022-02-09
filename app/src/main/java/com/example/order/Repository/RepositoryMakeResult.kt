@@ -6,4 +6,5 @@ interface RepositoryMakeResult {
     fun rememberMainList(mainList: MainList):MutableList<MainList>
 
 
+
 }
