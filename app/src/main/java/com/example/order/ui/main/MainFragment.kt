@@ -3,6 +3,8 @@ package com.example.order.ui.main
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,16 +14,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.AppState
+import com.example.order.Data.Item
 import com.example.order.Data.Keys
 import com.example.order.Data.Keys.KEY_FOR_INFLATE_MAIN_LIST
 import com.example.order.Data.Keys.count
 import com.example.order.Data.MainList
 import com.example.order.MainActivity
 import com.example.order.R
-import com.example.order.Repository.LocalRepository
-import com.example.order.Repository.LocalRepositoryImpl
-import com.example.order.Repository.RepositoryMakeResult
-import com.example.order.Repository.RepositoryMakeResultImpl
+import com.example.order.Repository.*
 import com.example.order.ViewModel.MainViewModel
 import com.example.order.app.App
 import com.example.order.databinding.MainFragmentBinding
@@ -29,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainFragment : Fragment() {
@@ -40,6 +41,7 @@ class MainFragment : Fragment() {
     private val binding
         get() = _binding!!
     private val adapter = MainFragmentAdapter()
+   /* private val itemStorage=ItemStorage()*/
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
@@ -100,6 +102,7 @@ class MainFragment : Fragment() {
                     makeDetails(manager, mainList)
                 } else {
                     binding.inputEditTextDate.show()
+
 
                     count = KEY_FOR_INFLATE_MAIN_LIST;
                     Keys.LIST_KEY = Keys.DEFAULT_VALUE
@@ -179,6 +182,37 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                adapter.setMainList(data.mainList)
 
+
+                ItemStorage.list=data.mainList as ArrayList<Item>
+
+                var etSearchBar=binding.inputEditText
+                etSearchBar.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {}
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        /*     fun updateSearch() {
+                            val s = etSearchBar.text
+
+                            if (s?.length == 0) {
+                                // Пользователь очистил поле поиска. Показываем все предметы
+                                // Загружаем в адаптер лист со всеми предметами
+                                //adapter.list = ItemStorage.list
+
+                            } else {
+                                // Пользователь что-то ввёл. Делаем поиск по этому запросу
+                                // Загружаем в адаптер отфильтрованный лист
+                                //adapter.list = ItemStorage.list.filter {
+                                    *//*it.abbr.startsWith(s.toString(), true) ||*//* *//*it.name.contains(s.toString(), true)*//*
+                                } as ArrayList
+                            }*/
+                    }
+                            adapter.notifyDataSetChanged()
+
+                        updateSearch()
+                    }
+                })
+
             }
             is AppState.Loading -> {
             }
@@ -255,7 +289,8 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance()= MainFragment()
         }
-    }
+ }
+
 
 
 
