@@ -1,11 +1,13 @@
 package com.example.order.ViewModel
 
 import androidx.lifecycle.ViewModel
+import com.example.order.Data.Item
 import com.example.order.Data.MainList
 import com.example.order.Room.LocalDataBase.DatabaseFrom1CEntity
 import com.example.order.Room.LocalDataBase.ResultEntity
 import com.example.order.Server.ServerResponseData
 import java.util.*
+import kotlin.collections.ArrayList
 
 open class Converters : ViewModel() {
     fun converterFromResponseServerToMainList(serverResponse: List<ServerResponseData?>): List<MainList> {
@@ -52,6 +54,29 @@ open class Converters : ViewModel() {
         ) }
 
     }
+    fun convertMainlistToItemStorage(mainList:List<MainList>):ArrayList<Item>{
+        val arrListOfItemStorage= ArrayList<Item>()
+        for (mainList in mainList) {
+            arrListOfItemStorage.add(Item(mainList.name))
+
+
+        }
+        return arrListOfItemStorage
+
+
+    }
+
+
+    fun convertItemStorageToMainList(arrayList:ArrayList<Item>):List<MainList>{
+        val mainList= mutableListOf<MainList>()
+        for (item in arrayList) {
+            mainList.add(MainList("","",item.name.toString(),""))
+
+
+        }
+        return mainList
+
+        }
 
 
 }

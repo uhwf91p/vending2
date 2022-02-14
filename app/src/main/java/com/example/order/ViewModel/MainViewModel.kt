@@ -1,21 +1,17 @@
 package com.example.order.ViewModel
 
-import android.content.Context
-import android.view.Gravity
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.order.AppState
 import com.example.order.BuildConfig
+import com.example.order.Data.Item
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
 import com.example.order.Repository.RepositoryGetMainList
 import com.example.order.Repository.RepositoryGetMainListImpl
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
-import com.example.order.ui.main.MainFragment
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,6 +19,7 @@ import retrofit2.Response
 
 class MainViewModel(
     private val repository: RepositoryGetMainList = RepositoryGetMainListImpl(),
+
 
 
 ) : ViewModel() {
@@ -45,6 +42,14 @@ class MainViewModel(
         viewModelCoroutineScope.launch {   liveDataToObserve.postValue(AppState.Success(repository.getMainList(Keys.LIST_KEY))) }
 
 
+
+    }
+    fun convertMainListToArrayListItem(mainList: List<MainList>): ArrayList<Item> {
+        return converters.convertMainlistToItemStorage(mainList)
+
+    }
+    fun convertArrayListItemToMainList(itemList: ArrayList<Item>): List<MainList> {
+        return converters.convertItemStorageToMainList(itemList)
 
     }
 
