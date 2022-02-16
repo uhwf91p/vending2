@@ -13,7 +13,7 @@ import java.io.IOException
 import kotlin.jvm.Throws
 
 class Retrofit1C {
-    private val baseUrl="http://192.168.8.8/YUB_AF_PL/hs/"
+    private val baseUrl="http://192.168.8.8/Dev_OOO_KA_PL/hs/adMobileExchange/"
     fun getRetrofit(): API {
         val retrofit1C =Retrofit.Builder()
             .baseUrl((baseUrl))

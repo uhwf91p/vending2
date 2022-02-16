@@ -57,7 +57,7 @@ open class Converters : ViewModel() {
     fun convertMainlistToItemStorage(mainList:List<MainList>):ArrayList<Item>{
         val arrListOfItemStorage= ArrayList<Item>()
         for (mainList in mainList) {
-            arrListOfItemStorage.add(Item(mainList.name))
+            arrListOfItemStorage.add(Item(mainList.id1,mainList.id2,mainList.name,mainList.value))
 
 
         }
@@ -70,7 +70,7 @@ open class Converters : ViewModel() {
     fun convertItemStorageToMainList(arrayList:ArrayList<Item>):List<MainList>{
         val mainList= mutableListOf<MainList>()
         for (item in arrayList) {
-            mainList.add(MainList("","",item.name.toString(),""))
+            mainList.add(MainList(item.id1.toString(),item.id2.toString(),item.name.toString(),item.value.toString()))
 
 
         }

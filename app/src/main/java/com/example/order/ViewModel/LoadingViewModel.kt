@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.order.AppState
 import com.example.order.BuildConfig
 import com.example.order.Data.MainList
+import com.example.order.Repository.MainRepisitoryFrom1C
+import com.example.order.Repository.MainRepositoryFrom1CImpl
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
 import com.example.order.app.App
@@ -18,6 +20,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
                        private val retrofit1C: Retrofit1C = Retrofit1C(),
                        private val converters: Converters = Converters()
 ):ViewModel() {
+    val mainRepository: MainRepisitoryFrom1C = MainRepositoryFrom1CImpl()
 
     fun getDataFromServerForDB(): LiveData<AppState> {
 
@@ -59,6 +62,11 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
                 }
             })
         }
+
+    }
+
+    fun getGlobalLIst(){
+        mainRepository.getListForChoice()
 
     }
 

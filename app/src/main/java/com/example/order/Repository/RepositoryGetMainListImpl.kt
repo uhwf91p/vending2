@@ -15,7 +15,7 @@ class RepositoryGetMainListImpl:RepositoryGetMainList {
         val mainRepository:MainRepisitoryFrom1C=MainRepositoryFrom1CImpl()
 
     val rememberedList:MutableList<MainList> = Keys.MAIN_REMEMEBERED_LIST
-      val listFrom1C=mainRepository.getListForChoice()
+        val listFrom1C=Keys.GLOBAL_LIST
         val tempList:MutableList<MainList> = mutableListOf()
         for (mainList in listFrom1C) {
             if (mainList.id1 == key) {
@@ -32,8 +32,8 @@ class RepositoryGetMainListImpl:RepositoryGetMainList {
                     }
 
                 }
-
-        return tempList.distinctBy { it.name to it.id1 to it.id2 }
+        Keys.LIST_FOR_FIRST_SCREEN=tempList.distinctBy { it.name to it.id1 to it.id2 }
+        return  Keys.LIST_FOR_FIRST_SCREEN
 
 
                 }

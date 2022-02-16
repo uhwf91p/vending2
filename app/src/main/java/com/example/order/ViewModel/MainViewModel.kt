@@ -12,12 +12,13 @@ import com.example.order.Repository.RepositoryGetMainList
 import com.example.order.Repository.RepositoryGetMainListImpl
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel(
+open class MainViewModel(
     private val repository: RepositoryGetMainList = RepositoryGetMainListImpl(),
 
 
@@ -26,6 +27,7 @@ class MainViewModel(
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val converters: Converters = Converters()
+
     protected val viewModelCoroutineScope = CoroutineScope(
         Dispatchers.Default+ SupervisorJob()+ CoroutineExceptionHandler { _, throwable -> handleError(throwable)  })
 
@@ -37,6 +39,30 @@ class MainViewModel(
     }
 
     fun getMainListViewModel() = requestData()
+    fun checkCompleteness(referenceList:List<MainList>, listForCheck:List<MainList>):String{
+        var differents:MutableList<MainList> = mutableListOf()
+
+        for (refValue in referenceList) {
+            for (checkedValue in listForCheck) {
+                var count=0
+                if (refValue.id2==checkedValue.id2) {
+                    count += 1
+
+                }
+                if (count<1){
+                    differents.add(refValue)
+                }
+
+            }
+
+        }
+        return if (differents.isEmpty()){
+            "Данные наряда заполнены не полностью"
+        } else "Данные в наряде заполнены корректно"
+
+
+    }
+
 
     private fun requestData() {
         viewModelCoroutineScope.launch {   liveDataToObserve.postValue(AppState.Success(repository.getMainList(Keys.LIST_KEY))) }

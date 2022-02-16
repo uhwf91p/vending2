@@ -14,39 +14,32 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
     private val amountOfWorkList=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORK_LIST,Keys.STEP_FOR_WORK_LIST,"Фактически отработано в натуре")
     private val hoursWorked=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORKED_HOURS,Keys.STEP_FOR_WORKED_HOURS,"Отработано часов")
     // саделать маски для имен в главном списке
-    override suspend fun getListForChoice(): List<MainList> {
+    override fun getListForChoice(): List<MainList> {
         val dataFrom1C: List<MainList>
         var testListBrigadir:MutableList<MainList> = mutableListOf()
         var testListTrakctorDriver:List<MainList> = listOf()
 
         if (Keys.LIST_KEY != "0") {
-            dataFrom1C = Keys.START_LIST
-
-
+            dataFrom1C = Keys.LIST_FROM_DB
 
         }
         else {
 
             dataFrom1C = dataBase1CViewModel.getAllDataFromDB1C()
-
-
-
-            Keys.START_LIST=dataFrom1C
-
+            Keys.LIST_FROM_DB=dataFrom1C
 
         }
-
 
         /*testListBrigadir=makeListFromDB("ФизическиеЛица",dataFrom1C)
               testListTrakctorDriver=makeListFromDB("ФизическиеЛица",dataFrom1C)*/
 
-        val startList=makeStartList(dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir+testListTrakctorDriver)+dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir+testListTrakctorDriver
-    return /*setDefaultValues(startList)*/startList
+        val startList=makeStartList(dataFrom1C+amountOfWorkList+hoursWorked+
+                testListBrigadir+testListTrakctorDriver)+dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir+testListTrakctorDriver
+        Keys.GLOBAL_LIST=startList
+
+        return /*setDefaultValues(startList)*/startList
     }
     private fun makeListFromDB(key: String, list:List<MainList>): List<MainList> {
-
-
-
         val tempList: MutableList<MainList> = mutableListOf()
         for (mainList in list) {
             if (mainList.id1 == key) {

@@ -8,7 +8,7 @@ import retrofit2.http.*
 
 interface API {
 
-    @GET("adMobileExchange")
+    @GET("GetData/")
     fun getDataFrom1C(
 
 

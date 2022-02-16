@@ -6,13 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment"
-
     >
-
-    <!--<androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
-
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,46 +20,34 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="найти"
-
+            android:hint="@string/hint_search_main_fragment"
             app:endIconCheckable="true"
-            app:endIconDrawable="@drawable/ic_launcher_foreground"
             app:endIconMode="custom"
-
             app:layout_constraintBottom_toTopOf="@id/input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-
                 android:id="@+id/input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:inputType="text" />
-
-
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_date_layout"
-
-
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_layout"
-
-
-            android:hint="Дата"
+            android:hint="@string/date_of_order"
             app:endIconCheckable="true"
             app:endIconDrawable="@drawable/ic_baseline_date_range_24"
             app:endIconMode="custom"
-
-
             >
+
             <com.google.android.material.textfield.TextInputEditText
                 android:clickable="false"
                 android:longClickable="false"
@@ -79,13 +61,7 @@
 
             </com.google.android.material.textfield.TextInputEditText>
 
-
-
-
-
-
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <androidx.recyclerview.widget.RecyclerView
 
@@ -101,7 +77,7 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--</androidx.core.widget.NestedScrollView>-->
+
     <include layout="@layout/bottom_sheet_layout"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -112,10 +88,7 @@
         android:backgroundTint="@color/color_primary"
         app:hideOnScroll="true"
         app:layout_scrollFlags="scroll|enterAlways"
-
         >
 
-
     </com.google.android.material.bottomappbar.BottomAppBar>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

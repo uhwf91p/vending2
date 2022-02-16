@@ -4,7 +4,10 @@ import android.text.Spannable
 import android.text.SpannableString
 
 data class Item (
-   /* val abbr: Spannable,*/
-    val name: Spannable) {
-    constructor(/*abbr: String,*/ name: String) : this(/*SpannableString(abbr),*/ SpannableString(name))
+   val id1:Spannable,
+   val id2:Spannable,
+   val name: Spannable,
+   val value:Spannable
+) {
+    constructor(id1:String, id2:String, name: String,value:String) : this(SpannableString(id1), SpannableString(id2), SpannableString(name),SpannableString(value))
 }

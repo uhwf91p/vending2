@@ -47,6 +47,7 @@ class LoadingFragment:Fragment() {
         binding.loadinglayout.show()
         viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getDataFromServer()
+        viewModel.getGlobalLIst()
 
 
     }
@@ -82,6 +83,7 @@ class LoadingFragment:Fragment() {
             }
         }
     }
+
     private fun goToMainList(
         manager: FragmentManager?,
 
