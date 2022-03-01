@@ -32,6 +32,7 @@ import java.util.*
 
 class MainFragment : Fragment() {
 
+
     var repositoryResult: RepositoryMakeResult = RepositoryMakeResultImpl()
     private val localRepository1C: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
@@ -137,17 +138,39 @@ class MainFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.send_main_bottom_bar) {
-            val dateFromCalendar= MainList("date","date",Keys.DATE_OF_ORDER,"1")// убрать хардкод из этой строки
-            repositoryResult.rememberMainList(dateFromCalendar)
-            if (viewModel.checkCompleteness(Keys.LIST_FOR_FIRST_SCREEN,Keys.MAIN_REMEMEBERED_LIST)=="Данные наряда заполнены не полностью"){
+           // var dateFromCalendar= Keys.DEFAULT_MAINlIST
+            if (Keys.DATE_OF_ORDER!= "") {
+               val dateFromCalendar= MainList("date","date",Keys.DATE_OF_ORDER,Keys.DEFAULT_VALUE) // убрать хардкод из этой строки
+                repositoryResult.rememberMainList(dateFromCalendar)
+            }
+
+
+            if (viewModel.checkCompleteness(Keys.LIST_FOR_FIRST_SCREEN,Keys.MAIN_REMEMEBERED_LIST,Keys.DATE_OF_ORDER)=="Данные наряда заполнены не полностью"){
                 toast("Данные наряда заполнены не полностью")
             }
             else {
                 localRepository1C.putDataToResultDB(Keys.MAIN_REMEMEBERED_LIST)
                 toast("данные записаны успешно")
-                /*viewModel.getFinishedOrdersFromServer()*/
+              /*  viewModel.getFinishedOrdersFromServer()*/
                 viewModel.pullDataToServer(localRepository1C.getAllDataDBResultEntity())
                 viewModel.getData().observe(viewLifecycleOwner, { isDataUploadedToServer(it) })
+             /* Keys.GLOBAL_LIST=Keys.DEFAULT_lIST*/
+                Keys.LIST_FOR_FIRST_SCREEN = mutableListOf()
+                Keys.MAIN_REMEMEBERED_LIST= mutableListOf()
+                Keys.DATE_OF_ORDER= ""
+                Keys.LIST_KEY=Keys.DEFAULT_VALUE
+                goToLoadingFragment(activity?.supportFragmentManager)
+
+
+
+
+
+
+
+
+
+
+
             }
         }
 
@@ -249,6 +272,13 @@ class MainFragment : Fragment() {
             binding.inputLayout.isGone=true
             binding.bottomBarMain.isGone=false
         }
+    }
+    private fun goToLoadingFragment(
+        manager: FragmentManager?,
+
+        ) {
+        manager?.beginTransaction()?.replace(R.id.container, LoadingFragment.newInstance())
+            ?.addToBackStack("")?.commitAllowingStateLoss()
     }
 
 

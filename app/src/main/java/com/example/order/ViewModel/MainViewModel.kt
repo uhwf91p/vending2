@@ -39,7 +39,7 @@ open class MainViewModel(
     }
 
     fun getMainListViewModel() = requestData()
-    fun checkCompleteness(referenceList:List<MainList>, listForCheck:List<MainList>):String{
+    fun checkCompleteness(referenceList:List<MainList>, listForCheck:List<MainList>,dateOfOrder:String):String{
         var differents:MutableList<MainList> = mutableListOf()
 
         for (refValue in referenceList) {
@@ -56,7 +56,7 @@ open class MainViewModel(
             }
 
         }
-        return if (differents.isEmpty()){
+        return if (differents.isEmpty()||listForCheck.isEmpty()||dateOfOrder==""){
             "Данные наряда заполнены не полностью"
         } else "Данные в наряде заполнены корректно"
 
@@ -114,6 +114,10 @@ open class MainViewModel(
 
     }
 
+
+companion object{
+    fun newInstance()=MainViewModel()
+}
 
 
 

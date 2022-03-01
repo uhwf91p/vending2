@@ -21,6 +21,7 @@ object Keys {
     const val STEP_FOR_WORKED_HOURS=1.0
     const val NUMBERS_OF_VALUES_FOR_WORKED_HOURS=50
     val DEFAULT_lIST= listOf(MainList("","","",""))
+    val DEFAULT_MAINlIST=MainList("","","","")
     var DATE_OF_ORDER=""
     var GLOBAL_LIST= DEFAULT_lIST
     var LIST_FOR_FIRST_SCREEN:List<MainList> = mutableListOf()

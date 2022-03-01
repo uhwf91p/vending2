@@ -8,7 +8,7 @@ import retrofit2.http.*
 
 interface API {
 
-    @GET("GetData/")
+    @GET("GET")
     fun getDataFrom1C(
 
 
@@ -23,7 +23,7 @@ interface API {
        /* @Query(Keys.DEFAULT_lIST)hard:List<MainList>*/
     ): Call<List<ServerResponseData>>
 
-    @POST("adMobileExchange")
+    @POST("SET")
     fun pullDataTo1C(@Body result:List<MainList>):Call<List<ServerResponseData>>
 
     @GET("SomePlaceOnServer")//запрос списка завершенные нарядов - формируется на сервере путем сравнения проведенных нарядов в 1 с и высланных по методу pullDataTo1C нарядов

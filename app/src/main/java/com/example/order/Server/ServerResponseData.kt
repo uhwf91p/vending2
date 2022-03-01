@@ -7,7 +7,7 @@ data class ServerResponseData(
 
 
     @SerializedName("ВидОбъекта") var id1: String?,
-    @SerializedName("КОД") var id2: String?,
+    @SerializedName("Код") var id2: String?,
     @SerializedName("Наименование") val name: String?
 
 
