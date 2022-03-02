@@ -159,7 +159,7 @@ class MainFragment : Fragment() {
                 Keys.MAIN_REMEMEBERED_LIST= mutableListOf()
                 Keys.DATE_OF_ORDER= ""
                 Keys.LIST_KEY=Keys.DEFAULT_VALUE
-                goToLoadingFragment(activity?.supportFragmentManager)
+                goToSaveFragment(activity?.supportFragmentManager)
 
 
 
@@ -273,11 +273,11 @@ class MainFragment : Fragment() {
             binding.bottomBarMain.isGone=false
         }
     }
-    private fun goToLoadingFragment(
+    private fun goToSaveFragment(
         manager: FragmentManager?,
 
         ) {
-        manager?.beginTransaction()?.replace(R.id.container, LoadingFragment.newInstance())
+        manager?.beginTransaction()?.replace(R.id.container, SaveFragment.newInstance())
             ?.addToBackStack("")?.commitAllowingStateLoss()
     }
 
