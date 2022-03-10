@@ -13,11 +13,27 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
     private val dataBase1CViewModel: Database1CViewModel = Database1CViewModel()
     private val amountOfWorkList=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORK_LIST,Keys.STEP_FOR_WORK_LIST,"Фактически отработано в натуре")
     private val hoursWorked=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORKED_HOURS,Keys.STEP_FOR_WORKED_HOURS,"Отработано часов")
+
     // саделать маски для имен в главном списке
     override fun getListForChoice(): List<MainList> {
         val dataFrom1C: List<MainList>
-        var testListBrigadir:MutableList<MainList> = mutableListOf()
-        var testListTrakctorDriver:List<MainList> = listOf()
+
+        val quality:MutableList<MainList> = mutableListOf(
+            MainList("ДоплатаЗаКачество","Доплата за качество 0%","0","0"),
+            MainList("ДоплатаЗаКачество","Доплата за качество 20%","20","0")
+        )
+        val difficult:MutableList<MainList> = mutableListOf(
+            MainList("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество0%","0","0"),
+            MainList("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество12%","12","0")
+        )
+        val refill:MutableList<MainList> = mutableListOf(
+            MainList("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку0%","0","0"),
+            MainList("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку20%","20","0")
+        )
+        val weekends:MutableList<MainList> = mutableListOf(
+            MainList("ДоплатаЗаВыходные","ДоплатаЗаВыходные0%","0","0"),
+            MainList("ДоплатаЗаВыходные","ДоплатаЗаВыходные100%","100","0")
+        )
 
         if (Keys.LIST_KEY != "0") {
             dataFrom1C = Keys.LIST_FROM_DB
@@ -29,12 +45,12 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
             Keys.LIST_FROM_DB=dataFrom1C
 
         }
-
-        /*testListBrigadir=makeListFromDB("ФизическиеЛица",dataFrom1C)
+/*
+        testListBrigadir=makeListFromDB("ФизическиеЛица",dataFrom1C)
               testListTrakctorDriver=makeListFromDB("ФизическиеЛица",dataFrom1C)*/
 
         val startList=makeStartList(dataFrom1C+amountOfWorkList+hoursWorked+
-                testListBrigadir+testListTrakctorDriver)+dataFrom1C+amountOfWorkList+hoursWorked+ testListBrigadir+testListTrakctorDriver
+                quality+difficult+refill+weekends)+dataFrom1C+amountOfWorkList+hoursWorked+ quality+difficult+refill+weekends
         Keys.GLOBAL_LIST=startList
 
         return /*setDefaultValues(startList)*/startList
