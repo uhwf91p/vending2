@@ -46,10 +46,12 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         @SuppressLint("SetTextI18n")
         fun bind(mainList: MainList) {
             val textForItem:String = if (Keys.LIST_KEY == "0") {
+
                 mainList.name+": "+mainList.value
             } else{
                 mainList.name
             }
+
 
             binding.apply {
 

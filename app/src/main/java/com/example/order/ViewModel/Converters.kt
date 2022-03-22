@@ -2,6 +2,7 @@ package com.example.order.ViewModel
 
 import androidx.lifecycle.ViewModel
 import com.example.order.Data.Item
+import com.example.order.Data.Keys
 import com.example.order.Data.MainList
 import com.example.order.Room.LocalDataBase.DatabaseFrom1CEntity
 import com.example.order.Room.LocalDataBase.ResultEntity
@@ -24,7 +25,7 @@ open class Converters : ViewModel() {
 
     }
     private fun convertmakeMainListFromStrings (id1:String?, id2:String?, name:String?):MainList{
-        return MainList(id1!!,id2!!,name!!,"0")
+        return MainList(id1!!,id2!!,name!!,Keys.DEFAULD_VALUE_FOR_GENERATED_LIST)
 
     }
     fun convertMainListToEntityDB1C(id1:String, id2:String, name: String, value:String): DatabaseFrom1CEntity {

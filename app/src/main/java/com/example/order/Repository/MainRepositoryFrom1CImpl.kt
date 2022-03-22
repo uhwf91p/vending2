@@ -19,20 +19,20 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
         val dataFrom1C: List<MainList>
 
         val quality:MutableList<MainList> = mutableListOf(
-            MainList("ДоплатаЗаКачество","Доплата за качество 0%","0","0"),
-            MainList("ДоплатаЗаКачество","Доплата за качество 20%","20","0")
+            MainList("ДоплатаЗаКачество","Доплата за качество 0%","0",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST),
+            MainList("ДоплатаЗаКачество","Доплата за качество 20%","20",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST)
         )
         val difficult:MutableList<MainList> = mutableListOf(
-            MainList("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество0%","0","0"),
-            MainList("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество12%","12","0")
+            MainList("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество0%","0",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST),
+            MainList("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество12%","12",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST)
         )
         val refill:MutableList<MainList> = mutableListOf(
-            MainList("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку0%","0","0"),
-            MainList("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку20%","20","0")
+            MainList("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку0%","0",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST),
+            MainList("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку20%","20",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST)
         )
         val weekends:MutableList<MainList> = mutableListOf(
-            MainList("ДоплатаЗаВыходные","ДоплатаЗаВыходные0%","0","0"),
-            MainList("ДоплатаЗаВыходные","ДоплатаЗаВыходные100%","100","0")
+            MainList("ДоплатаЗаВыходные","ДоплатаЗаВыходные0%","0",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST),
+            MainList("ДоплатаЗаВыходные","ДоплатаЗаВыходные100%","100",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST)
         )
 
         if (Keys.LIST_KEY != "0") {
@@ -96,13 +96,13 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
     }
     private fun makeListOfWork(numberOfValues:Int, step:Double, nameOfField:String):MutableList<MainList>{
         val workList: MutableList<MainList> = mutableListOf()
-        var valueForWork=0.0
+        var valueForWork=0.000
         for (i in 1..numberOfValues){
             valueForWork += step
-            val roundedNumber = DecimalFormat("#.#")
+            val roundedNumber = DecimalFormat("#.###")
             roundedNumber.roundingMode = RoundingMode.CEILING
 
-            workList.add(MainList(nameOfField,roundedNumber.format(valueForWork).toString(),roundedNumber.format(valueForWork).toString(),"0"))
+            workList.add(MainList(nameOfField,roundedNumber.format(valueForWork).toString(),roundedNumber.format(valueForWork).toString(),Keys.DEFAULD_VALUE_FOR_GENERATED_LIST))
         }
         return workList
 
