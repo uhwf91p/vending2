@@ -73,7 +73,7 @@ class MainFragment : Fragment() {
         input_date_layout.setEndIconOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { _, year, _, dayOfMonth ->
                 val month=month+1
-                Keys.DATE_OF_ORDER="${addZeroToMonthAndDay(dayOfMonth)}.${addZeroToMonthAndDay(month)}.$year"
+                Keys.DATE_OF_ORDER="$year.${addZeroToMonthAndDay(month)}.${addZeroToMonthAndDay(dayOfMonth)}"
                 /*viewModel.setDate("${addZeroToMonthAndDay(dayOfMonth)}.${addZeroToMonthAndDay(month)}.$year",textView)*/
                 textView.setText(Keys.DATE_OF_ORDER)
             }, year, month, day)
@@ -140,7 +140,7 @@ class MainFragment : Fragment() {
         if (item.itemId == R.id.send_main_bottom_bar) {
            // var dateFromCalendar= Keys.DEFAULT_MAINlIST
             if (Keys.DATE_OF_ORDER!= "") {
-               val dateFromCalendar= MainList("date","date",Keys.DATE_OF_ORDER,Keys.DEFAULT_VALUE) // убрать хардкод из этой строки
+               val dateFromCalendar= MainList("date","date",Keys.DATE_OF_ORDER,"") // убрать хардкод из этой строки
                 repositoryResult.rememberMainList(dateFromCalendar)
             }
 

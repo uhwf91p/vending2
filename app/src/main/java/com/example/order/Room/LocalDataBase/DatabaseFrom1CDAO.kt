@@ -28,7 +28,7 @@ interface DatabaseFrom1CDAO {
         @Query("SELECT id1, id2, name FROM DatabaseFrom1CEntity WHERE id1 = :id1&id2=:id2")
         fun getHistoryCursor(id1: Int,id2:Int): Cursor
 
-        @Query("SELECT*FROM ResultEntity WHERE value=0")
+        @Query("SELECT*FROM ResultEntity WHERE value=''")
         fun getAllUnfinishedResult():List<ResultEntity>
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insertDataToResult(entity: ResultEntity)

@@ -93,6 +93,7 @@ open class MainViewModel(
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         liveDataToObserve.value=AppState.Success(resultList)
+                        var responseString = response.body().toString()
 
 
                     } else {
