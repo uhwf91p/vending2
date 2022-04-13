@@ -11,12 +11,14 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
     private val repository: RepositoryGetMainList = RepositoryGetMainListImpl()
 
     private val dataBase1CViewModel: Database1CViewModel = Database1CViewModel()
-    private val amountOfWorkList=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORK_LIST,Keys.STEP_FOR_WORK_LIST,"Фактически отработано в натуре")
+   /* private val amountOfWorkList=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORK_LIST,Keys.STEP_FOR_WORK_LIST,"Фактически отработано в натуре")*/
     private val hoursWorked=makeListOfWork(Keys.NUMBERS_OF_VALUES_FOR_WORKED_HOURS,Keys.STEP_FOR_WORKED_HOURS,"Отработано часов")
 
     // саделать маски для имен в главном списке
     override fun getListForChoice(): List<MainList> {
         val dataFrom1C: List<MainList>
+
+        //TODO() хардкод ниже - убрать
 
         val quality:MutableList<MainList> = mutableListOf(
             MainList("ДоплатаЗаКачество","Доплата за качество 0%","0",Keys.DEFAULD_VALUE_FOR_GENERATED_LIST),
@@ -45,12 +47,10 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
             Keys.LIST_FROM_DB=dataFrom1C
 
         }
-/*
-        testListBrigadir=makeListFromDB("ФизическиеЛица",dataFrom1C)
-              testListTrakctorDriver=makeListFromDB("ФизическиеЛица",dataFrom1C)*/
 
-        val startList=makeStartList(dataFrom1C+amountOfWorkList+hoursWorked+
-                quality+difficult+refill+weekends)+dataFrom1C+amountOfWorkList+hoursWorked+ quality+difficult+refill+weekends
+
+        val startList=makeStartList(dataFrom1C/*+amountOfWorkList*/+hoursWorked+
+                quality+difficult+refill+weekends)+dataFrom1C/*+amountOfWorkList*/+hoursWorked+ quality+difficult+refill+weekends
         Keys.GLOBAL_LIST=startList
 
         return /*setDefaultValues(startList)*/startList
@@ -99,11 +99,21 @@ class MainRepositoryFrom1CImpl:MainRepisitoryFrom1C {
         var valueForWork=0.000
         for (i in 1..numberOfValues){
             valueForWork += step
-            val roundedNumber = DecimalFormat("#.###")
-            roundedNumber.roundingMode = RoundingMode.CEILING
+            var roundedNumber = DecimalFormat("#.###")
+            roundedNumber.roundingMode = RoundingMode.DOWN
+                workList.add(
+                    MainList(
+                        nameOfField,
+                        roundedNumber.format(valueForWork).toString(),
+                        roundedNumber.format(valueForWork).toString(),
+                        Keys.DEFAULD_VALUE_FOR_GENERATED_LIST
+                    )
+                )
+            }
 
-            workList.add(MainList(nameOfField,roundedNumber.format(valueForWork).toString(),roundedNumber.format(valueForWork).toString(),Keys.DEFAULD_VALUE_FOR_GENERATED_LIST))
-        }
+
+
+
         return workList
 
     }

@@ -7,6 +7,22 @@
     android:background="@color/loadingBackground"
     android:visibility="gone"
     tools:visibility="visible">
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Система КОМРАД: \nКомплекс Мобильных Решений Абрау-Дюрсо \n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                                  v 1.0 beta"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        >
+
+    </EditText>
+
+
+
+
+
     <ProgressBar
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"

@@ -15,7 +15,7 @@ class Database1CViewModel (
 
     }
     fun getAllDataFromResultDB():List<MainList>{
-        return localRepository1C.getAllDataDBResultEntity()
+        return localRepository1C.getAllDataDBResultEntityToMainList()
     }
 
 

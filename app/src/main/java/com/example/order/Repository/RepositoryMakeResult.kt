@@ -4,6 +4,7 @@ import com.example.order.Data.MainList
 
 interface RepositoryMakeResult {
     fun rememberMainList(mainList: MainList):MutableList<MainList>
+    fun makeOrderFinished()
 
 
 

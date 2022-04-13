@@ -63,6 +63,7 @@ class MainFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val workedInNatureEditText=binding.inputEditTextWorked
         val etSearchBar=binding.inputEditText
         val textView     = binding.inputEditTextDate
         val c = Calendar.getInstance()
@@ -78,6 +79,9 @@ class MainFragment : Fragment() {
                 textView.setText(Keys.DATE_OF_ORDER)
             }, year, month, day)
             dpd.show()
+        }
+        workedInNatureEditText.setOnClickListener {
+            viewModel.worked_in_nature=workedInNatureEditText.text.toString()
         }
 
 
@@ -143,17 +147,23 @@ class MainFragment : Fragment() {
                val dateFromCalendar= MainList("date","date",Keys.DATE_OF_ORDER,"") // убрать хардкод из этой строки
                 repositoryResult.rememberMainList(dateFromCalendar)
             }
+            if (viewModel.worked_in_nature!= "") {
+                val worked= MainList("Фактически отработано в натуре",viewModel.worked_in_nature,viewModel.worked_in_nature,Keys.DEFAULD_VALUE_FOR_GENERATED_LIST) // убрать хардкод из этой строки
+                repositoryResult.rememberMainList(worked)
+            }
 
 
-            if (viewModel.checkCompleteness(Keys.LIST_FOR_FIRST_SCREEN,Keys.MAIN_REMEMEBERED_LIST,Keys.DATE_OF_ORDER)=="Данные наряда заполнены не полностью"){
+
+            if (viewModel.checkCompleteness(Keys.LIST_FOR_FIRST_SCREEN,Keys.MAIN_REMEMEBERED_LIST,Keys.DATE_OF_ORDER,viewModel.worked_in_nature)=="Данные наряда заполнены не полностью"){
                 toast("Данные наряда заполнены не полностью")
             }
             else {
                 localRepository1C.putDataToResultDB(Keys.MAIN_REMEMEBERED_LIST)
                 toast("данные записаны успешно")
               /*  viewModel.getFinishedOrdersFromServer()*/
-                viewModel.pullDataToServer(localRepository1C.getAllDataDBResultEntity())
+                viewModel.pullDataToServer(localRepository1C.getAllDataDBResultEntityToMainList())
                 viewModel.getData().observe(viewLifecycleOwner, { isDataUploadedToServer(it) })
+
              /* Keys.GLOBAL_LIST=Keys.DEFAULT_lIST*/
                 Keys.LIST_FOR_FIRST_SCREEN = mutableListOf()
                 Keys.MAIN_REMEMEBERED_LIST= mutableListOf()
@@ -260,6 +270,7 @@ class MainFragment : Fragment() {
             binding.inputEditTextDate.isGone=true
             binding.bottomBarMain.isGone=true
             binding.inputLayout.isGone=false
+            binding.inputEditTextWorked.isGone=true
 
             binding.inputDateLayout.endIconMode=TextInputLayout.END_ICON_NONE
             val params = binding.mainFragmentRecyclerView.layoutParams as ConstraintLayout.LayoutParams
@@ -271,6 +282,7 @@ class MainFragment : Fragment() {
             binding.inputDateLayout.isGone=false
             binding.inputLayout.isGone=true
             binding.bottomBarMain.isGone=false
+            binding.inputEditTextWorked.isGone=false
         }
     }
     private fun goToSaveFragment(

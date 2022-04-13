@@ -8,11 +8,11 @@ import com.example.order.BuildConfig
 import com.example.order.Data.Item
 import com.example.order.Data.Keys
 import com.example.order.Data.MainList
-import com.example.order.Repository.RepositoryGetMainList
-import com.example.order.Repository.RepositoryGetMainListImpl
+import com.example.order.Repository.*
+import com.example.order.Room.LocalDataBase.DatabaseFrom1CDAO
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
-import com.google.android.material.textfield.TextInputEditText
+import com.example.order.app.App
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,6 +20,7 @@ import retrofit2.Response
 
 open class MainViewModel(
     private val repository: RepositoryGetMainList = RepositoryGetMainListImpl(),
+    private val makeResult: RepositoryMakeResult=RepositoryMakeResultImpl()
 
 
 
@@ -27,6 +28,8 @@ open class MainViewModel(
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val converters: Converters = Converters()
+    var worked_in_nature:String=""
+
 
     protected val viewModelCoroutineScope = CoroutineScope(
         Dispatchers.Default+ SupervisorJob()+ CoroutineExceptionHandler { _, throwable -> handleError(throwable)  })
@@ -39,24 +42,26 @@ open class MainViewModel(
     }
 
     fun getMainListViewModel() = requestData()
-    fun checkCompleteness(referenceList:List<MainList>, listForCheck:List<MainList>,dateOfOrder:String):String{
+    fun checkCompleteness(referenceList:List<MainList>, listForCheck:List<MainList>,dateOfOrder:String,worked:String):String{
         var differents:MutableList<MainList> = mutableListOf()
 
         for (refValue in referenceList) {
+            var count=0
             for (checkedValue in listForCheck) {
-                var count=0
-                if (refValue.id2==checkedValue.id2) {
+
+                if (refValue.id2==checkedValue.id1) {
                     count += 1
 
                 }
-                if (count<1){
-                    differents.add(refValue)
-                }
 
+
+            }
+            if (count<1){
+                differents.add(refValue)
             }
 
         }
-        return if (differents.isEmpty()||listForCheck.isEmpty()||dateOfOrder==""){
+        return if (differents.isNotEmpty()||listForCheck.isEmpty()||dateOfOrder==""||worked==""){
             "Данные наряда заполнены не полностью"
         } else "Данные в наряде заполнены корректно"
 
@@ -79,6 +84,11 @@ open class MainViewModel(
 
     }
 
+    fun makeOrdersFinishedVM() {
+        makeResult.makeOrderFinished()
+
+    }
+
     fun pullDataToServer(resultList:List<MainList>)  {
         liveDataToObserve.value = AppState.Loading(null)
         val apiKey: String = BuildConfig.APIKEY_FROM_1C
@@ -93,7 +103,9 @@ open class MainViewModel(
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         liveDataToObserve.value=AppState.Success(resultList)
-                        var responseString = response.body().toString()
+                        Keys.LIST_OF_FINISHED_ORDERS = response.body()!!
+                        makeOrdersFinishedVM()
+
 
 
                     } else {

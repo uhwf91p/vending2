@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.Gravity
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.order.Server.ServerResponseData
 
 object Keys {
     const val DEFAULT_VALUE: String = "0"
@@ -26,5 +27,7 @@ object Keys {
     var GLOBAL_LIST= DEFAULT_lIST
     var LIST_FOR_FIRST_SCREEN:List<MainList> = mutableListOf()
     val DEFAULD_VALUE_FOR_GENERATED_LIST=""
+    var LIST_OF_FINISHED_ORDERS = listOf<ServerResponseData>()
+    const val MARKER_OF_FINISHED_ORDER="1"
 
 }
