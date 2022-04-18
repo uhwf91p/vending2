@@ -45,6 +45,7 @@ class MainFragment : Fragment() {
     }
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +53,7 @@ class MainFragment : Fragment() {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -63,7 +65,8 @@ class MainFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val workedInNatureEditText=binding.inputEditTextWorked
+        val workedOut=binding.inputEditTextWorked
+
         val etSearchBar=binding.inputEditText
         val textView     = binding.inputEditTextDate
         val c = Calendar.getInstance()
@@ -80,9 +83,12 @@ class MainFragment : Fragment() {
             }, year, month, day)
             dpd.show()
         }
-        workedInNatureEditText.setOnClickListener {
-            viewModel.worked_in_nature=workedInNatureEditText.text.toString()
+        workedOut.setText(Keys.WORKED_OUT)
+        workedOut.setOnClickListener {
+            Keys.WORKED_OUT=workedOut.text.toString()
+            workedOut.setText(Keys.WORKED_OUT)
         }
+
 
 
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
@@ -120,6 +126,16 @@ class MainFragment : Fragment() {
                 updateSearch()
             }
         })
+
+        workedOut.setOnFocusChangeListener{ _: View, b: Boolean ->
+            if (!b){
+                Keys.WORKED_OUT= workedOut.text.toString()
+                workedOut.setText(Keys.WORKED_OUT)
+            }
+
+        }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -147,19 +163,21 @@ class MainFragment : Fragment() {
                val dateFromCalendar= MainList("date","date",Keys.DATE_OF_ORDER,"") // убрать хардкод из этой строки
                 repositoryResult.rememberMainList(dateFromCalendar)
             }
-            if (viewModel.worked_in_nature!= "") {
-                val worked= MainList("Фактически отработано в натуре",viewModel.worked_in_nature,viewModel.worked_in_nature,Keys.DEFAULD_VALUE_FOR_GENERATED_LIST) // убрать хардкод из этой строки
+            if (Keys.WORKED_OUT!= "") {
+                val worked= MainList("Фактически отработано в натуре",Keys.WORKED_OUT,Keys.WORKED_OUT,Keys.DEFAULD_VALUE_FOR_GENERATED_LIST) // убрать хардкод из этой строки
                 repositoryResult.rememberMainList(worked)
             }
 
 
 
-            if (viewModel.checkCompleteness(Keys.LIST_FOR_FIRST_SCREEN,Keys.MAIN_REMEMEBERED_LIST,Keys.DATE_OF_ORDER,viewModel.worked_in_nature)=="Данные наряда заполнены не полностью"){
+            if (viewModel.checkCompleteness(Keys.LIST_FOR_FIRST_SCREEN,Keys.MAIN_REMEMEBERED_LIST,Keys.DATE_OF_ORDER,Keys.WORKED_OUT)=="Данные наряда заполнены не полностью"){
                 toast("Данные наряда заполнены не полностью")
             }
             else {
+
                 localRepository1C.putDataToResultDB(Keys.MAIN_REMEMEBERED_LIST)
                 toast("данные записаны успешно")
+                val workedOut=binding.inputEditTextWorked
               /*  viewModel.getFinishedOrdersFromServer()*/
                 viewModel.pullDataToServer(localRepository1C.getAllDataDBResultEntityToMainList())
                 viewModel.getData().observe(viewLifecycleOwner, { isDataUploadedToServer(it) })
@@ -169,6 +187,9 @@ class MainFragment : Fragment() {
                 Keys.MAIN_REMEMEBERED_LIST= mutableListOf()
                 Keys.DATE_OF_ORDER= ""
                 Keys.LIST_KEY=Keys.DEFAULT_VALUE
+                Keys.WORKED_OUT= ""
+                workedOut.setText(Keys.WORKED_OUT)
+
                 goToSaveFragment(activity?.supportFragmentManager)
 
 

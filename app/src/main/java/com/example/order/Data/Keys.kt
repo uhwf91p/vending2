@@ -29,5 +29,6 @@ object Keys {
     val DEFAULD_VALUE_FOR_GENERATED_LIST=""
     var LIST_OF_FINISHED_ORDERS = listOf<ServerResponseData>()
     const val MARKER_OF_FINISHED_ORDER="1"
+    var WORKED_OUT:String=""
 
 }

@@ -1,20 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loadinglayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/loadingBackground"
     android:visibility="gone"
-    tools:visibility="visible">
+    tools:visibility="visible"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/ad"
+        >
+
+
+    </ImageView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
 
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Система КОМРАД: \nКомплекс Мобильных Решений Абрау-Дюрсо \n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n                                  v 1.0 beta"
-        android:textSize="30sp"
+        android:text="Система КОМРАД: \nКомплекс Мобильных Решений Абрау-Дюрсо"
+        android:textSize="20sp"
         android:textStyle="bold"
+        android:clickable="false"
+
+        >
+
+    </EditText>
+
+
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        >
+
+    </ProgressBar>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="версия 1.0 beta"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:clickable="false"
+        android:layout_gravity="end"
+        android:layout_marginTop="230dp"
+
+
+
+
         >
 
     </EditText>
@@ -23,12 +69,4 @@
 
 
 
-    <ProgressBar
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-    </ProgressBar>
-
-</FrameLayout>
+</LinearLayout>

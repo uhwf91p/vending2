@@ -28,7 +28,7 @@ open class MainViewModel(
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val converters: Converters = Converters()
-    var worked_in_nature:String=""
+
 
 
     protected val viewModelCoroutineScope = CoroutineScope(
