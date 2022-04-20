@@ -1,7 +1,7 @@
-package com.example.order.ViewModel
+package com.example.order
 
 import androidx.lifecycle.ViewModel
-import com.example.order.Data.MainList
+import com.example.order.Data.ItemOfList
 import com.example.order.Repository.LocalRepository
 import com.example.order.Repository.LocalRepositoryImpl
 import com.example.order.app.App
@@ -10,11 +10,11 @@ class Database1CViewModel (
 
     private val localRepository1C: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
 ):ViewModel() {
-        fun getAllDataFromDB1C():List<MainList> {
+        fun getAllDataFromDB1C():List<ItemOfList> {
         return localRepository1C.getAllDataDB1CEntity()
 
     }
-    fun getAllDataFromResultDB():List<MainList>{
+    fun getAllDataFromResultDB():List<ItemOfList>{
         return localRepository1C.getAllDataDBResultEntityToMainList()
     }
 

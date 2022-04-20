@@ -1,12 +1,6 @@
 package com.example.order.Server
 
-import android.os.Handler
-import androidx.lifecycle.LiveData
-import com.example.order.AppState
-import com.example.order.Data.Keys
 import kotlinx.coroutines.*
-import java.util.*
-import kotlin.concurrent.schedule
 
 
 class BackgroundTasks {

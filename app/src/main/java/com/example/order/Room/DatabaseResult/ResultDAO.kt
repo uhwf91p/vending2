@@ -2,17 +2,10 @@ package com.example.order.Room.DatabaseResult
 
 import android.database.Cursor
 import androidx.room.*
-import com.example.order.Room.LocalDataBase.ResultEntity
 
 @Dao
 interface ResultDAO {
 
-      /*  @Query("SELECT*FROM DatabaseFrom1CEntity")
-        fun all():List<ResultEntity>*/
-
-        /*@Query("SELECT*FROM DatabaseFrom1CEntity WHERE name LIKE:name")
-        fun getDataByWord(name:String):List<ResultEntity>
-*/
         @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insert(entity: ResultEntity)
 

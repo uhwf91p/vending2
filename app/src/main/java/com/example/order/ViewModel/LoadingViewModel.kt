@@ -3,14 +3,13 @@ package com.example.order.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.order.AppState
+import com.example.order.app.domain.AppState
 import com.example.order.BuildConfig
-import com.example.order.Data.MainList
-import com.example.order.Repository.MainRepisitoryFrom1C
-import com.example.order.Repository.MainRepositoryFrom1CImpl
+import com.example.order.app.domain.CreateListOfAllItemsFrom1CDB
+import com.example.order.app.domain.CreateListOfAllItemsFrom1CDBImpl
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
-import com.example.order.app.App
+import com.example.order.app.domain.Converters
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +19,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
                        private val retrofit1C: Retrofit1C = Retrofit1C(),
                        private val converters: Converters = Converters()
 ):ViewModel() {
-    val mainRepository: MainRepisitoryFrom1C = MainRepositoryFrom1CImpl()
+    val mainRepository: CreateListOfAllItemsFrom1CDB = CreateListOfAllItemsFrom1CDBImpl()
 
     fun getDataFromServerForDB(): LiveData<AppState> {
 

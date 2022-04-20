@@ -10,6 +10,7 @@ import com.example.order.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: MainActivityBinding
+    override fun onBackPressed() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

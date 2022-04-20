@@ -3,16 +3,15 @@ package com.example.order.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.order.AppState
+import com.example.order.app.domain.AppState
 import com.example.order.BuildConfig
-import com.example.order.Data.Item
-import com.example.order.Data.Keys
-import com.example.order.Data.MainList
+import com.example.order.Data.ItemForSearchText
+import com.example.order.Data.GlobalConstAndVars
+import com.example.order.Data.ItemOfList
 import com.example.order.Repository.*
-import com.example.order.Room.LocalDataBase.DatabaseFrom1CDAO
 import com.example.order.Server.Retrofit1C
 import com.example.order.Server.ServerResponseData
-import com.example.order.app.App
+import com.example.order.app.domain.Converters
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,8 +41,8 @@ open class MainViewModel(
     }
 
     fun getMainListViewModel() = requestData()
-    fun checkCompleteness(referenceList:List<MainList>, listForCheck:List<MainList>,dateOfOrder:String,worked:String):String{
-        var differents:MutableList<MainList> = mutableListOf()
+    fun checkCompleteness(referenceList:List<ItemOfList>, listForCheck:List<ItemOfList>, dateOfOrder:String, worked:String):String{
+        var differents:MutableList<ItemOfList> = mutableListOf()
 
         for (refValue in referenceList) {
             var count=0
@@ -70,16 +69,16 @@ open class MainViewModel(
 
 
     private fun requestData() {
-        viewModelCoroutineScope.launch {   liveDataToObserve.postValue(AppState.Success(repository.getMainList(Keys.LIST_KEY))) }
+        viewModelCoroutineScope.launch {   liveDataToObserve.postValue(AppState.Success(repository.getMainList(GlobalConstAndVars.LIST_KEY))) }
 
 
 
     }
-    fun convertMainListToArrayListItem(mainList: List<MainList>): ArrayList<Item> {
-        return converters.convertMainlistToItemStorage(mainList)
+    fun convertMainListToArrayListItem(itemOfList: List<ItemOfList>): ArrayList<ItemForSearchText> {
+        return converters.convertMainlistToItemStorage(itemOfList)
 
     }
-    fun convertArrayListItemToMainList(itemList: ArrayList<Item>): List<MainList> {
+    fun convertArrayListItemToMainList(itemList: ArrayList<ItemForSearchText>): List<ItemOfList> {
         return converters.convertItemStorageToMainList(itemList)
 
     }
@@ -88,8 +87,15 @@ open class MainViewModel(
         makeResult.makeOrderFinished()
 
     }
+    fun rememberListOfChosenItemsVM(item:ItemOfList){
+        makeResult.rememberListOfChosenItems(item)
+    }
 
-    fun pullDataToServer(resultList:List<MainList>)  {
+    fun getAllDataDBResultEntityToMainListVM(){
+
+    }
+
+    fun pullDataToServer(resultList:List<ItemOfList>)  {
         liveDataToObserve.value = AppState.Loading(null)
         val apiKey: String = BuildConfig.APIKEY_FROM_1C
         if (apiKey.isBlank()) {
@@ -102,11 +108,9 @@ open class MainViewModel(
                     response: Response<List<ServerResponseData>>
                 ) {
                     if (response.isSuccessful && response.body() != null) {
-                        liveDataToObserve.value=AppState.Success(resultList)
-                        Keys.LIST_OF_FINISHED_ORDERS = response.body()!!
+                        liveDataToObserve.value= AppState.Success(resultList)
+                        GlobalConstAndVars.LIST_OF_FINISHED_ORDERS = response.body()!!
                         makeOrdersFinishedVM()
-
-
 
                     } else {
                         val message = response.message()

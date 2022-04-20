@@ -4,12 +4,9 @@ import android.app.Application
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.order.Data.Keys
-import com.example.order.Room.LocalDataBase.DatabaseFrom1C
-import com.example.order.Room.LocalDataBase.DatabaseFrom1CDAO
-import com.example.order.Room.DatabaseResult.ResultDatabase
-import com.example.order.ViewModel.LoadingViewModel
-import kotlinx.coroutines.*
+import com.example.order.Data.GlobalConstAndVars
+import com.example.order.Room.DataBaseFrom1C.DatabaseFrom1C
+import com.example.order.Room.DataBaseFrom1C.DatabaseFrom1CDAO
 import java.lang.IllegalStateException
 
 class App: Application() {
@@ -21,10 +18,9 @@ class App: Application() {
 
     companion object {
         private var appInstance: App? = null
-        private var dbResult: ResultDatabase? = null
         private var db1C: DatabaseFrom1C? = null
 
-        private val DB1C_NAME = Keys.DATABASE1C_NAME
+        private val DB1C_NAME = GlobalConstAndVars.DATABASE1C_NAME
 
 
 
@@ -36,7 +32,7 @@ class App: Application() {
                             throw IllegalStateException("Application ids null meanwhile creating database")
 
                         }
-                        val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+                        val MIGRATION_1_2: Migration = object : Migration(1, 2) {//шаблон кода на случай миграции
                             override fun migrate(database: SupportSQLiteDatabase) {
                                 database.execSQL("CREATE TABLE `ResultEntity` ( `id1` TEXT NOT NULL,`id2` TEXT NOT NULL,`name` TEXT NOT NULL,`value` TEXT NOT NULL,PRIMARY KEY   (`id1`,`id2`,`name`) ) ")
 
@@ -49,7 +45,7 @@ class App: Application() {
                             DatabaseFrom1C::class.java, DB1C_NAME
                         )
                             .allowMainThreadQueries()
-                            /*.addMigrations(MIGRATION_1_2)*/
+                            /*.addMigrations(MIGRATION_1_2)*///шаблон кода на случай миграции
                             .build()
 
 

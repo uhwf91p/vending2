@@ -1,9 +1,9 @@
 package com.example.order.Repository
 
-import com.example.order.Data.MainList
+import com.example.order.Data.ItemOfList
 
 interface RepositoryMakeResult {
-    fun rememberMainList(mainList: MainList):MutableList<MainList>
+    fun rememberListOfChosenItems(itemOfList: ItemOfList):MutableList<ItemOfList>
     fun makeOrderFinished()
 
 

@@ -9,12 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import com.example.order.AppState
+import com.example.order.app.domain.AppState
 import com.example.order.R
-import com.example.order.Repository.LocalRepository
-import com.example.order.Repository.LocalRepositoryImpl
 import com.example.order.ViewModel.SaveViewModel
-import com.example.order.app.App
 import com.example.order.databinding.SaveFragmentBinding
 
 class SaveFragment:Fragment() {

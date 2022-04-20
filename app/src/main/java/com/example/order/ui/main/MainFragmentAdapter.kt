@@ -4,18 +4,18 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.order.Data.Keys
-import com.example.order.Data.MainList
+import com.example.order.Data.GlobalConstAndVars
+import com.example.order.Data.ItemOfList
 import com.example.order.databinding.MainItemBinding
 
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
-    private var mainListData: List<MainList> = listOf()
+    private var itemOfListData: List<ItemOfList> = listOf()
     private var onItemViewClickListener: MainFragment.OnItemViewClickListener? = null
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setMainList(data: List<MainList>) {
-        mainListData = data
+    fun setMainList(data: List<ItemOfList>) {
+        itemOfListData = data
         notifyDataSetChanged()
 
     }
@@ -37,19 +37,19 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        holder.bind(mainListData[position])
+        holder.bind(itemOfListData[position])
     }
 
-    override fun getItemCount() = mainListData.size
+    override fun getItemCount() = itemOfListData.size
     inner class MainViewHolder(private val binding: MainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(mainList: MainList) {
-            val textForItem:String = if (Keys.LIST_KEY == "0") {
+        fun bind(itemOfList: ItemOfList) {
+            val textForItem:String = if (GlobalConstAndVars.LIST_KEY == "0") {
 
-                mainList.name+": "+mainList.value
+                itemOfList.name+": "+itemOfList.value
             } else{
-                mainList.name
+                itemOfList.name
             }
 
 
@@ -58,7 +58,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
                 mainItemRecyclerTextView.text = textForItem
 
                 binding.mainItemRecyclerTextView.setOnClickListener {
-                    onItemViewClickListener?.onItemViewClick(mainList)
+                    onItemViewClickListener?.onItemViewClick(itemOfList)
                 }
             }
 

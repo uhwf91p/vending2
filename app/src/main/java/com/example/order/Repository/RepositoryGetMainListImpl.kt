@@ -2,21 +2,16 @@ package com.example.order.Repository
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.order.Data.Keys
-import com.example.order.Data.MainList
+import com.example.order.Data.GlobalConstAndVars
+import com.example.order.Data.ItemOfList
 
 class RepositoryGetMainListImpl:RepositoryGetMainList {
     @RequiresApi(Build.VERSION_CODES.N)
-    override suspend fun getMainList(key: String): List<MainList> {
-        //TODO() - убрать хардкод из выражения ниже
-       /* val keyForTempList:String = if (key == "Бригадир"||key=="Тракторист") {
-            "ФизическиеЛица"
-        } else key*/
-        val mainRepository:MainRepisitoryFrom1C=MainRepositoryFrom1CImpl()
+    override suspend fun getMainList(key: String): List<ItemOfList> {
 
-    val rememberedList:MutableList<MainList> = Keys.MAIN_REMEMEBERED_LIST
-        val listFrom1C=Keys.GLOBAL_LIST
-        val tempList:MutableList<MainList> = mutableListOf()
+    val rememberedList:MutableList<ItemOfList> = GlobalConstAndVars.listOfChosenItemOfLists
+        val listFrom1C=GlobalConstAndVars.GLOBAL_LIST
+        val tempList:MutableList<ItemOfList> = mutableListOf()
         for (mainList in listFrom1C) {
             if (mainList.id1 == key) {
                tempList.add(mainList)
@@ -32,8 +27,8 @@ class RepositoryGetMainListImpl:RepositoryGetMainList {
                     }
 
                 }
-        Keys.LIST_FOR_FIRST_SCREEN=tempList.distinctBy { it.name to it.id1 to it.id2 }
-        return  Keys.LIST_FOR_FIRST_SCREEN
+        GlobalConstAndVars.listForFirstScreen=tempList.distinctBy { it.name to it.id1 to it.id2 }
+        return  GlobalConstAndVars.listForFirstScreen
 
 
                 }

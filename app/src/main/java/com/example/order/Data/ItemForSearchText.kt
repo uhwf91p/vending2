@@ -3,7 +3,7 @@ package com.example.order.Data
 import android.text.Spannable
 import android.text.SpannableString
 
-data class Item (
+data class ItemForSearchText (
    val id1:Spannable,
    val id2:Spannable,
    val name: Spannable,

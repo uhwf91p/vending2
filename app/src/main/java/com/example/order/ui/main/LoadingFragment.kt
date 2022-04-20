@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import com.example.order.AppState
+import com.example.order.app.domain.AppState
 import com.example.order.R
 import com.example.order.Repository.LocalRepository
 import com.example.order.Repository.LocalRepositoryImpl
@@ -58,7 +58,7 @@ class LoadingFragment:Fragment() {
         when (data) {
             is AppState.Success -> {
                 localRepository1C.deleteAllData()
-                localRepository1C.putDataFromServer1CToLocalDatabase(data.mainList)
+                localRepository1C.putDataFromServer1CToLocalDatabase(data.itemOfList)
                 Toast.makeText(context,"Справочники закгружены успешно",Toast.LENGTH_SHORT).apply {
                     setGravity(Gravity.BOTTOM,0,250)
                     show()

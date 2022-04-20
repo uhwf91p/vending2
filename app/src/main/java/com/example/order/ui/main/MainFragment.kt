@@ -13,11 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.order.AppState
-import com.example.order.Data.Keys
-import com.example.order.Data.Keys.KEY_FOR_INFLATE_MAIN_LIST
-import com.example.order.Data.Keys.count
-import com.example.order.Data.MainList
+import com.example.order.Data.ItemForSearchTextStorage
+import com.example.order.app.domain.AppState
+import com.example.order.Data.GlobalConstAndVars
+import com.example.order.Data.GlobalConstAndVars.KEY_FOR_INFLATE_MAIN_LIST
+import com.example.order.Data.GlobalConstAndVars.count
+import com.example.order.Data.ItemOfList
 import com.example.order.MainActivity
 import com.example.order.R
 import com.example.order.Repository.*
@@ -27,13 +28,14 @@ import com.example.order.databinding.MainFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.coroutines.*
 import java.util.*
 
 
 class MainFragment : Fragment() {
 
 
-    var repositoryResult: RepositoryMakeResult = RepositoryMakeResultImpl()
+   /* var repositoryResult: RepositoryMakeResult = RepositoryMakeResultImpl()*/
     private val localRepository1C: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private var _binding: MainFragmentBinding? = null
@@ -45,7 +47,6 @@ class MainFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,6 +54,7 @@ class MainFragment : Fragment() {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
 
     override fun onDestroyView() {
@@ -63,53 +65,51 @@ class MainFragment : Fragment() {
 
     }
 
+
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val workedOut=binding.inputEditTextWorked
-
         val etSearchBar=binding.inputEditText
         val textView     = binding.inputEditTextDate
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-        textView.setText(Keys.DATE_OF_ORDER)
+        textView.setText(GlobalConstAndVars.DATE_OF_ORDER)
         input_date_layout.setEndIconOnClickListener {
             val dpd = DatePickerDialog(requireContext(), { _, year, _, dayOfMonth ->
                 val month=month+1
-                Keys.DATE_OF_ORDER="$year.${addZeroToMonthAndDay(month)}.${addZeroToMonthAndDay(dayOfMonth)}"
-                /*viewModel.setDate("${addZeroToMonthAndDay(dayOfMonth)}.${addZeroToMonthAndDay(month)}.$year",textView)*/
-                textView.setText(Keys.DATE_OF_ORDER)
+                GlobalConstAndVars.DATE_OF_ORDER="$year.${addZeroToMonthAndDay(month)}.${addZeroToMonthAndDay(dayOfMonth)}"
+                textView.setText(GlobalConstAndVars.DATE_OF_ORDER)
             }, year, month, day)
             dpd.show()
         }
-        workedOut.setText(Keys.WORKED_OUT)
+        workedOut.setText(GlobalConstAndVars.WORKED_OUT)
         workedOut.setOnClickListener {
-            Keys.WORKED_OUT=workedOut.text.toString()
-            workedOut.setText(Keys.WORKED_OUT)
+            GlobalConstAndVars.WORKED_OUT=workedOut.text.toString()
+            workedOut.setText(GlobalConstAndVars.WORKED_OUT)
         }
-
-
 
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
         setBottomAppBar(view)
-        hideAndShowDate()
+        hideAndShowViews()
          adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
-            override fun onItemViewClick(mainList: MainList) {
+            override fun onItemViewClick(itemOfList: ItemOfList) {
                 if (count == KEY_FOR_INFLATE_MAIN_LIST) {
                     binding.inputEditTextDate.hide()
-                    Keys.LIST_KEY = mainList.id2
+                    GlobalConstAndVars.LIST_KEY = itemOfList.id2
                     count += 1
                     val manager = activity?.supportFragmentManager
-                    makeDetails(manager, mainList)
+                    makeDetails(manager, itemOfList)
 
                 } else {
                     binding.inputEditTextDate.show()
                     count = KEY_FOR_INFLATE_MAIN_LIST
-                    Keys.LIST_KEY = Keys.DEFAULT_VALUE
+                    GlobalConstAndVars.LIST_KEY = GlobalConstAndVars.DEFAULT_VALUE
                     val manager = activity?.supportFragmentManager
-                    repositoryResult.rememberMainList(mainList)
-                    makeDetails(manager, mainList)
+                    viewModel.rememberListOfChosenItemsVM(itemOfList)
+                    makeDetails(manager, itemOfList)
                 }
             }
 
@@ -129,12 +129,11 @@ class MainFragment : Fragment() {
 
         workedOut.setOnFocusChangeListener{ _: View, b: Boolean ->
             if (!b){
-                Keys.WORKED_OUT= workedOut.text.toString()
-                workedOut.setText(Keys.WORKED_OUT)
+                GlobalConstAndVars.WORKED_OUT= workedOut.text.toString()
+                workedOut.setText(GlobalConstAndVars.WORKED_OUT)
             }
 
         }
-
 
     }
 
@@ -158,51 +157,43 @@ class MainFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.send_main_bottom_bar) {
-           // var dateFromCalendar= Keys.DEFAULT_MAINlIST
-            if (Keys.DATE_OF_ORDER!= "") {
-               val dateFromCalendar= MainList("date","date",Keys.DATE_OF_ORDER,"") // убрать хардкод из этой строки
-                repositoryResult.rememberMainList(dateFromCalendar)
+
+            if (GlobalConstAndVars.DATE_OF_ORDER!= "") {
+               val dateFromCalendar= ItemOfList("date","date",GlobalConstAndVars.DATE_OF_ORDER,"") // убрать хардкод из этой строки
+                viewModel.rememberListOfChosenItemsVM(dateFromCalendar)//<-----!!!!Изменил!!!! раньше запрашивлось из репозитория результатов
             }
-            if (Keys.WORKED_OUT!= "") {
-                val worked= MainList("Фактически отработано в натуре",Keys.WORKED_OUT,Keys.WORKED_OUT,Keys.DEFAULD_VALUE_FOR_GENERATED_LIST) // убрать хардкод из этой строки
-                repositoryResult.rememberMainList(worked)
+            if (GlobalConstAndVars.WORKED_OUT!= "") {
+                val worked= ItemOfList("Фактически отработано в натуре",GlobalConstAndVars.WORKED_OUT,GlobalConstAndVars.WORKED_OUT,GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST) // убрать хардкод из этой строки
+                viewModel.rememberListOfChosenItemsVM(worked)//<-----!!!!Изменил!!!! раньше запрашивлось из репозитория результатов
             }
 
-
-
-            if (viewModel.checkCompleteness(Keys.LIST_FOR_FIRST_SCREEN,Keys.MAIN_REMEMEBERED_LIST,Keys.DATE_OF_ORDER,Keys.WORKED_OUT)=="Данные наряда заполнены не полностью"){
+            if (viewModel.checkCompleteness(GlobalConstAndVars.listForFirstScreen,GlobalConstAndVars.listOfChosenItemOfLists,GlobalConstAndVars.DATE_OF_ORDER,GlobalConstAndVars.WORKED_OUT)=="Данные наряда заполнены не полностью"){
                 toast("Данные наряда заполнены не полностью")
             }
             else {
-
-                localRepository1C.putDataToResultDB(Keys.MAIN_REMEMEBERED_LIST)
+                localRepository1C.putDataToResultDB(GlobalConstAndVars.listOfChosenItemOfLists)
                 toast("данные записаны успешно")
                 val workedOut=binding.inputEditTextWorked
-              /*  viewModel.getFinishedOrdersFromServer()*/
                 viewModel.pullDataToServer(localRepository1C.getAllDataDBResultEntityToMainList())
                 viewModel.getData().observe(viewLifecycleOwner, { isDataUploadedToServer(it) })
 
-             /* Keys.GLOBAL_LIST=Keys.DEFAULT_lIST*/
-                Keys.LIST_FOR_FIRST_SCREEN = mutableListOf()
-                Keys.MAIN_REMEMEBERED_LIST= mutableListOf()
-                Keys.DATE_OF_ORDER= ""
-                Keys.LIST_KEY=Keys.DEFAULT_VALUE
-                Keys.WORKED_OUT= ""
-                workedOut.setText(Keys.WORKED_OUT)
-
+                GlobalConstAndVars.listForFirstScreen = mutableListOf()
+                GlobalConstAndVars.listOfChosenItemOfLists= mutableListOf()
+                GlobalConstAndVars.DATE_OF_ORDER= ""
+                GlobalConstAndVars.LIST_KEY=GlobalConstAndVars.DEFAULT_VALUE
+                GlobalConstAndVars.WORKED_OUT= ""
+                workedOut.setText(GlobalConstAndVars.WORKED_OUT)
                 goToSaveFragment(activity?.supportFragmentManager)
 
 
-
-
-
-
-
-
-
-
-
             }
+        }
+        if (item.itemId == R.id.refresh) {
+            viewModel.pullDataToServer(localRepository1C.getAllDataDBResultEntityToMainList())
+            viewModel.getData().observe(viewLifecycleOwner, { isDataUploadedToServer(it) })
+
+
+
         }
 
         return super.onOptionsItemSelected(item)
@@ -210,11 +201,11 @@ class MainFragment : Fragment() {
 
     private fun makeDetails(
         manager: FragmentManager?,
-        mainList: MainList
+        itemOfList: ItemOfList
     ) {
         if (manager != null) {
             val bundle = Bundle()
-            bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, mainList)
+            bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, itemOfList)
             manager.beginTransaction()
                 .replace(R.id.container, DetailsFragment.newInstance(bundle))
                 .addToBackStack("")
@@ -225,9 +216,9 @@ class MainFragment : Fragment() {
         val etSearchBar=binding.inputEditText
         val s = etSearchBar.text
         if (s?.length == 0) {
-            adapter.setMainList(viewModel.convertArrayListItemToMainList(ItemStorage.list))
+            adapter.setMainList(viewModel.convertArrayListItemToMainList(ItemForSearchTextStorage.list))
         } else {
-            adapter.setMainList( viewModel.convertArrayListItemToMainList(ItemStorage.list).filter {
+            adapter.setMainList( viewModel.convertArrayListItemToMainList(ItemForSearchTextStorage.list).filter {
                  it.name.contains(s.toString(), true)
             } )
         }
@@ -237,8 +228,8 @@ class MainFragment : Fragment() {
     private fun renderList(data: AppState) {
         when (data) {
             is AppState.Success -> {
-               adapter.setMainList(data.mainList)
-                ItemStorage.list=viewModel.convertMainListToArrayListItem(data.mainList)
+               adapter.setMainList(data.itemOfList)
+                ItemForSearchTextStorage.list=viewModel.convertMainListToArrayListItem(data.itemOfList)
             }
             is AppState.Loading -> {
             }
@@ -258,7 +249,8 @@ class MainFragment : Fragment() {
             is AppState.Loading -> {
             }
             is AppState.Error -> {
-                toast(data.error.message)
+                toast("Данные не загружены:${data.error.message}")
+
 
             }
 
@@ -267,14 +259,17 @@ class MainFragment : Fragment() {
     }
 
     interface OnItemViewClickListener {
-        fun onItemViewClick(mainList: MainList)
+        fun onItemViewClick(itemOfList: ItemOfList)
     }
 
    private fun Fragment.toast(string: String?) {
-        Toast.makeText(context, string, Toast.LENGTH_SHORT).apply {
+     fun handleError(error: Throwable){}
+       val fragmentCoroutineScope = CoroutineScope(
+           Dispatchers.Main+ SupervisorJob() + CoroutineExceptionHandler { _, throwable -> handleError(throwable)  })
 
-            show()
-        }
+        fragmentCoroutineScope.launch { Toast.makeText(context, string, Toast.LENGTH_LONG).
+        show() }
+
     }
     private fun addZeroToMonthAndDay(dayOrMonth:Int):String{
         return if (dayOrMonth <10) {
@@ -285,18 +280,16 @@ class MainFragment : Fragment() {
         }
 
     }
-    private fun hideAndShowDate(){
+    private fun hideAndShowViews(){
         if (count!= KEY_FOR_INFLATE_MAIN_LIST) {
             //второй экран
             binding.inputEditTextDate.isGone=true
             binding.bottomBarMain.isGone=true
             binding.inputLayout.isGone=false
             binding.inputEditTextWorked.isGone=true
-
             binding.inputDateLayout.endIconMode=TextInputLayout.END_ICON_NONE
             val params = binding.mainFragmentRecyclerView.layoutParams as ConstraintLayout.LayoutParams
             params.topToBottom=binding.inputLayout.id
-
 
         } else {
             //первый экран

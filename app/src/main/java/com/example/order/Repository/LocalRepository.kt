@@ -1,14 +1,14 @@
 package com.example.order.Repository
 
-import com.example.order.Data.MainList
-import com.example.order.Room.LocalDataBase.ResultEntity
+import com.example.order.Data.ItemOfList
+import com.example.order.Room.DatabaseResult.ResultEntity
 
 interface LocalRepository {
-    fun putDataFromServer1CToLocalDatabase(mainListFromServer:List<MainList>)
-    fun getAllDataDB1CEntity(): List<MainList>
+    fun putDataFromServer1CToLocalDatabase(itemOfListFromServer:List<ItemOfList>)
+    fun getAllDataDB1CEntity(): List<ItemOfList>
     fun deleteAllData()
-    fun getAllDataDBResultEntityToMainList():List<MainList>
-    fun putDataToResultDB(resultMainList:List<MainList>)
+    fun getAllDataDBResultEntityToMainList():List<ItemOfList>
+    fun putDataToResultDB(resultItemOfList:List<ItemOfList>)
     fun getAllDataDBResultEntity():List<ResultEntity>
     fun insertToDBResult(data: ResultEntity)
 
