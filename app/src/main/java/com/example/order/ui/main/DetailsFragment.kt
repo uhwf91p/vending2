@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.order.Data.ItemOfList
+import com.example.order.app.domain.model.ListItem
 import com.example.order.databinding.DetailsFragmentBinding
 
 class DetailsFragment: Fragment() {
@@ -21,15 +21,7 @@ class DetailsFragment: Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val weather = arguments?.getParcelable<ItemOfList>(BUNDLE_EXTRA)
-        if (weather != null){
 
-
-
-        }
-    }
 
 
     companion object {

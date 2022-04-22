@@ -9,19 +9,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import com.example.order.app.domain.AppState
 import com.example.order.R
-import com.example.order.Repository.LocalRepository
-import com.example.order.Repository.LocalRepositoryImpl
-import com.example.order.ViewModel.LoadingViewModel
-import com.example.order.app.App
+import com.example.order.viewModel.LoadingViewModel
+import com.example.order.app.domain.usecase.AppState
 import com.example.order.databinding.LoadingFragmentBinding
 
 class LoadingFragment:Fragment() {
     private var _binding:LoadingFragmentBinding?=null
     private val binding get()=_binding!!
     private val viewModel:LoadingViewModel by lazy { ViewModelProvider(this).get(LoadingViewModel::class.java) }
-    private val localRepository1C: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
+
+
 
 
     override fun onCreateView(
@@ -43,7 +41,6 @@ class LoadingFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*viewModel.refreshListOfFinishedOrders()*/
         binding.loadinglayout.show()
         viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getDataFromServer()
@@ -57,15 +54,14 @@ class LoadingFragment:Fragment() {
     private fun renderData(data: AppState) {
         when (data) {
             is AppState.Success -> {
-                localRepository1C.deleteAllData()
-                localRepository1C.putDataFromServer1CToLocalDatabase(data.itemOfList)
+                viewModel.clearDB()
+                viewModel.putDataFromServer1CToLocalDatabase(data.listItem)
                 Toast.makeText(context,"Справочники закгружены успешно",Toast.LENGTH_SHORT).apply {
                     setGravity(Gravity.BOTTOM,0,250)
                     show()
                 }
                 binding.loadinglayout.hide()
                 goToMainList(activity?.supportFragmentManager)
-
 
             }
             is AppState.Loading -> {

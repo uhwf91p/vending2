@@ -9,15 +9,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import com.example.order.app.domain.AppState
+import com.example.order.app.domain.usecase.AppState
 import com.example.order.R
-import com.example.order.ViewModel.SaveViewModel
+import com.example.order.viewModel.SaveViewModel
 import com.example.order.databinding.SaveFragmentBinding
 
 class SaveFragment:Fragment() {
     private var _binding:SaveFragmentBinding?=null
     private val binding get()=_binding!!
-    private val viewModel: SaveViewModel by lazy { ViewModelProvider(this).get(SaveViewModel::class.java) }
+    private val viewModel: SaveViewModel by lazy { ViewModelProvider(this)[SaveViewModel::class.java] }
 
     override fun onCreateView(
         inflater: LayoutInflater,

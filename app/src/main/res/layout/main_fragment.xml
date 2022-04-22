@@ -80,7 +80,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
 
-                android:id="@+id/input_edit_text_worked"
+                android:id="@+id/input_edit_text_worked_out"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
