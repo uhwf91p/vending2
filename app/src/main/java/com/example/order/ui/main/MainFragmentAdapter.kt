@@ -14,7 +14,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
 
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setMainList(data: List<ListItem>) {
+    fun setListItem(data: List<ListItem>) {
         listItemData = data
         notifyDataSetChanged()
 

@@ -20,8 +20,9 @@ import com.example.order.core.GlobalConstAndVars.KEY_FOR_INFLATE_MAIN_LIST
 import com.example.order.core.GlobalConstAndVars.count
 import com.example.order.app.domain.model.ListItem
 import com.example.order.R
-import com.example.order.viewModel.MainViewModel
+
 import com.example.order.databinding.MainFragmentBinding
+import com.example.order.viewModel.MainViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -62,58 +63,20 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         createCalendar()
         setWorkedOutFieldBehavior()
-       /* val workedOut=binding.inputEditTextWorkedOut
-        workedOut.setText(GlobalConstAndVars.WORKED_OUT)
-        workedOut.setOnClickListener {
-            GlobalConstAndVars.WORKED_OUT=workedOut.text.toString()
-            workedOut.setText(GlobalConstAndVars.WORKED_OUT)
-        }*/
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
         setBottomAppBar()
         hideUnnecessaryFields()
          adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
                 chooseScreenToShow(listItem)
-               /* if (count == KEY_FOR_INFLATE_MAIN_LIST) {
-                    binding.inputEditTextDate.hide()
-                    GlobalConstAndVars.LIST_KEY = listItem.id2
-                    count += 1
-                    val manager = activity?.supportFragmentManager
-                    makeDetails(manager, listItem)
-
-                } else {
-                    binding.inputEditTextDate.show()
-                    count = KEY_FOR_INFLATE_MAIN_LIST
-                    GlobalConstAndVars.LIST_KEY = GlobalConstAndVars.DEFAULT_VALUE
-                    val manager = activity?.supportFragmentManager
-                    viewModel.rememberListOfChosenItemsVM(listItem)
-                    makeDetails(manager, listItem)
-                }*/
             }
-
         })
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter = adapter
-        viewModel.getData().observe(viewLifecycleOwner, { renderList(it) })
-        viewModel.getMainListViewModel()
-       /* val etSearchBar=binding.inputEditText
-        etSearchBar.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                updateSearch()
-            }
-        })*/
+        viewModel.processAppState().observe(viewLifecycleOwner, { renderList(it) })
+        viewModel.processTheSelectedItem()
         launchSearchBarListener()
-        isEditingWorkedOutFieldFinished()
-
-       /* binding.inputEditTextWorkedOut.setOnFocusChangeListener{ _: View, b: Boolean ->
-            if (!b){
-                GlobalConstAndVars.WORKED_OUT= binding.inputEditTextWorkedOut.text.toString()
-                binding.inputEditTextWorkedOut.setText(GlobalConstAndVars.WORKED_OUT)
-            }
-
-        }*/
+        isEditingWorkedOutFieldFinished()    
 
     }
 
@@ -180,8 +143,14 @@ class MainFragment : Fragment() {
     }
 
     private fun sendDataToServer() {
-        viewModel.pullDataToServer(viewModel.getAllDataDBResultEntityToListItem())
-        viewModel.getData().observe(viewLifecycleOwner, { isDataUploadedToServer(it) })
+        val listToSend = viewModel.getAllDataDBResultEntityToListItem()
+        if (listToSend.isEmpty())
+            toast("Ничего не загружено, т к все данные уже были загружены ранее")
+        else {
+            viewModel.pullDataToServer(viewModel.getAllDataDBResultEntityToListItem())
+            viewModel.processAppState().observe(viewLifecycleOwner, { isDataUploadedToServer(it) })
+            toast("Все наряды отосланы на сервер")
+        }
     }
 
     private fun rememberWorkedOutAmount() {
@@ -192,7 +161,7 @@ class MainFragment : Fragment() {
                 GlobalConstAndVars.WORKED_OUT,
                 GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST
             ) // убрать хардкод из этой строки
-            viewModel.rememberListOfChosenItemsVM(worked)//<-----!!!!Изменил!!!! раньше запрашивлось из репозитория результатов
+            viewModel.rememberListOfChosenItemsVM(worked)
         }
     }
 
@@ -204,7 +173,7 @@ class MainFragment : Fragment() {
                 GlobalConstAndVars.DATE_OF_ORDER,
                 ""
             ) // убрать хардкод из этой строки
-            viewModel.rememberListOfChosenItemsVM(dateFromCalendar)//<-----!!!!Изменил!!!! раньше запрашивлось из репозитория результатов
+            viewModel.rememberListOfChosenItemsVM(dateFromCalendar)
         }
     }
 
@@ -225,9 +194,9 @@ class MainFragment : Fragment() {
         val etSearchBar=binding.inputEditText
         val s = etSearchBar.text
         if (s?.length == 0) {
-            adapter.setMainList(viewModel.convertArrayListItemToMainList(SearchItemStorage.list))
+            adapter.setListItem(viewModel.convertArrayListItemToMainList(SearchItemStorage.list))
         } else {
-            adapter.setMainList( viewModel.convertArrayListItemToMainList(SearchItemStorage.list).filter {
+            adapter.setListItem( viewModel.convertArrayListItemToMainList(SearchItemStorage.list).filter {
                  it.name.contains(s.toString(), true)
             } )
         }
@@ -237,7 +206,7 @@ class MainFragment : Fragment() {
     private fun renderList(data: AppState) {
         when (data) {
             is AppState.Success -> {
-               adapter.setMainList(data.listItem)
+               adapter.setListItem(data.listItem)
                 SearchItemStorage.list=viewModel.convertMainListToArrayListItem(data.listItem)
             }
             is AppState.Loading -> {

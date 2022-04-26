@@ -35,12 +35,12 @@ open class MainViewModel(
 
     private fun handleError() {}
 
-    fun getData(): LiveData<AppState> {
+    fun processAppState(): LiveData<AppState> {
         liveDataToObserve.value = AppState.Loading(null)
         return liveDataToObserve
     }
 
-    fun getMainListViewModel() = requestData()
+    fun processTheSelectedItem() = requestData()
     fun checkCompleteness(referenceListItem:List<ListItem>, listItemForCheck:List<ListItem>, dateOfOrder:String, worked:String):String{
         val differences:MutableList<ListItem> = mutableListOf()
         for (refValue in referenceListItem) {
