@@ -13,17 +13,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.order.R
+import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.model.SearchItemStorage
 import com.example.order.app.domain.usecase.AppState
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.core.GlobalConstAndVars.KEY_FOR_INFLATE_MAIN_LIST
 import com.example.order.core.GlobalConstAndVars.count
-import com.example.order.app.domain.model.ListItem
-import com.example.order.R
-
 import com.example.order.databinding.MainFragmentBinding
 import com.example.order.viewModel.MainViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -34,7 +32,7 @@ import java.util.*
 class MainFragment : Fragment() {
 
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+
     private var _binding: MainFragmentBinding? = null
     private val binding
         get() = _binding!!
@@ -63,7 +61,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         createCalendar()
         setWorkedOutFieldBehavior()
-        setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
+        /*setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))*/
         setBottomAppBar()
         hideUnnecessaryFields()
          adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
@@ -92,10 +90,7 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-    }
+
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -159,7 +154,7 @@ class MainFragment : Fragment() {
                 "Фактически отработано в натуре",
                 GlobalConstAndVars.WORKED_OUT,
                 GlobalConstAndVars.WORKED_OUT,
-                GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST
+                GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST
             ) // убрать хардкод из этой строки
             viewModel.rememberListOfChosenItemsVM(worked)
         }
@@ -219,6 +214,9 @@ class MainFragment : Fragment() {
         }
 
     }
+
+
+
     private fun isDataUploadedToServer(data: AppState) {
         when (data) {
             is AppState.Success -> {
@@ -268,6 +266,7 @@ class MainFragment : Fragment() {
             binding.inputDateLayout.endIconMode=TextInputLayout.END_ICON_NONE
             val params = binding.mainFragmentRecyclerView.layoutParams as ConstraintLayout.LayoutParams
             params.topToBottom=binding.inputLayout.id
+            params.matchConstraintPercentHeight= 0.89F
 
         } else {
             //первый экран
@@ -275,6 +274,7 @@ class MainFragment : Fragment() {
             binding.inputLayout.isGone=true
             binding.bottomBarMain.isGone=false
             binding.inputEditTextWorkedOut.isGone=false
+
         }
     }
     private fun goToSaveFragment(
@@ -322,14 +322,14 @@ class MainFragment : Fragment() {
     }
     fun chooseScreenToShow(listItem:ListItem){
         if (count == KEY_FOR_INFLATE_MAIN_LIST) {
-            binding.inputEditTextDate.hide()
+            /*binding.inputEditTextDate.hide()*/
             GlobalConstAndVars.LIST_KEY = listItem.id2
             count += 1
             val manager = activity?.supportFragmentManager
             makeDetails(manager, listItem)
 
         } else {
-            binding.inputEditTextDate.show()
+            /*binding.inputEditTextDate.show()*/
             count = KEY_FOR_INFLATE_MAIN_LIST
             GlobalConstAndVars.LIST_KEY = GlobalConstAndVars.DEFAULT_VALUE
             val manager = activity?.supportFragmentManager

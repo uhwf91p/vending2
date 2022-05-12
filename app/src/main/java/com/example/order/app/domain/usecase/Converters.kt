@@ -25,7 +25,7 @@ open class Converters : ViewModel() {
 
     }
     private fun convertMainListFromStrings (id1:String?, id2:String?, name:String?):ListItem{
-        return ListItem(id1!!,id2!!,name!!, GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST)
+        return ListItem(id1!!,id2!!,name!!, GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
 
     }
     fun convertMainListToEntityDB1C(id1:String, id2:String, name: String, value:String): DatabaseFrom1CEntity {

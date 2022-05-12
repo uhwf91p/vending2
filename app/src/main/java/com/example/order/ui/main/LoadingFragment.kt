@@ -56,7 +56,7 @@ class LoadingFragment:Fragment() {
             is AppState.Success -> {
                 viewModel.clearDB()
                 viewModel.putDataFromServer1CToLocalDatabase(data.listItem)
-                Toast.makeText(context,"Справочники закгружены успешно",Toast.LENGTH_SHORT).apply {
+                Toast.makeText(context,"Справочники загружены успешно",Toast.LENGTH_SHORT).apply {
                     setGravity(Gravity.BOTTOM,0,250)
                     show()
                 }

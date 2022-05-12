@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="font_size_main">20sp</dimen>
+    <dimen name="bottom_app_bar_height">50dp</dimen>
 </resources>

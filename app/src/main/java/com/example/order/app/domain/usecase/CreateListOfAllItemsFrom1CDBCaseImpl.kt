@@ -25,20 +25,20 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
         //TODO() хардкод ниже - убрать
 
         val quality:MutableList<ListItem> = mutableListOf(
-            ListItem("ДоплатаЗаКачество","Доплата за качество 0%","0", GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST),
-            ListItem("ДоплатаЗаКачество","Доплата за качество 20%","20", GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST)
+            ListItem("ДоплатаЗаКачество","Доплата за качество 0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
+            ListItem("ДоплатаЗаКачество","Доплата за качество 20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
         )
         val difficult:MutableList<ListItem> = mutableListOf(
-            ListItem("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество0%","0", GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST),
-            ListItem("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество12%","12", GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST)
+            ListItem("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
+            ListItem("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество12%","12", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
         )
         val refill:MutableList<ListItem> = mutableListOf(
-            ListItem("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку0%","0", GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST),
-            ListItem("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку20%","20", GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST)
+            ListItem("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
+            ListItem("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
         )
         val weekends:MutableList<ListItem> = mutableListOf(
-            ListItem("ДоплатаЗаВыходные","ДоплатаЗаВыходные0%","0", GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST),
-            ListItem("ДоплатаЗаВыходные","ДоплатаЗаВыходные100%","100", GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST)
+            ListItem("ДоплатаЗаВыходные","ДоплатаЗаВыходные0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
+            ListItem("ДоплатаЗаВыходные","ДоплатаЗаВыходные100%","100", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
         )
 
         if (GlobalConstAndVars.LIST_KEY != "0") {
@@ -104,7 +104,7 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
                         nameOfField,
                         roundedNumber.format(valueForWork).toString(),
                         roundedNumber.format(valueForWork).toString(),
-                        GlobalConstAndVars.DEFAULD_VALUE_FOR_GENERATED_LIST
+                        GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST
                     )
                 )
             }
