@@ -12,7 +12,7 @@
 
             android:id="@+id/mainItemRecyclerTextView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,11 +23,12 @@
 
 
 
-            tools:text="Работаааааааааааааааааааааааааааааааааааааа"
+            tools:text="Работаааааааааааааааааааааааааааааааааааааа
+"
             android:textSize="@dimen/font_size_main">
 
         </androidx.appcompat.widget.AppCompatTextView>
-        <View
+      <View
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"

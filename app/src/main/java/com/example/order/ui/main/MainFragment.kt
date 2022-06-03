@@ -144,7 +144,7 @@ class MainFragment : Fragment() {
         else {
             viewModel.pullDataToServer(viewModel.getAllDataDBResultEntityToListItem())
             viewModel.processAppState().observe(viewLifecycleOwner, { isDataUploadedToServer(it) })
-            toast("Все наряды отосланы на сервер")
+
         }
     }
 

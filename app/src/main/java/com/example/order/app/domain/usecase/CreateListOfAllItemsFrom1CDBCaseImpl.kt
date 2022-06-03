@@ -40,6 +40,21 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
             ListItem("ДоплатаЗаВыходные","ДоплатаЗаВыходные0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
             ListItem("ДоплатаЗаВыходные","ДоплатаЗаВыходные100%","100", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
         )
+        val steepSlope:MutableList<ListItem> = mutableListOf(
+            ListItem("КрутойСклон","КрутойСклон0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
+            ListItem("КрутойСклон","КрутойСклон20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
+        )
+        val shortRun:MutableList<ListItem> = mutableListOf(
+            ListItem("КороткийГон","КороткийГон0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
+            ListItem("КороткийГон","КороткийГон20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
+        )
+        val student:MutableList<ListItem> = mutableListOf(
+            ListItem("Ученические","Ученические0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
+            ListItem("Ученические","Ученические20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
+            ListItem("Ученические","Ученические30%","30", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
+
+        )
+
 
         if (GlobalConstAndVars.LIST_KEY != "0") {
             dataFrom1C = GlobalConstAndVars.listItemFromDb
@@ -54,7 +69,7 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
 
 
         val startList=makeStartList(dataFrom1C+hoursWorked+
-                quality+difficult+refill+weekends)+dataFrom1C+hoursWorked+ quality+difficult+refill+weekends
+                quality+difficult+refill+weekends+steepSlope+shortRun+student)+dataFrom1C+hoursWorked+ quality+difficult+refill+weekends+steepSlope+shortRun+student
         GlobalConstAndVars.GLOBAL_LIST=startList
 
         return startList
