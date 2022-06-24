@@ -78,8 +78,22 @@ open class Converters : ViewModel() {
         return mainList
 
         }
+    fun convertEntityResultToMainListForOrederList(entityList: List<ResultEntity>):List<ListItem>{
+        return entityList.map {  ListItem(it.uid, it.id1, it.name, it.value) }
+    }
 
 
+}
+
+private fun swapValuesForOrdersListCreating(
+    id1: String,
+    id2: String,
+    name: String,
+    value: String,
+    uid: String
+): ListItem {
+
+    return ListItem("0", uid, name, value)
 }
 
 

@@ -6,6 +6,7 @@ import com.example.order.app.domain.model.ListItem
 import com.example.order.repository.LocalRepository
 import com.example.order.repository.LocalRepositoryImpl
 import com.example.order.core.App
+import com.example.order.datasource.Room.DatabaseResult.ResultEntity
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -17,10 +18,13 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
     private val hoursWorked=makeListOfWork(
        GlobalConstAndVars.NUMBERS_OF_VALUES_FOR_WORKED_HOURS,
        GlobalConstAndVars.STEP_FOR_WORKED_HOURS,"Отработано часов")
+    private val converters:Converters= Converters()
 
     // саделать маски для имен в главном списке
     override fun getListForChoice(): List<ListItem> {
+        var startList: List<ListItem> = listOf()
         val dataFrom1C: List<ListItem>
+        val dataFrom1CResuldEntity:List<ResultEntity>
 
         //TODO() хардкод ниже - убрать
 
@@ -61,51 +65,101 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
 
         }
         else {
+            if (GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST == 0) {
+                dataFrom1C = localRepository1C.getAllDataDB1CEntity()
+                GlobalConstAndVars.listItemFromDb=dataFrom1C
+                startList=makeStartList(dataFrom1C+hoursWorked+
+                        quality+difficult+refill+weekends+steepSlope+shortRun+student)+dataFrom1C+hoursWorked+ quality+difficult+refill+weekends+steepSlope+shortRun+student
+                GlobalConstAndVars.GLOBAL_LIST=startList
 
-            dataFrom1C = localRepository1C.getAllDataDB1CEntity()
-            GlobalConstAndVars.listItemFromDb=dataFrom1C
+            }
+            else{
+               dataFrom1C=converters.convertEntityResultToMainListForOrederList(localRepository1C.getAllDatafromDBResult())
+                GlobalConstAndVars.listItemFromDb=dataFrom1C
+                startList=createOrdersList(dataFrom1C)+dataFrom1C
+                GlobalConstAndVars.GLOBAL_LIST=startList
+
+
+
+            }
+
+
+
+
+
 
         }
+      /*  if (GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST == 0) {
+            startList=makeStartList(dataFrom1C+hoursWorked+
+                    quality+difficult+refill+weekends+steepSlope+shortRun+student)+dataFrom1C+hoursWorked+ quality+difficult+refill+weekends+steepSlope+shortRun+student
+            GlobalConstAndVars.GLOBAL_LIST=startList
+
+        }
+        else{
+            startList=createOrdersList()
 
 
-        val startList=makeStartList(dataFrom1C+hoursWorked+
-                quality+difficult+refill+weekends+steepSlope+shortRun+student)+dataFrom1C+hoursWorked+ quality+difficult+refill+weekends+steepSlope+shortRun+student
-        GlobalConstAndVars.GLOBAL_LIST=startList
+        }*/
+
+
+
 
         return startList
     }
-  /*  private fun makeListFromDB(key: String, listItem:List<ListItem>): List<ListItem> {
-        val tempListItem: MutableList<ListItem> = mutableListOf()
-        for (mainList in listItem) {
-            if (mainList.id1 == key) {
-                tempListItem.add(mainList)
-            }
+
+    private fun createOrdersList(listItem: List<ListItem>): List<ListItem> {
+        val startListItem: List<ListItem> = listItem.distinctBy { it.id1
         }
-        for (mainList in tempListItem) {
-             mainList.value = mainList.name
+        val convertListItem:MutableList<ListItem> = mutableListOf()
+        for (startList1 in startListItem) {
+            convertListItem.add(swapValuesForOrdersListCreating(startList1.id1,startList1.id2,startList1.name,startList1.value))
 
-                }
+        }
+        return convertListItem
+    }
+      private fun makeListFromDB(key: String, listItem:List<ListItem>): List<ListItem> {
+          val tempListItem: MutableList<ListItem> = mutableListOf()
+          for (mainList in listItem) {
+              if (mainList.id1 == key) {
+                  tempListItem.add(mainList)
+              }
+          }
+          for (mainList in tempListItem) {
+               mainList.value = mainList.name
 
-        return tempListItem.distinctBy { it.name to it.id1 to it.id2 }
-    }*/
+                  }
+
+          return tempListItem.distinctBy { it.name to it.id1 to it.id2 }
+      }
 
     private fun makeStartList(listItem: List<ListItem>): List<ListItem> {
         val startListItem: List<ListItem> = listItem.distinctBy { it.id1 }
         val convertListItem:MutableList<ListItem> = mutableListOf()
          for (startList1 in startListItem) {
-           convertListItem.add(swapValues(startList1.id1,startList1.id2,startList1.name,startList1.value))
+           convertListItem.add(swapValuesForStartListCreating(startList1.id1,startList1.id2,startList1.name,startList1.value))
 
         }
         return convertListItem
     }
 
-    private fun swapValues (id1:String, id2:String, name: String, value:String):ListItem{
+    private fun swapValuesForStartListCreating (id1:String, id2:String, name: String, value:String):ListItem{
         val objectForChange = ListItem(id1,id2,name,value)
 
         objectForChange.name=objectForChange.id1
         objectForChange.id2=objectForChange.id1
         objectForChange.id1="0"
         return objectForChange
+    }
+
+    private fun swapValuesForOrdersListCreating(
+        id1: String,
+        id2: String,
+        name: String,
+        value: String,
+
+    ): ListItem {
+
+        return ListItem("0", id1, name, value)
     }
     private fun makeListOfWork(numberOfValues:Int, step:Double, nameOfField:String):MutableList<ListItem>{
         val workListItem: MutableList<ListItem> = mutableListOf()

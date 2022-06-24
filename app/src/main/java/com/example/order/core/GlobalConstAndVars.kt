@@ -23,5 +23,6 @@ object GlobalConstAndVars {
     var LIST_OF_FINISHED_ORDERS = listOf<ServerResponseData>()
     const val MARKER_OF_FINISHED_ORDER="1"
     var WORKED_OUT:String=""
+    var SWITCH_FOR_ORDERS_LIST=0
 
 }

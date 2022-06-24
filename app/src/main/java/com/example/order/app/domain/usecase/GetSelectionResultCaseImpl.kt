@@ -27,7 +27,7 @@ class GetSelectionResultCaseImpl: GetSelectionResultCase {
         return GlobalConstAndVars.LIST_OF_CHOSEN_ITEMS
     }
     override fun makeOrderFinished() {
-        val listOfUnfinishedOrders = localDataSource.getAllDataDBResultEntity()
+        val listOfUnfinishedOrders = localDataSource.getAllUnfinishedDataDBResultEntity()
         for (orderFromDB in listOfUnfinishedOrders) {
             for (orderFromServer in GlobalConstAndVars.LIST_OF_FINISHED_ORDERS) {
                 if (orderFromDB.uid == orderFromServer.id2) {
@@ -52,7 +52,7 @@ class GetSelectionResultCaseImpl: GetSelectionResultCase {
     }
 
     override fun getAllDataDBResultEntityToListItem():List<ListItem> {
-        return localDataSource.getAllDataDBResultEntityToMainList()
+        return localDataSource.getAllUnfinishedDataDBResultEntityToMainList()
     }
 
 

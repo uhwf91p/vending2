@@ -31,8 +31,12 @@ interface DatabaseFrom1CDAO {
 
         @Query("SELECT*FROM ResultEntity WHERE value=''")
         fun getAllUnfinishedResult():List<ResultEntity>
+
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun insertDataToResult(entity: ResultEntity)
+
+        @Query("SELECT*FROM ResultEntity")
+        fun allFromResultDB():List<ResultEntity>
 
 
 

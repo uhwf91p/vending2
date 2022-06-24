@@ -18,4 +18,15 @@
     </item>
 
 
+    <item
+        android:id="@+id/order_list"
+
+
+        android:icon="@drawable/orders_list"
+        android:title="Список нарядов"
+        app:showAsAction="ifRoom" />
+
+
+
+
 </menu>

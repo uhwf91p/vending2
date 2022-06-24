@@ -7,10 +7,11 @@ interface LocalRepository {
     fun putDataFromServer1CToLocalDatabase(listItemFromServer:List<ListItem>)
     fun getAllDataDB1CEntity(): List<ListItem>
     fun deleteAllData()
-    fun getAllDataDBResultEntityToMainList():List<ListItem>
+    fun getAllUnfinishedDataDBResultEntityToMainList():List<ListItem>
     fun putDataToResultDBFromListItem(resultListItem:List<ListItem>)
-    fun getAllDataDBResultEntity():List<ResultEntity>
+    fun getAllUnfinishedDataDBResultEntity():List<ResultEntity>
     fun insertToDBResultFromResultEntity(data: ResultEntity)
+    fun getAllDatafromDBResult():List<ResultEntity>
 
 
 }

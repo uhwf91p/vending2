@@ -104,9 +104,33 @@ class MainFragment : Fragment() {
             sendDataToServer()
 
         }
+        if (item.itemId == R.id.order_list) {
+
+            val manager = activity?.supportFragmentManager
+            val listItem=ListItem("","","","")
+            showOrHideOrdersList()
+
+           makeDetails(manager,listItem)
+
+        }
+
 
         return super.onOptionsItemSelected(item)
     }
+
+    private fun showOrHideOrdersList() {
+        if (GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST == 0) {
+            GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST=1
+            viewModel.getOrdersListFromDBResult()
+            newInstance()
+
+        }
+        else { GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST=0
+            viewModel.getGlobalLIst()
+            newInstance()
+        }
+    }
+
 
     private fun checkFieldsCompleteness() {
         if (viewModel.checkCompleteness(

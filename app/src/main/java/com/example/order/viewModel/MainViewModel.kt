@@ -22,10 +22,12 @@ open class MainViewModel(
 
 
 
+
 ) : ViewModel() {
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val converters: Converters = Converters()
+    private val createListOfOrdersAndStartListItem: CreateListOfAllItemsFrom1CDBCase = CreateListOfAllItemsFrom1CDBCaseImpl()
 
 
 
@@ -124,6 +126,13 @@ open class MainViewModel(
                 }
             })
         }
+
+    }
+    fun getOrdersListFromDBResult(){
+        createListOfOrdersAndStartListItem.getListForChoice()
+    }
+    fun getGlobalLIst(){
+       createListOfOrdersAndStartListItem.getListForChoice()
 
     }
 

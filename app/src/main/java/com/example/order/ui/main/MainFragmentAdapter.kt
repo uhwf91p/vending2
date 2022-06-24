@@ -46,17 +46,25 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         @SuppressLint("SetTextI18n")
         fun bind(listItem: ListItem) {
 
-            val textForItem:String = if (GlobalConstAndVars.LIST_KEY == "0") {
+            val textForItem:String = if (GlobalConstAndVars.LIST_KEY == "0"&&GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST==0) {
 
 
                     listItem.name + ": " + listItem.value
 
-            } else {
+
+            }
+
+
+            else {
                 if (listItem.id1 == "ВР"&&listItem.value!="") {
                     listItem.value + ": " + listItem.name
                 } else {
                    listItem.name
                 }
+            }
+            if (GlobalConstAndVars.LIST_KEY == "0"&&GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST==1) {
+                listItem.id2
+
             }
 
 
