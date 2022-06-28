@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.order.R
+import com.example.order.app.domain.model.ListItem
 import com.example.order.viewModel.LoadingViewModel
 import com.example.order.app.domain.usecase.AppState
+import com.example.order.app.domain.usecase.CreateListOfAllItemsFrom1CDBCase
 import com.example.order.databinding.LoadingFragmentBinding
 
 class LoadingFragment:Fragment() {
@@ -43,9 +45,28 @@ class LoadingFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loadinglayout.show()
         viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })
+        val listTest = listOf(
+            ListItem("1","Вариант","1","До моста производство работ не менее 150 метров"),
+            ListItem("2","Вариант","1","До железнодорожного переезда без шлагбаума не менее 50 метров"),
+            ListItem("3","Вариант","1","До железнодорожного переезда со шлагбаумом не менее 150 метров"),
+            ListItem("4","ТекстВопроса","1","О чем предупреждают Вас данные знаки?"),
+            ListItem("5","Ответ","1","3"),
+
+            ListItem("1","Вариант","2","какой-то вариант1"),
+            ListItem("2","Вариант","2","какой-то вариант2"),
+            ListItem("3","Вариант","2","какой-то варинат3"),
+            ListItem("3","Вариант","2","какой-то варинат4"),
+            ListItem("4","ТекстВопроса","2","Какой-то вопрос"),
+            ListItem("5","Ответ","2","3")
+
+
+
+
+        )
+        viewModel.clearDB()
+        viewModel.putDataFromServer1CToLocalDatabase(listTest)
         viewModel.getDataFromServer()
         viewModel.getGlobalLIst()
-
 
     }
 
@@ -55,7 +76,10 @@ class LoadingFragment:Fragment() {
         when (data) {
             is AppState.Success -> {
                 viewModel.clearDB()
-                viewModel.putDataFromServer1CToLocalDatabase(data.listItem)
+               /* viewModel.putDataFromServer1CToLocalDatabase(data.listItem)*/
+
+
+
                 Toast.makeText(context,"Справочники загружены успешно",Toast.LENGTH_SHORT).apply {
                     setGravity(Gravity.BOTTOM,0,250)
                     show()
@@ -69,10 +93,10 @@ class LoadingFragment:Fragment() {
             }
             is AppState.Error -> {
                 binding.loadinglayout.show()
-                Toast.makeText(context,data.error.message,Toast.LENGTH_SHORT).apply {
+              /*  Toast.makeText(context,data.error.message,Toast.LENGTH_SHORT).apply {
                     setGravity(Gravity.BOTTOM,0,250)
                     show()
-                }
+                }*/
                 goToMainList(activity?.supportFragmentManager)
 
 

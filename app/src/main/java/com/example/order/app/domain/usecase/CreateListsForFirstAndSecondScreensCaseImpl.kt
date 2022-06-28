@@ -23,15 +23,15 @@ class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondS
         }
                 for (mainList in tempListItem) {
                     for (remList in rememberedListItem) {
-                        if (mainList.id2 == remList.id1) {
-                            mainList.value=remList.name
+                        if (mainList.dataType == remList.id1) {
+                            mainList.value=remList.ticketNumber
 
                     }
 
                     }
 
                 }
-        GlobalConstAndVars.LIST_OF_ITEMS_FOR_FIRST_AND_SECOND_SCREENS=tempListItem.distinctBy { it.name to it.id1 to it.id2 }
+        GlobalConstAndVars.LIST_OF_ITEMS_FOR_FIRST_AND_SECOND_SCREENS=tempListItem.distinctBy { it.ticketNumber to it.id1 to it.dataType }
         return  GlobalConstAndVars.LIST_OF_ITEMS_FOR_FIRST_AND_SECOND_SCREENS
 
 

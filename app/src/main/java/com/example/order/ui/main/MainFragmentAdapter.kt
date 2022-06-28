@@ -49,7 +49,7 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
             val textForItem:String = if (GlobalConstAndVars.LIST_KEY == "0"&&GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST==0) {
 
 
-                    listItem.name + ": " + listItem.value
+                    listItem.ticketNumber + ": " + listItem.value
 
 
             }
@@ -57,13 +57,13 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
 
             else {
                 if (listItem.id1 == "ВР"&&listItem.value!="") {
-                    listItem.value + ": " + listItem.name
+                    listItem.value + ": " + listItem.ticketNumber
                 } else {
-                   listItem.name
+                   listItem.ticketNumber
                 }
             }
             if (GlobalConstAndVars.LIST_KEY == "0"&&GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST==1) {
-                listItem.id2
+                listItem.dataType
 
             }
 

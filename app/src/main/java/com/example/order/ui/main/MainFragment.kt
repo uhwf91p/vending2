@@ -1,18 +1,12 @@
 package com.example.order.ui.main
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.R
 import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.model.SearchItemStorage
@@ -23,10 +17,7 @@ import com.example.order.core.GlobalConstAndVars.count
 import com.example.order.databinding.MainFragmentBinding
 import com.example.order.viewModel.MainViewModel
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.coroutines.*
-import java.util.*
 
 
 class MainFragment : Fragment() {
@@ -343,7 +334,7 @@ class MainFragment : Fragment() {
     fun chooseScreenToShow(listItem:ListItem){
         if (count == KEY_FOR_INFLATE_MAIN_LIST) {
             /*binding.inputEditTextDate.hide()*/
-            GlobalConstAndVars.LIST_KEY = listItem.id2
+            GlobalConstAndVars.LIST_KEY = listItem.dataType
             count += 1
             val manager = activity?.supportFragmentManager
             makeDetails(manager, listItem)

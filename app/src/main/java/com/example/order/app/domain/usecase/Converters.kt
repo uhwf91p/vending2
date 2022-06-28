@@ -2,7 +2,6 @@ package com.example.order.app.domain.usecase
 
 import androidx.lifecycle.ViewModel
 import com.example.order.app.domain.model.SearchItem
-import com.example.order.core.GlobalConstAndVars
 import com.example.order.app.domain.model.ListItem
 import com.example.order.datasource.Room.DataBaseFrom1C.DatabaseFrom1CEntity
 import com.example.order.datasource.Room.DatabaseResult.ResultEntity
@@ -31,14 +30,14 @@ open class Converters : ViewModel() {
     fun convertMainListToEntityDB1C(id1:String, id2:String, name: String, value:String): DatabaseFrom1CEntity {
         val databaseFrom1CEntity= DatabaseFrom1CEntity("","","","")
         databaseFrom1CEntity.id1=id1
-        databaseFrom1CEntity.id2=id2
-        databaseFrom1CEntity.name=name
+        databaseFrom1CEntity.dataType=id2
+        databaseFrom1CEntity.ticketNumber=name
         databaseFrom1CEntity.value=value
         return databaseFrom1CEntity
     }
     fun convertEntityDB1CToMainList(entityList: List<DatabaseFrom1CEntity>): List<ListItem> {
         return entityList.map {
-            ListItem(it.id1, it.id2, it.name, it.value)
+            ListItem(it.id1, it.dataType, it.ticketNumber, it.value)
 
         }
 
@@ -50,7 +49,7 @@ open class Converters : ViewModel() {
     }
     fun convertRemListToResultEntity(remListItem:List<ListItem>):List<ResultEntity>{
         val uid=UUID.randomUUID().toString()
-        return remListItem.map { ResultEntity(it.id1,it.id2,it.name,it.value,uid
+        return remListItem.map { ResultEntity(it.id1,it.dataType,it.ticketNumber,it.value,uid
 
         ) }
 
@@ -58,7 +57,7 @@ open class Converters : ViewModel() {
     fun convertListItemToItemStorage(listItem:List<ListItem>):ArrayList<SearchItem>{
         val arrListOfItemStorage= ArrayList<SearchItem>()
         for (mainList in listItem) {
-            arrListOfItemStorage.add(SearchItem(mainList.id1,mainList.id2,mainList.name,mainList.value))
+            arrListOfItemStorage.add(SearchItem(mainList.id1,mainList.dataType,mainList.ticketNumber,mainList.value))
 
 
         }

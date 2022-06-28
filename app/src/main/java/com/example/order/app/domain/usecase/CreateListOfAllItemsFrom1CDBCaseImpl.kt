@@ -112,7 +112,7 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
         }
         val convertListItem:MutableList<ListItem> = mutableListOf()
         for (startList1 in startListItem) {
-            convertListItem.add(swapValuesForOrdersListCreating(startList1.id1,startList1.id2,startList1.name,startList1.value))
+            convertListItem.add(swapValuesForOrdersListCreating(startList1.id1,startList1.dataType,startList1.ticketNumber,startList1.value))
 
         }
         return convertListItem
@@ -125,18 +125,18 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
               }
           }
           for (mainList in tempListItem) {
-               mainList.value = mainList.name
+               mainList.value = mainList.ticketNumber
 
                   }
 
-          return tempListItem.distinctBy { it.name to it.id1 to it.id2 }
+          return tempListItem.distinctBy { it.ticketNumber to it.id1 to it.dataType }
       }
 
     private fun makeStartList(listItem: List<ListItem>): List<ListItem> {
         val startListItem: List<ListItem> = listItem.distinctBy { it.id1 }
         val convertListItem:MutableList<ListItem> = mutableListOf()
          for (startList1 in startListItem) {
-           convertListItem.add(swapValuesForStartListCreating(startList1.id1,startList1.id2,startList1.name,startList1.value))
+           convertListItem.add(swapValuesForStartListCreating(startList1.id1,startList1.dataType,startList1.ticketNumber,startList1.value))
 
         }
         return convertListItem
@@ -145,8 +145,8 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
     private fun swapValuesForStartListCreating (id1:String, id2:String, name: String, value:String):ListItem{
         val objectForChange = ListItem(id1,id2,name,value)
 
-        objectForChange.name=objectForChange.id1
-        objectForChange.id2=objectForChange.id1
+        objectForChange.ticketNumber=objectForChange.id1
+        objectForChange.dataType=objectForChange.id1
         objectForChange.id1="0"
         return objectForChange
     }

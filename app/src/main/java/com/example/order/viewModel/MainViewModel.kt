@@ -3,7 +3,6 @@ package com.example.order.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.order.BuildConfig
 import com.example.order.app.domain.model.SearchItem
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.app.domain.model.ListItem
@@ -48,7 +47,7 @@ open class MainViewModel(
         for (refValue in referenceListItem) {
             var count=0
             for (checkedValue in listItemForCheck) {
-                if (refValue.id2==checkedValue.id1) {
+                if (refValue.dataType==checkedValue.id1) {
                     count += 1
                 }
             }
