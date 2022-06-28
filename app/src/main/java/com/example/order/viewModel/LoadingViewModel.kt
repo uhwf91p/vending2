@@ -33,7 +33,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
 
     fun getDataFromServer()  {
         liveDataToObserve.value = AppState.Loading(null)
-        val apiKey: String = BuildConfig.APIKEY_FROM_1C
+        val apiKey: String = "BuildConfig.APIKEY_FROM_1C"
         if (apiKey.isBlank()) {
             AppState.Error(Throwable("You need API key"))
         } else {

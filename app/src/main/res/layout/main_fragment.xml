@@ -1,194 +1,376 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/margin_left_main"
+    android:layout_marginEnd="@dimen/margin_right_main"
     tools:context=".ui.main.MainFragment"
-    android:layout_above="@id/bottom_bar_main"
+    android:background="#80FAF6F6"
+
 
     >
+    <com.google.android.material.textview.MaterialTextView
 
+        android:id="@+id/theme"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/margin_top_main"
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-
-        >
-
-        <com.google.android.material.textfield.TextInputLayout
-
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-           app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias="0"
-            android:id="@+id/input_layout"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.09"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_search_main_fragment"
-            app:endIconCheckable="true"
-            app:endIconMode="custom"
-            app:layout_constraintTop_toTopOf="parent"
-
-
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/input_date_layout"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.09"
-            android:id="@+id/input_date_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_layout"
-            app:layout_constraintBottom_toTopOf="@id/input_work_amount_layout"
-            android:hint="@string/date_of_order"
-            app:endIconCheckable="true"
-            app:endIconDrawable="@drawable/ic_baseline_date_range_24"
-            app:endIconMode="custom"
-
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:clickable="false"
-                android:longClickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/input_edit_text_date"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text">
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.09"
-            android:id="@+id/input_work_amount_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_date_layout"
-            app:layout_constraintBottom_toTopOf="@id/mainFragmentRecyclerView"
-            android:hint="@string/worked_in_nature"
-            app:endIconCheckable="true"
-
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-
-
-                android:id="@+id/input_edit_text_worked_out"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="numberDecimal"
-                android:maxLength="6">
-
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            app:layout_constraintVertical_chainStyle="packed"
-
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.73"
-
-
-
-
-
-            android:id="@+id/mainFragmentRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toBottomOf="@id/input_work_amount_layout"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-
-
-            tools:listitem="@layout/main_item">
-
-
-        </androidx.recyclerview.widget.RecyclerView>
-     <!--   <androidx.coordinatorlayout.widget.CoordinatorLayout
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.09"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mainFragmentRecyclerView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0"
-
-            >
-
-
-
-
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
-
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <com.google.android.material.bottomappbar.BottomAppBar
-
-
-        android:id="@+id/bottom_bar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:backgroundTint="@color/teal_700"
+        android:textSize="@dimen/text_size_main_head"
+        android:text="Тема 1.Дорожные знаки"
+        android:textColor="@color/black"
 
-        app:layout_scrollFlags="scroll|enterAlways"
+        android:textStyle="bold">
+
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/ticket"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/theme"
+        android:layout_width="@dimen/tickets_and_qustions_fields_size"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_main_head"
+
+        android:text="Билет   ">
+
+    </com.google.android.material.textview.MaterialTextView>
+    <ImageButton
+        android:id="@+id/skip_previous_ticket"
+        android:layout_marginStart="@dimen/margin_views"
+        app:layout_constraintStart_toEndOf="@id/ticket"
+        app:layout_constraintTop_toBottomOf="@id/theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_skip_previous_24"
+        android:backgroundTint="@color/teal_700"
+        >
+
+
+    </ImageButton>
+
+
+    <ImageButton
+        android:id="@+id/back_ticket"
+        android:layout_marginStart="@dimen/margin_views"
+        app:layout_constraintStart_toEndOf="@id/skip_previous_ticket"
+        app:layout_constraintTop_toBottomOf="@id/theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_left_24"
+        android:backgroundTint="@color/teal_700"
+        >
+
+
+    </ImageButton>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tickets_number"
+        android:layout_marginStart="@dimen/margin_views"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintStart_toEndOf="@id/back_ticket"
+        app:layout_constraintTop_toBottomOf="@id/theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+
+        android:text="1">
+    </com.google.android.material.textview.MaterialTextView>
+    <ImageButton
+        android:id="@+id/next_ticket"
+        android:layout_marginStart="@dimen/margin_views"
+        app:layout_constraintStart_toEndOf="@id/tickets_number"
+        app:layout_constraintTop_toBottomOf="@id/theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_right_24"
+        android:backgroundTint="@color/teal_700"
+        >
+    </ImageButton>
+    <ImageButton
+        android:id="@+id/skip_end_ticket"
+        android:layout_marginStart="@dimen/margin_views"
+        app:layout_constraintStart_toEndOf="@id/next_ticket"
+        app:layout_constraintTop_toBottomOf="@id/theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_skip_next_24"
+        android:backgroundTint="@color/teal_700"
+        >
+    </ImageButton>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tickets_amount"
+        android:layout_marginStart="@dimen/margin_views"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintStart_toEndOf="@id/skip_end_ticket"
+        app:layout_constraintTop_toBottomOf="@id/theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:text="из 30">
+    </com.google.android.material.textview.MaterialTextView>
+
+
+
+
+
+
+
+
+
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/question"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ticket"
+        android:layout_width="@dimen/tickets_and_qustions_fields_size"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+
+        android:text="Вопрос">
+
+    </com.google.android.material.textview.MaterialTextView>
+    <ImageButton
+        android:id="@+id/skip_previous_question"
+
+        android:layout_marginStart="@dimen/margin_views"
+        app:layout_constraintStart_toEndOf="@id/question"
+        app:layout_constraintTop_toBottomOf="@id/ticket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_skip_previous_24"
+        >
+
+
+    </ImageButton>
+
+
+    <ImageButton
+        android:id="@+id/back_question"
+        android:layout_marginStart="@dimen/margin_views"
+        app:layout_constraintStart_toEndOf="@id/skip_previous_question"
+        app:layout_constraintTop_toBottomOf="@id/ticket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_left_24"
+        >
+
+
+    </ImageButton>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/questions_number"
+        android:layout_marginStart="@dimen/margin_views"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintStart_toEndOf="@id/back_question"
+        app:layout_constraintTop_toBottomOf="@id/ticket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+
+        android:text="1">
+    </com.google.android.material.textview.MaterialTextView>
+    <ImageButton
+        android:id="@+id/next_question"
+        android:layout_marginStart="@dimen/margin_views"
+        app:layout_constraintStart_toEndOf="@id/questions_number"
+        app:layout_constraintTop_toBottomOf="@id/ticket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_right_24"
+        >
+    </ImageButton>
+    <ImageButton
+        android:id="@+id/skip_end_question"
+        android:layout_marginStart="@dimen/margin_views"
+        app:layout_constraintStart_toEndOf="@id/next_question"
+        app:layout_constraintTop_toBottomOf="@id/ticket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_skip_next_24"
+        >
+    </ImageButton>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/questions_amount"
+        android:layout_marginStart="@dimen/margin_views"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintStart_toEndOf="@id/skip_end_question"
+        app:layout_constraintTop_toBottomOf="@id/ticket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        tools:text="из 10">
+    </com.google.android.material.textview.MaterialTextView>
+
+
+        <com.google.android.material.card.MaterialCardView
+
+            android:id="@+id/questions_text"
+            app:layout_constraintTop_toBottomOf="@id/question"
+            android:layout_marginTop="@dimen/margin_lines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           >
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_marginTop="@dimen/margin_top_main"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="О чем предупреждают Вас данные знаки?"
+                android:textSize="@dimen/font_size_main"
+                android:textColor="@color/black"
+                style="@style/CardView">
+
+
+            </com.google.android.material.textview.MaterialTextView>
+
+
+        </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@id/image"
+        android:layout_marginTop="@dimen/margin_top_main"
+        app:layout_constraintTop_toBottomOf="@id/questions_text"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="280dp"
+        android:src="@drawable/image3"
+        android:scaleType="fitStart"
+        >
+
+
+    </com.google.android.material.imageview.ShapeableImageView>
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/radio_button"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.checkbox.MaterialCheckBox>
+
+    <com.google.android.material.card.MaterialCardView
+
+        android:id="@+id/answers"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintStart_toEndOf="@+id/radio_button"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
 
         >
 
-    </com.google.android.material.bottomappbar.BottomAppBar>
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_top_main"
+            android:textSize="@dimen/font_size_main"
+            android:text="1. До моста производство работ не менее 150 метров">
+
+
+        </com.google.android.material.textview.MaterialTextView>
+
+
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/radio_button2"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/radio_button"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.checkbox.MaterialCheckBox>
+
+    <com.google.android.material.card.MaterialCardView
+
+        android:id="@+id/answers2"
+        app:layout_constraintTop_toBottomOf="@id/answers"
+        app:layout_constraintStart_toEndOf="@+id/radio_button"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        >
+
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_top_main"
+            android:textSize="@dimen/font_size_main"
+            android:text="2. До железнодорожного переезда без шлагбаума не менее 50 метров">
+
+
+        </com.google.android.material.textview.MaterialTextView>
+
+
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/radio_button3"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@id/radio_button2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.checkbox.MaterialCheckBox>
+
+    <com.google.android.material.card.MaterialCardView
+
+        android:id="@+id/answers3"
+        app:layout_constraintTop_toBottomOf="@id/answers2"
+        app:layout_constraintStart_toEndOf="@+id/radio_button"
+        android:layout_marginTop="@dimen/margin_lines"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.CardView"
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        >
+
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/CardView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_top_main"
+            android:textSize="@dimen/font_size_main"
+            android:text="3. До железнодорожного переезда со шлагбаумом не менее 150 метров">
+
+
+        </com.google.android.material.textview.MaterialTextView>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

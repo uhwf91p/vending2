@@ -32,30 +32,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    buildTypes.each {
+   /* buildTypes.each {
 
         Properties properties=new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
         def apikeyFrom1C=properties.getProperty("APIKEY_From1C", "")
         it.buildConfigField "String","APIKEY_FROM_1C",apikeyFrom1C
 
-    }
-    buildTypes.each {
+    }*/
+   /* buildTypes.each {
 
         Properties properties=new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
         def UserName=properties.getProperty("API_USERNAME", "")
         it.buildConfigField "String","API_USERNAME",UserName
 
-    }
-    buildTypes.each {
+    }*/
+  /*  buildTypes.each {
 
         Properties properties=new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
         def password=properties.getProperty("API_PASSWORD", "")
         it.buildConfigField "String","API_PASSWORD",password
 
-    }
+    }*/
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

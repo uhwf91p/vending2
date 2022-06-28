@@ -25,7 +25,7 @@ class Retrofit1C {
     }
     private fun createOkHttpClient(interceptor:Interceptor):OkHttpClient{
         val httpClient=OkHttpClient.Builder()
-        httpClient.addInterceptor(AuthInterceptor(BuildConfig.API_USERNAME,BuildConfig.API_PASSWORD))
+        /*httpClient.addInterceptor(AuthInterceptor(BuildConfig.API_USERNAME,BuildConfig.API_PASSWORD))*/
         httpClient.addInterceptor(interceptor)
         httpClient.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         return httpClient.build()

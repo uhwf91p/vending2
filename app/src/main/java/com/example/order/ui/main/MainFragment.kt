@@ -59,18 +59,14 @@ class MainFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        createCalendar()
-        setWorkedOutFieldBehavior()
-        /*setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))*/
-        setBottomAppBar()
-        hideUnnecessaryFields()
+
          adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
                 chooseScreenToShow(listItem)
             }
         })
-        binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.mainFragmentRecyclerView.adapter = adapter
+      /*  binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.mainFragmentRecyclerView.adapter = adapter*/
         viewModel.processAppState().observe(viewLifecycleOwner, { renderList(it) })
         viewModel.processTheSelectedItem()
         launchSearchBarListener()
@@ -85,8 +81,8 @@ class MainFragment : Fragment() {
 
     private fun setBottomAppBar() {
         val context = activity as MainActivity
-        context.setSupportActionBar(binding.bottomBarMain)
-        setHasOptionsMenu(true)
+        /*context.setSupportActionBar(binding.bottomBarMain)
+        setHasOptionsMenu(true)*/
 
     }
 
@@ -133,7 +129,7 @@ class MainFragment : Fragment() {
 
 
     private fun checkFieldsCompleteness() {
-        if (viewModel.checkCompleteness(
+       /* if (viewModel.checkCompleteness(
                 GlobalConstAndVars.LIST_OF_ITEMS_FOR_FIRST_AND_SECOND_SCREENS,
                 GlobalConstAndVars.LIST_OF_CHOSEN_ITEMS,
                 GlobalConstAndVars.DATE_OF_ORDER,
@@ -149,7 +145,7 @@ class MainFragment : Fragment() {
             setDefaultValuesForTheGlobalVars(workedOut)
 
 
-        }
+        }*/
     }
 
     private fun setDefaultValuesForTheGlobalVars(workedOut: TextInputEditText) {
@@ -210,7 +206,7 @@ class MainFragment : Fragment() {
         }
     }
     private fun updateSearch() {
-        val etSearchBar=binding.inputEditText
+     /*   val etSearchBar=binding.inputEditText
         val s = etSearchBar.text
         if (s?.length == 0) {
             adapter.setListItem(viewModel.convertArrayListItemToMainList(SearchItemStorage.list))
@@ -218,7 +214,7 @@ class MainFragment : Fragment() {
             adapter.setListItem( viewModel.convertArrayListItemToMainList(SearchItemStorage.list).filter {
                  it.name.contains(s.toString(), true)
             } )
-        }
+        }*/
 
     }
 
@@ -281,7 +277,7 @@ class MainFragment : Fragment() {
 
     }
     private fun hideUnnecessaryFields(){
-        if (count!= KEY_FOR_INFLATE_MAIN_LIST) {
+     /*   if (count!= KEY_FOR_INFLATE_MAIN_LIST) {
             //второй экран
             binding.inputEditTextDate.isGone=true
             binding.bottomBarMain.isGone=true
@@ -299,7 +295,7 @@ class MainFragment : Fragment() {
             binding.bottomBarMain.isGone=false
             binding.inputEditTextWorkedOut.isGone=false
 
-        }
+        }*/
     }
     private fun goToSaveFragment(
         manager: FragmentManager?,
@@ -310,7 +306,7 @@ class MainFragment : Fragment() {
     }
     private fun createCalendar() {
 
-        val textView = binding.inputEditTextDate
+      /*  val textView = binding.inputEditTextDate
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val monthFromCalendar = c.get(Calendar.MONTH)
@@ -324,25 +320,25 @@ class MainFragment : Fragment() {
                 textView.setText(GlobalConstAndVars.DATE_OF_ORDER)
             }, year, monthFromCalendar, day)
             dpd.show()
-        }
+        }*/
     }
 
     private fun setWorkedOutFieldBehavior() {
-        val workedOut = binding.inputEditTextWorkedOut
+       /* val workedOut = binding.inputEditTextWorkedOut
         workedOut.setText(GlobalConstAndVars.WORKED_OUT)
         workedOut.setOnClickListener {
             GlobalConstAndVars.WORKED_OUT = workedOut.text.toString()
             workedOut.setText(GlobalConstAndVars.WORKED_OUT)
-        }
+        }*/
 
     }
     private fun isEditingWorkedOutFieldFinished() {
-        binding.inputEditTextWorkedOut.setOnFocusChangeListener { _: View, b: Boolean ->
+    /*    binding.inputEditTextWorkedOut.setOnFocusChangeListener { _: View, b: Boolean ->
             if (!b) {
                 GlobalConstAndVars.WORKED_OUT = binding.inputEditTextWorkedOut.text.toString()
                 binding.inputEditTextWorkedOut.setText(GlobalConstAndVars.WORKED_OUT)
             }
-        }
+        }*/
     }
     fun chooseScreenToShow(listItem:ListItem){
         if (count == KEY_FOR_INFLATE_MAIN_LIST) {
@@ -362,14 +358,14 @@ class MainFragment : Fragment() {
         }
     }
     private fun launchSearchBarListener(){
-        val etSearchBar=binding.inputEditText
+    /*    val etSearchBar=binding.inputEditText
         etSearchBar.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 updateSearch()
             }
-        })
+        })*/
     }
 
 

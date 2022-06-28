@@ -95,7 +95,7 @@ open class MainViewModel(
 
     fun pullDataToServer(resultListItem:List<ListItem>)  {
         liveDataToObserve.value = AppState.Loading(null)
-        val apiKey: String = BuildConfig.APIKEY_FROM_1C
+        val apiKey: String = "BuildConfig.APIKEY_FROM_1C"
         if (apiKey.isBlank()) {
             AppState.Error(Throwable("You need API key"))
         } else {
