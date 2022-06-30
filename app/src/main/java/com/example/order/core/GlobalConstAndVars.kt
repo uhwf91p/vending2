@@ -2,8 +2,12 @@ package com.example.order.core
 
 import com.example.order.app.domain.model.ListItem
 import com.example.order.datasource.Server.ServerResponseData
+import com.example.order.datasource.fireBase.ServerResponseDataFireBase
+import com.google.firebase.firestore.DocumentSnapshot
 
 object GlobalConstAndVars {
+    var taskList:List<DocumentSnapshot> = listOf()
+    var listFromCloud:MutableList<ServerResponseDataFireBase> = mutableListOf()
     const val DEFAULT_VALUE: String = "0"
     var listItemFromDb:List<ListItem> = mutableListOf()
     var LIST_KEY: String = DEFAULT_VALUE

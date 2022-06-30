@@ -14,12 +14,19 @@ import com.example.order.app.domain.model.ListItem
 import com.example.order.viewModel.LoadingViewModel
 import com.example.order.app.domain.usecase.AppState
 import com.example.order.app.domain.usecase.CreateListOfAllItemsFrom1CDBCase
+import com.example.order.core.GlobalConstAndVars
 import com.example.order.databinding.LoadingFragmentBinding
+import com.example.order.datasource.fireBase.CloudFireStore
+import io.reactivex.Single
 
 class LoadingFragment:Fragment() {
     private var _binding:LoadingFragmentBinding?=null
     private val binding get()=_binding!!
-    private val viewModel:LoadingViewModel by lazy { ViewModelProvider(this).get(LoadingViewModel::class.java) }
+    private val viewModel:LoadingViewModel by lazy { ViewModelProvider(this).get(LoadingViewModel::class.java)
+
+    }
+    val cloud:CloudFireStore=CloudFireStore()
+
 
 
 
@@ -63,8 +70,13 @@ class LoadingFragment:Fragment() {
 
 
         )
+        var x: Single<List<com.example.order.datasource.fireBase.Task>>
+       cloud.getAllDataFromCollectionCloudFireStore()
+        GlobalConstAndVars.taskList.isEmpty()
+
         viewModel.clearDB()
-        viewModel.putDataFromServer1CToLocalDatabase(listTest)
+
+      /*  viewModel.putDataFromServer1CToLocalDatabase(listTest)*/
         viewModel.getDataFromServer()
         viewModel.getGlobalLIst()
 

@@ -56,6 +56,7 @@ class MainFragment : Fragment() {
                 chooseScreenToShow(listItem)
             }
         })
+
       /*  binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.mainFragmentRecyclerView.adapter = adapter*/
         viewModel.processAppState().observe(viewLifecycleOwner, { renderList(it) })

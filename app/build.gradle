@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+
 
 }
 
@@ -80,10 +82,15 @@ allprojects {
 
     dependencies {
         implementation 'androidx.room:room-runtime:2.3.0'
+        implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
+        implementation 'com.google.firebase:firebase-firestore-ktx:24.2.0'
+        implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
+        implementation 'com.google.firebase:firebase-functions-ktx:20.1.0'
         kapt 'androidx.room:room-compiler:2.3.0'
         implementation "android.arch.persistence.room:runtime:1.1.1"
         annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
         implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+        implementation 'com.google.firebase:firebase-database:20.0.5'
 
 
 
@@ -94,6 +101,9 @@ allprojects {
         implementation 'com.squareup.retrofit2:retrofit:2.9.0'
         implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
         implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+
+        implementation "io.reactivex.rxjava2:rxjava:2.2.11"
+        implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
         implementation 'androidx.core:core-ktx:1.7.0'
@@ -110,3 +120,4 @@ allprojects {
         implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
         implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     }
+apply plugin: 'com.google.gms.google-services'
