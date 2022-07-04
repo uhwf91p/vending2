@@ -28,9 +28,20 @@ class FirebaseCaseImpl:FireBaseCase {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
+                    var list=converters.mapDocumentToRemoteTaskHM(document,collectionsName)
+                    for (serverResponseDataFireBase in list) {
+                        database.insertToDB(converters.mapToDB(serverResponseDataFireBase))
+
+                    }
+
+
+
+                   /* database.insertToDB(converters.mapDocumentToRemoteTaskHM(document,collectionsName))
                     database.insertToDB(converters.mapToDB(converters.mapDocumentToRemoteTask(document)))
-                    listFromCloud.add(converters.mapDocumentToRemoteTask(document))
+                    listFromCloud.add(converters.mapDocumentToRemoteTask(document))*/
+
                 }
+
             }
             .addOnFailureListener { exception ->
                 Log.d(TAG, "Error getting documents: ", exception)

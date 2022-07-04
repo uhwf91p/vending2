@@ -3,15 +3,10 @@ package com.example.order.app.domain.model
 import com.google.gson.annotations.SerializedName
 
 data class ServerResponseDataFireBase(
-
-
-var id:String="",
-    var variant1: String="",
-   var variant2: String="",
-   val variant3: String="",
-   val question: String="",
-   val picture: String="",
-   val answer: String=""
-
-
+   var collection:String="",
+   var documentFB: String="",
+   var field: String="",
+   var value: String="",
+   var theme:String="",
+   var typeOfTests:String=""
 )

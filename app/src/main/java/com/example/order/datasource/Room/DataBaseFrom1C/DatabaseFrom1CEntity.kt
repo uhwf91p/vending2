@@ -9,7 +9,9 @@ data class DatabaseFrom1CEntity(
     var id1: String,
     var dataType: String,
     var ticketNumber:String,
-    var value:String
+    var value:String,
+    var theme:String,
+    var typeOfTests:String
 
 
 )

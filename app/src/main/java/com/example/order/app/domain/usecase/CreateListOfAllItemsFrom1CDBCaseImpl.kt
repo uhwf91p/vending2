@@ -108,11 +108,11 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
     }
 
     private fun createOrdersList(listItem: List<ListItem>): List<ListItem> {
-        val startListItem: List<ListItem> = listItem.distinctBy { it.id1
+        val startListItem: List<ListItem> = listItem.distinctBy { it.collection
         }
         val convertListItem:MutableList<ListItem> = mutableListOf()
         for (startList1 in startListItem) {
-            convertListItem.add(swapValuesForOrdersListCreating(startList1.id1,startList1.dataType,startList1.ticketNumber,startList1.value))
+            convertListItem.add(swapValuesForOrdersListCreating(startList1.collection,startList1.documentFB,startList1.field,startList1.value))
 
         }
         return convertListItem
@@ -120,23 +120,23 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
       private fun makeListFromDB(key: String, listItem:List<ListItem>): List<ListItem> {
           val tempListItem: MutableList<ListItem> = mutableListOf()
           for (mainList in listItem) {
-              if (mainList.id1 == key) {
+              if (mainList.collection == key) {
                   tempListItem.add(mainList)
               }
           }
           for (mainList in tempListItem) {
-               mainList.value = mainList.ticketNumber
+               mainList.value = mainList.field
 
                   }
 
-          return tempListItem.distinctBy { it.ticketNumber to it.id1 to it.dataType }
+          return tempListItem.distinctBy { it.field to it.collection to it.documentFB }
       }
 
     private fun makeStartList(listItem: List<ListItem>): List<ListItem> {
-        val startListItem: List<ListItem> = listItem.distinctBy { it.id1 }
+        val startListItem: List<ListItem> = listItem.distinctBy { it.collection }
         val convertListItem:MutableList<ListItem> = mutableListOf()
          for (startList1 in startListItem) {
-           convertListItem.add(swapValuesForStartListCreating(startList1.id1,startList1.dataType,startList1.ticketNumber,startList1.value))
+           convertListItem.add(swapValuesForStartListCreating(startList1.collection,startList1.documentFB,startList1.field,startList1.value))
 
         }
         return convertListItem
@@ -145,9 +145,9 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
     private fun swapValuesForStartListCreating (id1:String, id2:String, name: String, value:String):ListItem{
         val objectForChange = ListItem(id1,id2,name,value)
 
-        objectForChange.ticketNumber=objectForChange.id1
-        objectForChange.dataType=objectForChange.id1
-        objectForChange.id1="0"
+        objectForChange.field=objectForChange.collection
+        objectForChange.documentFB=objectForChange.collection
+        objectForChange.collection="0"
         return objectForChange
     }
 

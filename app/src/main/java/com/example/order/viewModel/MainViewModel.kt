@@ -47,7 +47,7 @@ open class MainViewModel(
         for (refValue in referenceListItem) {
             var count=0
             for (checkedValue in listItemForCheck) {
-                if (refValue.dataType==checkedValue.id1) {
+                if (refValue.documentFB==checkedValue.collection) {
                     count += 1
                 }
             }

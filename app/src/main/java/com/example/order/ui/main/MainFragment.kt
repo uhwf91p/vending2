@@ -11,10 +11,13 @@ import com.example.order.R
 import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.model.SearchItemStorage
 import com.example.order.app.domain.usecase.AppState
+import com.example.order.app.domain.usecase.FireBaseCase
+import com.example.order.app.domain.usecase.FirebaseCaseImpl
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.core.GlobalConstAndVars.KEY_FOR_INFLATE_MAIN_LIST
 import com.example.order.core.GlobalConstAndVars.count
 import com.example.order.databinding.MainFragmentBinding
+import com.example.order.viewModel.LoadingViewModel
 import com.example.order.viewModel.MainViewModel
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
@@ -31,6 +34,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
+   private val fireBase:FireBaseCase=FirebaseCaseImpl()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +54,11 @@ class MainFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.nextTicket.setOnClickListener{
+            fireBase.executeGettingDataFromFirebase(":Тесты ПДД: Тема 1 Дорожные Знаки")
+
+        }
+
 
          adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
@@ -335,7 +344,7 @@ class MainFragment : Fragment() {
     fun chooseScreenToShow(listItem:ListItem){
         if (count == KEY_FOR_INFLATE_MAIN_LIST) {
             /*binding.inputEditTextDate.hide()*/
-            GlobalConstAndVars.LIST_KEY = listItem.dataType
+            GlobalConstAndVars.LIST_KEY = listItem.documentFB
             count += 1
             val manager = activity?.supportFragmentManager
             makeDetails(manager, listItem)

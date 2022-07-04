@@ -49,21 +49,21 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
             val textForItem:String = if (GlobalConstAndVars.LIST_KEY == "0"&&GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST==0) {
 
 
-                    listItem.ticketNumber + ": " + listItem.value
+                    listItem.field + ": " + listItem.value
 
 
             }
 
 
             else {
-                if (listItem.id1 == "ВР"&&listItem.value!="") {
-                    listItem.value + ": " + listItem.ticketNumber
+                if (listItem.collection == "ВР"&&listItem.value!="") {
+                    listItem.value + ": " + listItem.field
                 } else {
-                   listItem.ticketNumber
+                   listItem.field
                 }
             }
             if (GlobalConstAndVars.LIST_KEY == "0"&&GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST==1) {
-                listItem.dataType
+                listItem.documentFB
 
             }
 

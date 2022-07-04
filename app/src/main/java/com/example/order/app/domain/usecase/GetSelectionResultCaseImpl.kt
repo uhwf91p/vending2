@@ -18,7 +18,7 @@ class GetSelectionResultCaseImpl: GetSelectionResultCase {
         val iterator=rememberedListItem.iterator()
         while (iterator.hasNext()) {
             val item=iterator.next()
-            if (item.id1 == listItem.id1) {
+            if (item.collection == listItem.collection) {
                 iterator.remove()
             }
         }

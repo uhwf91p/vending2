@@ -67,7 +67,7 @@ class LoadingFragment:Fragment() {
 
 
         )*/
-
+        viewModel.loadDataFromFirebase("test")
 
 
 
@@ -86,7 +86,7 @@ class LoadingFragment:Fragment() {
         when (data) {
             is AppState.Success -> {
                 viewModel.clearDB()
-                viewModel.loadDataFromFirebase("test")
+               /* viewModel.loadDataFromFirebase("ПДД:ТемаДорожныеЗнаки:Билет1")*/
                /* viewModel.putDataFromServer1CToLocalDatabase(data.listItem)*/
 
 
@@ -108,7 +108,7 @@ class LoadingFragment:Fragment() {
                     setGravity(Gravity.BOTTOM,0,250)
                     show()
                 }*/
-                viewModel.loadDataFromFirebase("test")
+              /*  viewModel.loadDataFromFirebase("test")*/
                 goToMainList(activity?.supportFragmentManager)
 
 

@@ -11,7 +11,7 @@ class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : Loca
     override fun putDataFromServer1CToLocalDatabase(listItemFromServer: List<ListItem>) {
        for (mainList in listItemFromServer) {
            /*val data:DatabaseFrom1CEntity=converter.convertMainListToEntityDB1C(mainList.id1,mainList.id2,mainList.name,mainList.value)*/
-           val data=DatabaseFrom1CEntity(mainList.id1,mainList.dataType,mainList.ticketNumber,mainList.value)
+           val data=DatabaseFrom1CEntity(mainList.collection,mainList.documentFB,mainList.field,mainList.value,"","")
             insertToDB(data)
 
           }

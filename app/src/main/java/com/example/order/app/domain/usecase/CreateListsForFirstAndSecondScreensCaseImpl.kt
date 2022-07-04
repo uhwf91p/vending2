@@ -13,7 +13,7 @@ class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondS
         val listFrom1C= GlobalConstAndVars.GLOBAL_LIST
         val tempListItem:MutableList<ListItem> = mutableListOf()
         for (mainList in listFrom1C) {
-            if (mainList.id1 == key) {
+            if (mainList.collection == key) {
                tempListItem.add(mainList)
                 if (key == GlobalConstAndVars.DEFAULT_VALUE) {
                     mainList.value=""
@@ -23,15 +23,15 @@ class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondS
         }
                 for (mainList in tempListItem) {
                     for (remList in rememberedListItem) {
-                        if (mainList.dataType == remList.id1) {
-                            mainList.value=remList.ticketNumber
+                        if (mainList.documentFB == remList.collection) {
+                            mainList.value=remList.field
 
                     }
 
                     }
 
                 }
-        GlobalConstAndVars.LIST_OF_ITEMS_FOR_FIRST_AND_SECOND_SCREENS=tempListItem.distinctBy { it.ticketNumber to it.id1 to it.dataType }
+        GlobalConstAndVars.LIST_OF_ITEMS_FOR_FIRST_AND_SECOND_SCREENS=tempListItem.distinctBy { it.field to it.collection to it.documentFB }
         return  GlobalConstAndVars.LIST_OF_ITEMS_FOR_FIRST_AND_SECOND_SCREENS
 
 
