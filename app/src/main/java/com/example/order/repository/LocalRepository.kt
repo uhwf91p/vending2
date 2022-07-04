@@ -1,6 +1,7 @@
 package com.example.order.repository
 
 import com.example.order.app.domain.model.ListItem
+import com.example.order.datasource.Room.DataBaseFrom1C.DatabaseFrom1CEntity
 import com.example.order.datasource.Room.DatabaseResult.ResultEntity
 
 interface LocalRepository {
@@ -12,6 +13,7 @@ interface LocalRepository {
     fun getAllUnfinishedDataDBResultEntity():List<ResultEntity>
     fun insertToDBResultFromResultEntity(data: ResultEntity)
     fun getAllDatafromDBResult():List<ResultEntity>
+    fun insertToDB(data: DatabaseFrom1CEntity)
 
 
 }

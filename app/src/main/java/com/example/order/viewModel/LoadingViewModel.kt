@@ -3,7 +3,6 @@ package com.example.order.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.order.BuildConfig
 import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.usecase.*
 import com.example.order.datasource.Server.Retrofit1C
@@ -18,6 +17,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
 ):ViewModel() {
     private val createGlobalListCase: CreateListOfAllItemsFrom1CDBCase = CreateListOfAllItemsFrom1CDBCaseImpl()
     private val loadFrom1CtoDBCase:LoadDataFrom1CCase=LoadDataFrom1CCaseImpl()
+    private val firebase:FireBaseCase=FirebaseCaseImpl()
 
     fun getDataFromServerForDB(): LiveData<AppState> {
 
@@ -28,6 +28,10 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
     }
     fun putDataFromServer1CToLocalDatabase(listFromServer:List<ListItem>){
         loadFrom1CtoDBCase.executeDownloadingDataFrom1CToDB(listFromServer)
+
+    }
+    fun loadDataFromFirebase(collection:String){
+        firebase.executeGettingDataFromFirebase(collection)
 
     }
 

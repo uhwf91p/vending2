@@ -10,14 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.order.R
-import com.example.order.app.domain.model.ListItem
 import com.example.order.viewModel.LoadingViewModel
 import com.example.order.app.domain.usecase.AppState
-import com.example.order.app.domain.usecase.CreateListOfAllItemsFrom1CDBCase
-import com.example.order.core.GlobalConstAndVars
 import com.example.order.databinding.LoadingFragmentBinding
-import com.example.order.datasource.fireBase.CloudFireStore
-import io.reactivex.Single
+import com.example.order.app.domain.usecase.FirebaseCaseImpl
+import kotlinx.coroutines.*
 
 class LoadingFragment:Fragment() {
     private var _binding:LoadingFragmentBinding?=null
@@ -25,7 +22,7 @@ class LoadingFragment:Fragment() {
     private val viewModel:LoadingViewModel by lazy { ViewModelProvider(this).get(LoadingViewModel::class.java)
 
     }
-    val cloud:CloudFireStore=CloudFireStore()
+    val cloud: FirebaseCaseImpl = FirebaseCaseImpl()
 
 
 
@@ -52,7 +49,7 @@ class LoadingFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.loadinglayout.show()
         viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })
-        val listTest = listOf(
+       /* val listTest = listOf(
             ListItem("1","Вариант","1","До моста производство работ не менее 150 метров"),
             ListItem("2","Вариант","1","До железнодорожного переезда без шлагбаума не менее 50 метров"),
             ListItem("3","Вариант","1","До железнодорожного переезда со шлагбаумом не менее 150 метров"),
@@ -69,10 +66,11 @@ class LoadingFragment:Fragment() {
 
 
 
-        )
-        var x: Single<List<com.example.order.datasource.fireBase.Task>>
-       cloud.getAllDataFromCollectionCloudFireStore()
-        GlobalConstAndVars.taskList.isEmpty()
+        )*/
+
+
+
+
 
         viewModel.clearDB()
 
@@ -88,6 +86,7 @@ class LoadingFragment:Fragment() {
         when (data) {
             is AppState.Success -> {
                 viewModel.clearDB()
+                viewModel.loadDataFromFirebase("test")
                /* viewModel.putDataFromServer1CToLocalDatabase(data.listItem)*/
 
 
@@ -109,6 +108,7 @@ class LoadingFragment:Fragment() {
                     setGravity(Gravity.BOTTOM,0,250)
                     show()
                 }*/
+                viewModel.loadDataFromFirebase("test")
                 goToMainList(activity?.supportFragmentManager)
 
 
@@ -123,6 +123,13 @@ class LoadingFragment:Fragment() {
         manager?.beginTransaction()?.replace(R.id.container, MainFragment.newInstance())
             ?.addToBackStack("")?.commitAllowingStateLoss()
     }
+
+    private val appCoroutineScope = CoroutineScope(
+        Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
+            handleError()
+        })
+
+    private fun handleError() {}
     companion object {
         fun newInstance() = LoadingFragment()
 

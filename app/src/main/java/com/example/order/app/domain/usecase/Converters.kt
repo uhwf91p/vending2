@@ -3,9 +3,11 @@ package com.example.order.app.domain.usecase
 import androidx.lifecycle.ViewModel
 import com.example.order.app.domain.model.SearchItem
 import com.example.order.app.domain.model.ListItem
+import com.example.order.app.domain.model.ServerResponseDataFireBase
 import com.example.order.datasource.Room.DataBaseFrom1C.DatabaseFrom1CEntity
 import com.example.order.datasource.Room.DatabaseResult.ResultEntity
 import com.example.order.datasource.Server.ServerResponseData
+import com.google.firebase.firestore.DocumentSnapshot
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -43,6 +45,21 @@ open class Converters : ViewModel() {
 
 
 
+    }
+    fun mapDocumentToRemoteTask(document: DocumentSnapshot) = document.toObject(
+        ServerResponseDataFireBase::class.java)!!.apply { id = document.id }
+
+    fun mapToDB(remoteTask: ServerResponseDataFireBase): DatabaseFrom1CEntity {
+
+
+        return DatabaseFrom1CEntity(
+
+            remoteTask.variant1,
+            remoteTask.variant2,
+            remoteTask.variant3,
+            remoteTask.question,
+
+            )
     }
     fun convertEntityResultToMainList(entityList: List<ResultEntity>):List<ListItem>{
         return entityList.map {  ListItem(it.id1, it.id2, it.name, it.uid) }
@@ -83,6 +100,8 @@ open class Converters : ViewModel() {
 
 
 }
+
+
 
 private fun swapValuesForOrdersListCreating(
     id1: String,

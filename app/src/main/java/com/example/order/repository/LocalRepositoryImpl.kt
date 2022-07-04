@@ -18,7 +18,7 @@ class LocalRepositoryImpl(private val localDataSource: DatabaseFrom1CDAO) : Loca
 
     }
 
-    private fun insertToDB(data:DatabaseFrom1CEntity){
+    override fun insertToDB(data:DatabaseFrom1CEntity){
         localDataSource.insert(data)
 
 

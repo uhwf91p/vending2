@@ -1,4 +1,4 @@
-package com.example.order.datasource.fireBase
+package com.example.order.app.domain.model
 
 import com.google.gson.annotations.SerializedName
 
