@@ -27,6 +27,9 @@ open class MainViewModel(
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val converters: Converters = Converters()
     private val createListOfOrdersAndStartListItem: CreateListOfAllItemsFrom1CDBCase = CreateListOfAllItemsFrom1CDBCaseImpl()
+    var ticket:String=""
+    var questions:String="1"
+    var variants:List<ListItem> = listOf()
 
 
 
@@ -63,7 +66,7 @@ open class MainViewModel(
 
     private fun requestData() {
         viewModelCoroutineScope.launch {   liveDataToObserve.postValue(
-            AppState.Success(createLists.getMainList(
+            AppState.Success(createLists.getTicketsList(
             GlobalConstAndVars.LIST_KEY))) }
     }
     fun convertMainListToArrayListItem(listItem: List<ListItem>): ArrayList<SearchItem> {
@@ -127,13 +130,18 @@ open class MainViewModel(
         }
 
     }
-    fun getOrdersListFromDBResult(){
+    suspend fun getOrdersListFromDBResult(){
+
         createListOfOrdersAndStartListItem.getListForChoice()
     }
-    fun getGlobalLIst(){
+    suspend fun getGlobalLIst(){
        createListOfOrdersAndStartListItem.getListForChoice()
 
     }
+    fun getQuestions(fieldsName: String,ticketNumber:String):List<ListItem>{
+        return createLists.getQuestions(fieldsName,ticketNumber)
+    }
+
 
 
 

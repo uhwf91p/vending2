@@ -22,9 +22,9 @@ open class Converters : ViewModel() {
                         list.id1,
                         list.id2,
                         list.name,
-                        list.value
+                        list.value, "","")
                     )
-                )
+
             }
 
         }
@@ -37,9 +37,11 @@ open class Converters : ViewModel() {
         id1: String?,
         id2: String?,
         name: String?,
-        value: String?
+        value: String?,
+
+        theme:String,typeOftest:String
     ): ListItem {
-        return ListItem(id1!!, id2!!, name!!, value!!)
+        return ListItem(id1!!, id2!!, name!!, value!!,theme,typeOftest)
 
     }
 
@@ -59,7 +61,7 @@ open class Converters : ViewModel() {
 
     fun convertEntityDB1CToMainList(entityList: List<DatabaseFrom1CEntity>): List<ListItem> {
         return entityList.map {
-            ListItem(it.id1, it.dataType, it.ticketNumber, it.value)
+            ListItem(it.id1, it.dataType, it.ticketNumber, it.value,it.theme,it.dataType)
 
         }
 
@@ -75,9 +77,21 @@ open class Converters : ViewModel() {
            s.contains(textToFind)
         }
     }*/
+    fun mapServerResponseDataFireBaseToListItem(remoteTask: ServerResponseDataFireBase): ListItem {
 
 
-    fun mapToDB(remoteTask: ServerResponseDataFireBase): DatabaseFrom1CEntity {
+        return ListItem(
+            remoteTask.collection,
+            remoteTask.documentFB,
+            remoteTask.field,
+            value = remoteTask.value,
+            theme = remoteTask.theme,
+            remoteTask.typeOfTests
+
+        )
+    }
+
+    fun mapServerResponseDataFireBaseToDBEntity(remoteTask: ServerResponseDataFireBase): DatabaseFrom1CEntity {
 
 
         return DatabaseFrom1CEntity(
@@ -91,13 +105,13 @@ open class Converters : ViewModel() {
         )
     }
 
-    fun mapDocumentToRemoteTaskHM(
+    fun mapDocumentToServerResponseDataFireBase(
         document: DocumentSnapshot,
         collection: String
     ): MutableList<ServerResponseDataFireBase> {
         var result: MutableList<ServerResponseDataFireBase> = mutableListOf()
-        var themeForList:String=""
-        var typeOfTestDB:String=""
+        var themeForList =""
+        var typeOfTestDB =""
 
         var hashMap = document.data
         if (hashMap != null) {
@@ -133,7 +147,7 @@ open class Converters : ViewModel() {
 
 
     fun convertEntityResultToMainList(entityList: List<ResultEntity>): List<ListItem> {
-        return entityList.map { ListItem(it.id1, it.id2, it.name, it.uid) }
+        return entityList.map { ListItem(it.id1, it.id2, it.name, it.uid,"","") }
     }
 
     fun convertRemListToResultEntity(remListItem: List<ListItem>): List<ResultEntity> {
@@ -148,13 +162,13 @@ open class Converters : ViewModel() {
     }
 
     fun convertEntityResultToMainListForOrederList(entityList: List<ResultEntity>):List<ListItem>{
-        return entityList.map {  ListItem(it.uid, it.id1, it.name, it.value) }
+        return entityList.map {  ListItem(it.uid, it.id1, it.name, it.value,"","") }
     }
 
     fun convertItemStorageToMainList(arrayList:ArrayList<SearchItem>):List<ListItem>{
         val mainList= mutableListOf<ListItem>()
         for (item in arrayList) {
-            mainList.add(ListItem(item.id1.toString(),item.id2.toString(),item.name.toString(),item.value.toString()))
+            mainList.add(ListItem(item.id1.toString(),item.id2.toString(),item.name.toString(),item.value.toString(),"",""))
 
 
         }

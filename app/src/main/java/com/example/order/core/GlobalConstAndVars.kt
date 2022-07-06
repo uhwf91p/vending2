@@ -6,6 +6,7 @@ import com.example.order.app.domain.model.ServerResponseDataFireBase
 import com.google.firebase.firestore.DocumentSnapshot
 
 object GlobalConstAndVars {
+    val START_TICKET="1"
     var taskList:List<DocumentSnapshot> = listOf()
     var listFromCloud:MutableList<ServerResponseDataFireBase> = mutableListOf()
     const val DEFAULT_VALUE: String = "0"
@@ -19,7 +20,7 @@ object GlobalConstAndVars {
     /*const val NUMBERS_OF_VALUES_FOR_WORK_LIST=3000*///не удалять - может понадобиться
     const val STEP_FOR_WORKED_HOURS=1.0
     const val NUMBERS_OF_VALUES_FOR_WORKED_HOURS=50
-    val DEFAULT_lIST= listOf(ListItem("","","",""))
+    val DEFAULT_lIST= listOf(ListItem("","","","","",""))
     var DATE_OF_ORDER=""
     var GLOBAL_LIST= DEFAULT_lIST
     var LIST_OF_ITEMS_FOR_FIRST_AND_SECOND_SCREENS:List<ListItem> = mutableListOf()

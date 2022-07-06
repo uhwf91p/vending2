@@ -38,7 +38,7 @@ class SaveFragment:Fragment() {
         binding.saveLayout.show()
         viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.awaiting()
-        viewModel.getGlobalLIst()
+        /*viewModel.getGlobalLIst()*/
     }
 
     private fun renderData(data: AppState) {

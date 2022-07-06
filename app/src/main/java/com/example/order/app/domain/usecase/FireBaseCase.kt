@@ -1,7 +1,8 @@
 package com.example.order.app.domain.usecase
 
+import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.model.ServerResponseDataFireBase
 
 interface FireBaseCase{
-    fun executeGettingDataFromFirebase(collectionsName:String):MutableList<ServerResponseDataFireBase>
+  suspend fun executeGettingDataFromFirebase(collectionsName:String):MutableList<ListItem>
 }

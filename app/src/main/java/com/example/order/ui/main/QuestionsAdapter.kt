@@ -8,7 +8,7 @@ import com.example.order.core.GlobalConstAndVars
 import com.example.order.app.domain.model.ListItem
 import com.example.order.databinding.MainItemBinding
 
-class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
+class QuestionsAdapter:RecyclerView.Adapter<QuestionsAdapter.MainViewHolder>() {
     private var listItemData: List<ListItem> = listOf()
     private var onItemViewClickListener: MainFragment.OnItemViewClickListener? = null
 
@@ -47,10 +47,6 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
         fun bind(listItem: ListItem) {
 
             val textForItem:String =   listItem.documentFB
-
-
-
-
 
 
 

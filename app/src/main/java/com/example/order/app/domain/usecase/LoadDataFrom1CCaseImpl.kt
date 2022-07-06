@@ -14,4 +14,8 @@ class LoadDataFrom1CCaseImpl:LoadDataFrom1CCase {
     override fun executeDownloadingDataFrom1CToDB(listItemFromServer:List<ListItem>) {
         localRepository.putDataFromServer1CToLocalDatabase(listItemFromServer)
     }
+
+    override suspend fun executeDownloadingDataFromFireBaseToLocalDB(listItemFromFB: List<ListItem>) {
+        localRepository.putDataFromFBToLocalDatabase(listItemFromFB)
+    }
 }

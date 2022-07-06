@@ -14,6 +14,7 @@ interface LocalRepository {
     fun insertToDBResultFromResultEntity(data: ResultEntity)
     fun getAllDatafromDBResult():List<ResultEntity>
     fun insertToDB(data: DatabaseFrom1CEntity)
+    suspend fun putDataFromFBToLocalDatabase(listItemFromServer: List<ListItem>)
 
 
 }

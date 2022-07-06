@@ -7,17 +7,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.order.R
 import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.model.SearchItemStorage
-import com.example.order.app.domain.usecase.AppState
-import com.example.order.app.domain.usecase.FireBaseCase
-import com.example.order.app.domain.usecase.FirebaseCaseImpl
+import com.example.order.app.domain.usecase.*
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.core.GlobalConstAndVars.KEY_FOR_INFLATE_MAIN_LIST
 import com.example.order.core.GlobalConstAndVars.count
 import com.example.order.databinding.MainFragmentBinding
-import com.example.order.viewModel.LoadingViewModel
 import com.example.order.viewModel.MainViewModel
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
@@ -30,11 +28,15 @@ class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding
         get() = _binding!!
-    private val adapter = MainFragmentAdapter()
+    private val ticketsAdapter = MainFragmentAdapter()
+    private val questionsAdapter = QuestionsAdapter()
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
    private val fireBase:FireBaseCase=FirebaseCaseImpl()
+    private val load:LoadDataFrom1CCase=LoadDataFrom1CCaseImpl()
+    private val list:CreateListOfAllItemsFrom1CDBCase=CreateListOfAllItemsFrom1CDBCaseImpl()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,30 +50,46 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        adapter.removeOnItemViewClickListener()
+        ticketsAdapter.removeOnItemViewClickListener()
 
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.nextTicket.setOnClickListener{
-            fireBase.executeGettingDataFromFirebase(":Тесты ПДД: Тема 1 Дорожные Знаки")
+      /*  binding.nextTicket.setOnClickListener{
+       *//* load.executeDownloadingDataFromFireBaseToLocalDB(fireBase.executeGettingDataFromFirebase("test"))*//*
+          *//*  appCoroutineScope.launch { list.getListForChoice() }*//*
+
+
+
+
 
         }
+*/
 
-
-         adapter.setOnItemViewClickListener(object : OnItemViewClickListener {
+         ticketsAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
-                chooseScreenToShow(listItem)
+
+               viewModel.variants= viewModel.getQuestions("variant",listItem.documentFB)
+               /* chooseScreenToShow(listItem)*/
             }
         })
+        questionsAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
+            override fun onItemViewClick(listItem: ListItem) {
 
-      /*  binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.mainFragmentRecyclerView.adapter = adapter*/
+
+            }
+        })
+       /* val layoutManager = LinearLayoutManager(this@MainActivity,LinearLayoutManager.HORIZONTAL,true)
+        recyclerview.layoutManager = layoutManager*/
+
+        binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        binding.mainFragmentRecyclerView.adapter = ticketsAdapter
         viewModel.processAppState().observe(viewLifecycleOwner, { renderList(it) })
         viewModel.processTheSelectedItem()
-        launchSearchBarListener()
-        isEditingWorkedOutFieldFinished()    
+
+        /*launchSearchBarListener()
+        isEditingWorkedOutFieldFinished()    */
 
     }
 
@@ -104,8 +122,8 @@ class MainFragment : Fragment() {
         if (item.itemId == R.id.order_list) {
 
             val manager = activity?.supportFragmentManager
-            val listItem=ListItem("","","","")
-            showOrHideOrdersList()
+            val listItem=ListItem("","","","","","")
+            /*showOrHideOrdersList()*/
 
            makeDetails(manager,listItem)
 
@@ -115,7 +133,7 @@ class MainFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showOrHideOrdersList() {
+    private suspend fun showOrHideOrdersList() {
         if (GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST == 0) {
             GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST=1
             viewModel.getOrdersListFromDBResult()
@@ -175,7 +193,9 @@ class MainFragment : Fragment() {
                 "Фактически отработано в натуре",
                 GlobalConstAndVars.WORKED_OUT,
                 GlobalConstAndVars.WORKED_OUT,
-                GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST
+                GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST,
+                "",
+                ""
             ) // убрать хардкод из этой строки
             viewModel.rememberListOfChosenItemsVM(worked)
         }
@@ -187,7 +207,7 @@ class MainFragment : Fragment() {
                 "date",
                 "date",
                 GlobalConstAndVars.DATE_OF_ORDER,
-                ""
+                "", "",""
             ) // убрать хардкод из этой строки
             viewModel.rememberListOfChosenItemsVM(dateFromCalendar)
         }
@@ -222,7 +242,7 @@ class MainFragment : Fragment() {
     private fun renderList(data: AppState) {
         when (data) {
             is AppState.Success -> {
-               adapter.setListItem(data.listItem)
+               ticketsAdapter.setListItem(data.listItem)
                 SearchItemStorage.list=viewModel.convertMainListToArrayListItem(data.listItem)
             }
             is AppState.Loading -> {
@@ -368,6 +388,12 @@ class MainFragment : Fragment() {
             }
         })*/
     }
+    private val appCoroutineScope = CoroutineScope(
+        Dispatchers.IO + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
+            handleError()
+        })
+
+    private fun handleError() {}
 
 
 

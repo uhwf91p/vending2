@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.example.order.R
+import com.example.order.app.domain.usecase.*
 import com.example.order.viewModel.LoadingViewModel
-import com.example.order.app.domain.usecase.AppState
 import com.example.order.databinding.LoadingFragmentBinding
-import com.example.order.app.domain.usecase.FirebaseCaseImpl
 import kotlinx.coroutines.*
 
 class LoadingFragment:Fragment() {
@@ -23,6 +22,8 @@ class LoadingFragment:Fragment() {
 
     }
     val cloud: FirebaseCaseImpl = FirebaseCaseImpl()
+    private val fireBase: FireBaseCase =FirebaseCaseImpl()
+    private val load: LoadDataFrom1CCase = LoadDataFrom1CCaseImpl()
 
 
 
@@ -48,7 +49,7 @@ class LoadingFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loadinglayout.show()
-        viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })
+      /*  viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })*/
        /* val listTest = listOf(
             ListItem("1","Вариант","1","До моста производство работ не менее 150 метров"),
             ListItem("2","Вариант","1","До железнодорожного переезда без шлагбаума не менее 50 метров"),
@@ -67,16 +68,22 @@ class LoadingFragment:Fragment() {
 
 
         )*/
-        viewModel.loadDataFromFirebase("test")
-
-
-
 
         viewModel.clearDB()
+        appCoroutineScope.launch{
+
+            load.executeDownloadingDataFromFireBaseToLocalDB(fireBase.executeGettingDataFromFirebase("test"))
+
+            viewModel.getGlobalLIst()
+            goToMainList(activity?.supportFragmentManager)
+        }
+
+
+
 
       /*  viewModel.putDataFromServer1CToLocalDatabase(listTest)*/
-        viewModel.getDataFromServer()
-        viewModel.getGlobalLIst()
+       /* viewModel.getDataFromServer()*/
+
 
     }
 
@@ -85,9 +92,12 @@ class LoadingFragment:Fragment() {
     private fun renderData(data: AppState) {
         when (data) {
             is AppState.Success -> {
-                viewModel.clearDB()
+               /* viewModel.clearDB()*/
+
+
+
                /* viewModel.loadDataFromFirebase("ПДД:ТемаДорожныеЗнаки:Билет1")*/
-               /* viewModel.putDataFromServer1CToLocalDatabase(data.listItem)*/
+            /*    viewModel.putDataFromFireBaseLocalDatabase(data.listItem)*/
 
 
 
@@ -104,11 +114,11 @@ class LoadingFragment:Fragment() {
             }
             is AppState.Error -> {
                 binding.loadinglayout.show()
-              /*  Toast.makeText(context,data.error.message,Toast.LENGTH_SHORT).apply {
+                Toast.makeText(context,data.error.message,Toast.LENGTH_SHORT).apply {
                     setGravity(Gravity.BOTTOM,0,250)
                     show()
-                }*/
-              /*  viewModel.loadDataFromFirebase("test")*/
+                }
+
                 goToMainList(activity?.supportFragmentManager)
 
 

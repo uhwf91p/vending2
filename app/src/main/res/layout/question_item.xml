@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemContainer"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="2dp"
     android:paddingEnd="2dp"
@@ -11,15 +11,15 @@
 
         >
      <com.google.android.material.button.MaterialButton
-         android:id="@+id/mainItemRecyclerTextView"
+         android:id="@+id/questions_recycler_item"
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toTopOf="parent"
          app:layout_constraintEnd_toEndOf="parent"
-         android:layout_width="wrap_content"
+         android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:src="@drawable/ic_baseline_crop_din_24"
-         tools:text="1"
-         android:minWidth="1dp"
+         tools:text="какой-то очень интересный вопрос на две строки"
+
          app:cornerRadius="0dp"
          android:backgroundTint="#E1DBDB"
          android:textColor="@color/black"

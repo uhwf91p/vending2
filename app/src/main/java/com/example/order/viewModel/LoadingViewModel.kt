@@ -30,7 +30,11 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
         loadFrom1CtoDBCase.executeDownloadingDataFrom1CToDB(listFromServer)
 
     }
-    fun loadDataFromFirebase(collection:String){
+    suspend fun putDataFromFireBaseLocalDatabase(listFromServer:List<ListItem>){
+        loadFrom1CtoDBCase.executeDownloadingDataFromFireBaseToLocalDB(listFromServer)
+
+    }
+    suspend fun loadDataFromFirebase(collection:String){
         firebase.executeGettingDataFromFirebase(collection)
 
     }
@@ -73,7 +77,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
 
     }
 
-    fun getGlobalLIst(){
+    suspend fun getGlobalLIst(){
         createGlobalListCase.getListForChoice()
 
     }

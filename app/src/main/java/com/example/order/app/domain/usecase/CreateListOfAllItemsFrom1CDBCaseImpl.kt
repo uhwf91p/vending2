@@ -21,85 +21,16 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
     private val converters:Converters= Converters()
 
     // саделать маски для имен в главном списке
-    override fun getListForChoice(): List<ListItem> {
+    override suspend fun getListForChoice(): List<ListItem> {
         var startList: List<ListItem> = listOf()
         val dataFrom1C: List<ListItem>
-        val dataFrom1CResuldEntity:List<ResultEntity>
 
-        //TODO() хардкод ниже - убрать
-
-        val quality:MutableList<ListItem> = mutableListOf(
-            ListItem("ДоплатаЗаКачество","Доплата за качество 0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
-            ListItem("ДоплатаЗаКачество","Доплата за качество 20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
-        )
-        val difficult:MutableList<ListItem> = mutableListOf(
-            ListItem("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
-            ListItem("ДоплатаЗаТяжесть(Сложность)","ДоплатаЗаКачество12%","12", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
-        )
-        val refill:MutableList<ListItem> = mutableListOf(
-            ListItem("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
-            ListItem("ДоплатаЗаЗаправку","ДоплатаЗаЗаправку20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
-        )
-        val weekends:MutableList<ListItem> = mutableListOf(
-            ListItem("ДоплатаЗаВыходные","ДоплатаЗаВыходные0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
-            ListItem("ДоплатаЗаВыходные","ДоплатаЗаВыходные100%","100", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
-        )
-        val steepSlope:MutableList<ListItem> = mutableListOf(
-            ListItem("КрутойСклон","КрутойСклон0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
-            ListItem("КрутойСклон","КрутойСклон20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
-        )
-        val shortRun:MutableList<ListItem> = mutableListOf(
-            ListItem("КороткийГон","КороткийГон0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
-            ListItem("КороткийГон","КороткийГон20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
-        )
-        val student:MutableList<ListItem> = mutableListOf(
-            ListItem("Ученические","Ученические0%","0", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
-            ListItem("Ученические","Ученические20%","20", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST),
-            ListItem("Ученические","Ученические30%","30", GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST)
-
-        )
+        dataFrom1C = localRepository1C.getAllDataDB1CEntity()
+        GlobalConstAndVars.listItemFromDb=dataFrom1C
+        startList=dataFrom1C
+        GlobalConstAndVars.GLOBAL_LIST=startList
 
 
-        if (GlobalConstAndVars.LIST_KEY != "0") {
-            dataFrom1C = GlobalConstAndVars.listItemFromDb
-
-        }
-        else {
-            if (GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST == 0) {
-                dataFrom1C = localRepository1C.getAllDataDB1CEntity()
-                GlobalConstAndVars.listItemFromDb=dataFrom1C
-                startList=makeStartList(dataFrom1C+hoursWorked+
-                        quality+difficult+refill+weekends+steepSlope+shortRun+student)+dataFrom1C+hoursWorked+ quality+difficult+refill+weekends+steepSlope+shortRun+student
-                GlobalConstAndVars.GLOBAL_LIST=startList
-
-            }
-            else{
-               dataFrom1C=converters.convertEntityResultToMainListForOrederList(localRepository1C.getAllDatafromDBResult())
-                GlobalConstAndVars.listItemFromDb=dataFrom1C
-                startList=createOrdersList(dataFrom1C)+dataFrom1C
-                GlobalConstAndVars.GLOBAL_LIST=startList
-
-
-
-            }
-
-
-
-
-
-
-        }
-      /*  if (GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST == 0) {
-            startList=makeStartList(dataFrom1C+hoursWorked+
-                    quality+difficult+refill+weekends+steepSlope+shortRun+student)+dataFrom1C+hoursWorked+ quality+difficult+refill+weekends+steepSlope+shortRun+student
-            GlobalConstAndVars.GLOBAL_LIST=startList
-
-        }
-        else{
-            startList=createOrdersList()
-
-
-        }*/
 
 
 
@@ -143,7 +74,7 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
     }
 
     private fun swapValuesForStartListCreating (id1:String, id2:String, name: String, value:String):ListItem{
-        val objectForChange = ListItem(id1,id2,name,value)
+        val objectForChange = ListItem(id1,id2,name,value,"","")
 
         objectForChange.field=objectForChange.collection
         objectForChange.documentFB=objectForChange.collection
@@ -159,7 +90,7 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
 
     ): ListItem {
 
-        return ListItem("0", id1, name, value)
+        return ListItem("0", id1, name, value,"","")
     }
     private fun makeListOfWork(numberOfValues:Int, step:Double, nameOfField:String):MutableList<ListItem>{
         val workListItem: MutableList<ListItem> = mutableListOf()
@@ -173,7 +104,7 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
                         nameOfField,
                         roundedNumber.format(valueForWork).toString(),
                         roundedNumber.format(valueForWork).toString(),
-                        GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST
+                        GlobalConstAndVars.DEFAULT_VALUE_FOR_GENERATED_LIST,"",""
                     )
                 )
             }

@@ -28,7 +28,7 @@ class SaveViewModel(
         }
 
     }
-    fun getGlobalLIst(){
+    suspend fun getGlobalLIst(){
         globalList.getListForChoice()
     }
 

@@ -4,7 +4,8 @@ import com.example.order.app.domain.model.ListItem
 
 
 interface CreateListsForFirstAndSecondScreensCase {
-   suspend fun getMainList(key: String):List<ListItem>
+   suspend fun getTicketsList(key: String):List<ListItem>
+   fun getQuestions(fieldsName: String,ticketNumber:String): List<ListItem>
 
 
 
