@@ -14,7 +14,7 @@ class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondS
 
     }
 
-    override fun getQuestions(fieldsName: String,ticketNumber:String): List<ListItem> {
+    override fun getQuestionsAndAnswers(fieldsName: String, ticketNumber:String): List<ListItem> {
         var listForFilter=GlobalConstAndVars.GLOBAL_LIST
         listForFilter.filter { it.documentFB==ticketNumber }.filter { it.field.contains(fieldsName)  }
        return listForFilter

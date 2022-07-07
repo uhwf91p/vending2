@@ -7,6 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 object GlobalConstAndVars {
     val START_TICKET="1"
+
     var taskList:List<DocumentSnapshot> = listOf()
     var listFromCloud:MutableList<ServerResponseDataFireBase> = mutableListOf()
     const val DEFAULT_VALUE: String = "0"

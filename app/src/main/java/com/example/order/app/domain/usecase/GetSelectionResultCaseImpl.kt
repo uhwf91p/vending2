@@ -55,6 +55,16 @@ class GetSelectionResultCaseImpl: GetSelectionResultCase {
         return localDataSource.getAllUnfinishedDataDBResultEntityToMainList()
     }
 
+    override fun isAnswerRight(listForChecking: List<ListItem>) {
+        for (listItem in listForChecking) {
+            for (listOfChosenItem in GlobalConstAndVars.LIST_OF_CHOSEN_ITEMS) {
+                listItem.value=listOfChosenItem.value
+
+            }
+
+        }
+    }
+
 
 }
 

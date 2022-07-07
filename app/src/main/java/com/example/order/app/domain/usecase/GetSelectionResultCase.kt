@@ -7,6 +7,7 @@ interface GetSelectionResultCase {
     fun makeOrderFinished()
     fun putListOfChosenItemToDB(data:MutableList<ListItem>)
     fun getAllDataDBResultEntityToListItem():List<ListItem>
+    fun isAnswerRight(listForChecking:List<ListItem>)
 
 
 

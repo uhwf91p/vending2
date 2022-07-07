@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.app.domain.model.ListItem
 import com.example.order.databinding.MainItemBinding
+import com.example.order.databinding.QuestionItemBinding
 
 class QuestionsAdapter:RecyclerView.Adapter<QuestionsAdapter.MainViewHolder>() {
     private var listItemData: List<ListItem> = listOf()
@@ -32,7 +33,7 @@ class QuestionsAdapter:RecyclerView.Adapter<QuestionsAdapter.MainViewHolder>() {
         parent: ViewGroup,
         viewType: Int
     ): MainViewHolder {
-        val binding = MainItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = QuestionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MainViewHolder(binding)
     }
 
@@ -41,7 +42,7 @@ class QuestionsAdapter:RecyclerView.Adapter<QuestionsAdapter.MainViewHolder>() {
     }
 
     override fun getItemCount() = listItemData.size
-    inner class MainViewHolder(private val binding: MainItemBinding) :
+    inner class MainViewHolder(private val binding: QuestionItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(listItem: ListItem) {
@@ -52,9 +53,9 @@ class QuestionsAdapter:RecyclerView.Adapter<QuestionsAdapter.MainViewHolder>() {
 
             binding.apply {
 
-                mainItemRecyclerTextView.text = textForItem
+                questionsRecyclerItem.text = textForItem
 
-                binding.mainItemRecyclerTextView.setOnClickListener {
+                binding.questionsRecyclerItem.setOnClickListener {
                     onItemViewClickListener?.onItemViewClick(listItem)
                 }
             }

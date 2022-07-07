@@ -70,12 +70,18 @@ class MainFragment : Fragment() {
          ticketsAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
 
-               viewModel.variants= viewModel.getQuestions("variant",listItem.documentFB)
-               /* chooseScreenToShow(listItem)*/
+
+/*
+                viewModel.processAppState().observe(viewLifecycleOwner, { renderQuestionsList(it) })
+                viewModel.variants= viewModel.getQuestionsAndAnswers("variant",listItem.documentFB)
+               *//* chooseScreenToShow(listItem)*/
             }
         })
         questionsAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
+               /* viewModel.rememberListOfChosenItemsVM(listItem)
+                viewModel.getQuestionsAndAnswers("answer",listItem.documentFB)*/
+
 
 
             }
@@ -85,8 +91,13 @@ class MainFragment : Fragment() {
 
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         binding.mainFragmentRecyclerView.adapter = ticketsAdapter
+        binding.questionsRecycler.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        binding.mainFragmentRecyclerView.adapter = questionsAdapter
         viewModel.processAppState().observe(viewLifecycleOwner, { renderList(it) })
-        viewModel.processTheSelectedItem()
+        viewModel.processTheSelectedItemTicket()
+        viewModel.processAppState().observe(viewLifecycleOwner, { renderQuestionsList(it) })
+        viewModel.processTheSelectedItemQuestion("variant","1")
+
 
         /*launchSearchBarListener()
         isEditingWorkedOutFieldFinished()    */
@@ -244,6 +255,22 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                ticketsAdapter.setListItem(data.listItem)
                 SearchItemStorage.list=viewModel.convertMainListToArrayListItem(data.listItem)
+            }
+            is AppState.Loading -> {
+            }
+            is AppState.Error -> {
+                toast(data.error.message)
+
+            }
+
+        }
+
+    }
+    private fun renderQuestionsList(data: AppState) {
+        when (data) {
+            is AppState.Success -> {
+                questionsAdapter.setListItem(data.listItem)
+              /*  SearchItemStorage.list=viewModel.convertMainListToArrayListItem(data.listItem)*/
             }
             is AppState.Loading -> {
             }
