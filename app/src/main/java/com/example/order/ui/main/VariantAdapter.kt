@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.order.core.GlobalConstAndVars
 import com.example.order.app.domain.model.ListItem
 import com.example.order.databinding.MainItemBinding
-import com.example.order.databinding.QuestionItemBinding
+import com.example.order.databinding.QuestionsItemBinding
 
-class QuestionsAdapter:RecyclerView.Adapter<QuestionsAdapter.MainViewHolder>() {
+class VariantAdapter: RecyclerView.Adapter<VariantAdapter.MainViewHolder>() {
     private var listItemData: List<ListItem> = listOf()
     private var onItemViewClickListener: MainFragment.OnItemViewClickListener? = null
 
@@ -33,7 +32,7 @@ class QuestionsAdapter:RecyclerView.Adapter<QuestionsAdapter.MainViewHolder>() {
         parent: ViewGroup,
         viewType: Int
     ): MainViewHolder {
-        val binding = QuestionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = QuestionsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MainViewHolder(binding)
     }
 
@@ -42,20 +41,24 @@ class QuestionsAdapter:RecyclerView.Adapter<QuestionsAdapter.MainViewHolder>() {
     }
 
     override fun getItemCount() = listItemData.size
-    inner class MainViewHolder(private val binding: QuestionItemBinding) :
+    inner class MainViewHolder(private val binding: QuestionsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(listItem: ListItem) {
 
-            val textForItem:String =   listItem.documentFB
+            val textForItem:String =   listItem.value
+
+
+
+
 
 
 
             binding.apply {
 
-                questionsRecyclerItem.text = textForItem
+                questionRecyclerItem.text = textForItem
 
-                binding.questionsRecyclerItem.setOnClickListener {
+                binding.questionRecyclerItem.setOnClickListener {
                     onItemViewClickListener?.onItemViewClick(listItem)
                 }
             }

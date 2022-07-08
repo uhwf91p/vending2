@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_main_head"
        tools:text="Билет 1, Вопрос 1"
-        android:text="Тема 1.Дорожные знаки"
+
         android:textColor="@color/black"
 
         android:textStyle="bold">
@@ -54,7 +54,7 @@
             android:id="@+id/mainFragmentRecyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/theme"
             app:layout_constraintStart_toStartOf="parent"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -308,10 +308,12 @@
             android:layout_height="wrap_content"
            >
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/questions_text_text_view"
                 android:layout_marginTop="@dimen/margin_top_main"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="О чем предупреждают Вас данные знаки?"
+                tools:text="Какой-то вопрос о правилах дорожного движения"
+
                 android:textSize="@dimen/font_size_main"
                 android:textColor="@color/black"
                 style="@style/CardView">
@@ -328,7 +330,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="280dp"
-        android:src="@drawable/image3"
+
         android:scaleType="fitStart"
         >
 
@@ -348,7 +350,7 @@
 
 
 
-        tools:listitem="@layout/question_item">
+        tools:listitem="@layout/questions_item">
 
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -28,7 +28,7 @@ open class MainViewModel(
     private val converters: Converters = Converters()
     private val createListOfOrdersAndStartListItem: CreateListOfAllItemsFrom1CDBCase =
         CreateListOfAllItemsFrom1CDBCaseImpl()
-    var ticket: String = ""
+    var ticket:List<ListItem> = listOf()
     var questions: String = "1"
     var variants: List<ListItem> = listOf()
 
@@ -43,8 +43,8 @@ open class MainViewModel(
         return liveDataToObserve
     }
 
-    fun processTheSelectedItemTicket() = requestDataTicket()
-    fun processTheSelectedItemQuestion(fieldsName: String, ticketNumber: String) =
+    suspend fun processTheSelectedItemTicket() = requestDataTicket()
+    suspend fun processTheSelectedItemQuestion(fieldsName: String, ticketNumber: String) =
         requestDataQuestion(fieldsName, ticketNumber)
 
     fun checkCompleteness(
@@ -71,20 +71,25 @@ open class MainViewModel(
         } else "Данные в наряде заполнены корректно"
     }
 
-    private fun requestDataTicket() {
-        viewModelCoroutineScope.launch {
-            liveDataToObserve.postValue(
-                AppState.Success(createLists.getTicketsList(""))
-            )
-        }
+    private suspend fun requestDataTicket() {
+       liveDataToObserve.postValue(
+            AppState.SuccessTickets(createLists.getTicketsList(""))
+        )
+
+
+
+
     }
 
-    private fun requestDataQuestion(fieldsName: String, ticketNumber: String) {
-        viewModelCoroutineScope.launch {
-            liveDataToObserve.postValue(
-                AppState.Success(createLists.getQuestionsAndAnswers(fieldsName, ticketNumber))
-            )
-        }
+
+    private suspend fun requestDataQuestion(fieldsName: String, ticketNumber: String) {
+        liveDataToObserve.postValue(
+            AppState.SuccessQuestions(createLists.getQuestionsAndAnswers(fieldsName, ticketNumber))
+
+        )
+
+
+
     }
         fun convertMainListToArrayListItem(listItem: List<ListItem>): ArrayList<SearchItem> {
             return converters.convertListItemToItemStorage(listItem)
@@ -162,7 +167,7 @@ open class MainViewModel(
 
         }
 
-        fun getQuestionsAndAnswers(fieldsName: String, ticketNumber: String): List<ListItem> {
+        suspend fun getQuestionsAndAnswers(fieldsName: String, ticketNumber: String): List<ListItem> {
             return createLists.getQuestionsAndAnswers(fieldsName, ticketNumber)
         }
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.order.R
 import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.model.SearchItemStorage
@@ -18,6 +19,8 @@ import com.example.order.core.GlobalConstAndVars.count
 import com.example.order.databinding.MainFragmentBinding
 import com.example.order.viewModel.MainViewModel
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.*
 
 
@@ -29,13 +32,14 @@ class MainFragment : Fragment() {
     private val binding
         get() = _binding!!
     private val ticketsAdapter = MainFragmentAdapter()
-    private val questionsAdapter = QuestionsAdapter()
+    private val questionsAdapter = VariantAdapter()
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
    private val fireBase:FireBaseCase=FirebaseCaseImpl()
     private val load:LoadDataFrom1CCase=LoadDataFrom1CCaseImpl()
     private val list:CreateListOfAllItemsFrom1CDBCase=CreateListOfAllItemsFrom1CDBCaseImpl()
+    private val storage = Firebase.storage
 
 
     override fun onCreateView(
@@ -56,31 +60,46 @@ class MainFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-      /*  binding.nextTicket.setOnClickListener{
-       *//* load.executeDownloadingDataFromFireBaseToLocalDB(fireBase.executeGettingDataFromFirebase("test"))*//*
-          *//*  appCoroutineScope.launch { list.getListForChoice() }*//*
 
 
 
 
 
-        }
-*/
+
+
+
 
          ticketsAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
+                appCoroutineScope.launch {
+                    viewModel.getQuestionsAndAnswers(GlobalConstAndVars.NAME_VARIANT_FIELD,listItem.documentFB)
+                    questionsAdapter.setListItem(GlobalConstAndVars.QUESTIONS_LIST)
+                    viewModel.getQuestionsAndAnswers(GlobalConstAndVars.NAME_QUESTION_FIELD,listItem.documentFB)
+                    binding.questionsTextTextView.text = GlobalConstAndVars.QUESTION_TEXT
+                    binding.theme.text="Билет 1, вопрос ${listItem.documentFB}"
+                    viewModel.getQuestionsAndAnswers(GlobalConstAndVars.IMAGE_URL_NAME,listItem.documentFB)
+                    storage.getReferenceFromUrl(GlobalConstAndVars.PICTURES_URL).downloadUrl.addOnSuccessListener {
+                        Glide
+                            .with(this@MainFragment)
+                            .load(it)
+                            .into(binding.image)
+                    }.addOnFailureListener {
+
+                    }
 
 
-/*
-                viewModel.processAppState().observe(viewLifecycleOwner, { renderQuestionsList(it) })
-                viewModel.variants= viewModel.getQuestionsAndAnswers("variant",listItem.documentFB)
-               *//* chooseScreenToShow(listItem)*/
+
+
+
+                }
+
+               /* chooseScreenToShow(listItem)*/
             }
         })
         questionsAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
-               /* viewModel.rememberListOfChosenItemsVM(listItem)
-                viewModel.getQuestionsAndAnswers("answer",listItem.documentFB)*/
+                viewModel.rememberListOfChosenItemsVM(listItem)
+
 
 
 
@@ -92,11 +111,53 @@ class MainFragment : Fragment() {
         binding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         binding.mainFragmentRecyclerView.adapter = ticketsAdapter
         binding.questionsRecycler.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-        binding.mainFragmentRecyclerView.adapter = questionsAdapter
+        binding.questionsRecycler.adapter = questionsAdapter
+       /* viewModel.processTheSelectedItemTicket()*/
+        appCoroutineScope.launch {
+            viewModel.processTheSelectedItemTicket()
+            ticketsAdapter.setListItem(GlobalConstAndVars.TICKETS_LIST)
+            viewModel.processTheSelectedItemQuestion(GlobalConstAndVars.NAME_VARIANT_FIELD,GlobalConstAndVars.START_TICKET)
+            questionsAdapter.setListItem(GlobalConstAndVars.QUESTIONS_LIST)
+            viewModel.getQuestionsAndAnswers(GlobalConstAndVars.NAME_QUESTION_FIELD,GlobalConstAndVars.START_TICKET)
+            binding.questionsTextTextView.text = GlobalConstAndVars.QUESTION_TEXT
+            binding.theme.text="Билет 1, вопрос ${GlobalConstAndVars.START_TICKET}"
+            viewModel.getQuestionsAndAnswers(GlobalConstAndVars.IMAGE_URL_NAME,GlobalConstAndVars.START_TICKET)
+            storage.getReferenceFromUrl(GlobalConstAndVars.PICTURES_URL).downloadUrl.addOnSuccessListener {
+               Glide
+                   .with(this@MainFragment)
+                   .load(it)
+                   .into(binding.image)
+                }.addOnFailureListener {
+
+            }
+
+
+
+        }
+
+
+
+/*
+        ticketsAdapter.setListItem(GlobalConstAndVars.TICKETS_LIST)
+        questionsAdapter.setListItem(GlobalConstAndVars.QUESTIONS_LIST)*/
+       /* viewModel.processAppState().observe(viewLifecycleOwner, { renderList(it) })
+
+
+
+
+            viewModel.processTheSelectedItemQuestion("variant","1")
         viewModel.processAppState().observe(viewLifecycleOwner, { renderList(it) })
-        viewModel.processTheSelectedItemTicket()
-        viewModel.processAppState().observe(viewLifecycleOwner, { renderQuestionsList(it) })
-        viewModel.processTheSelectedItemQuestion("variant","1")
+        viewModel.processTheSelectedItemTicket()*/
+
+
+       /* appCoroutineScope.launch {
+            viewModel.processAppState().observe(viewLifecycleOwner, { renderQuestionsList(it) })
+            viewModel.processTheSelectedItemQuestion("variant","1")
+            }*/
+
+               /*   appCoroutineScope.launch{
+            viewModel.processAppState().observe(viewLifecycleOwner, { renderQuestionsList(it) })
+            viewModel.processTheSelectedItemQuestion("variant","1")}  */
 
 
         /*launchSearchBarListener()
@@ -252,10 +313,16 @@ class MainFragment : Fragment() {
 
     private fun renderList(data: AppState) {
         when (data) {
-            is AppState.Success -> {
-               ticketsAdapter.setListItem(data.listItem)
-                SearchItemStorage.list=viewModel.convertMainListToArrayListItem(data.listItem)
+            is AppState.SuccessTickets -> {
+               ticketsAdapter.setListItem(data.tickets)
+
+              /*  SearchItemStorage.list=viewModel.convertMainListToArrayListItem(data.listItem)*/
             }
+            is AppState.SuccessQuestions -> {
+                questionsAdapter.setListItem(data.questions)
+
+            }
+
             is AppState.Loading -> {
             }
             is AppState.Error -> {
@@ -416,7 +483,7 @@ class MainFragment : Fragment() {
         })*/
     }
     private val appCoroutineScope = CoroutineScope(
-        Dispatchers.IO + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
+        Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
             handleError()
         })
 
