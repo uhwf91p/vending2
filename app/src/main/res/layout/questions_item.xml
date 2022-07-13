@@ -17,12 +17,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
+
+
+
+
 
         tools:text="какой-то очень интересный вопрос на две строки"
 
         app:cornerRadius="0dp"
-        android:backgroundTint="@color/teal_700"
+
+
         android:textColor="@color/black"
+        android:backgroundTint="@color/buttons_colour"
+
 
         >
 

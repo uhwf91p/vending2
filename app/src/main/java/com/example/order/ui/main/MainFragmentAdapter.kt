@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.app.domain.model.ListItem
 import com.example.order.databinding.MainItemBinding
+import java.util.*
 
 class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
     private var listItemData: List<ListItem> = listOf()
@@ -56,7 +57,8 @@ class MainFragmentAdapter:RecyclerView.Adapter<MainFragmentAdapter.MainViewHolde
 
             binding.apply {
 
-                mainItemRecyclerTextView.text = textForItem
+                mainItemRecyclerTextView.text = textForItem.lowercase()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
                 binding.mainItemRecyclerTextView.setOnClickListener {
                     onItemViewClickListener?.onItemViewClick(listItem)

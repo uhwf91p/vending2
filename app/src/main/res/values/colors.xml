@@ -10,4 +10,7 @@
     <color name="color_accent">#2962FF</color>
     <color name="color_primary">#212121</color>
     <color name="loadingBackground">#80FFFFFF</color>
+    <color name="buttons_colour">#F3EFEF</color>
+    <color name="right_answer_color">#4CAF50</color>
+
 </resources>

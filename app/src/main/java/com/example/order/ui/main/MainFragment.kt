@@ -1,5 +1,6 @@
 package com.example.order.ui.main
 
+import android.R.*
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
@@ -11,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.order.R
 import com.example.order.app.domain.model.ListItem
-import com.example.order.app.domain.model.SearchItemStorage
 import com.example.order.app.domain.usecase.*
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.core.GlobalConstAndVars.KEY_FOR_INFLATE_MAIN_LIST
@@ -21,6 +21,7 @@ import com.example.order.viewModel.MainViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.questions_item.view.*
 import kotlinx.coroutines.*
 
 
@@ -40,6 +41,9 @@ class MainFragment : Fragment() {
     private val load:LoadDataFrom1CCase=LoadDataFrom1CCaseImpl()
     private val list:CreateListOfAllItemsFrom1CDBCase=CreateListOfAllItemsFrom1CDBCaseImpl()
     private val storage = Firebase.storage
+    private val storageRef = storage.reference
+
+
 
 
     override fun onCreateView(
@@ -47,6 +51,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -61,6 +66,12 @@ class MainFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+      /*  binding.buttonNextQuestion.setOnClickListener{
+            *//*questionsAdapter.onItemVi*//*
+
+
+        }*/
+
 
 
 
@@ -71,26 +82,41 @@ class MainFragment : Fragment() {
 
          ticketsAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
+
                 appCoroutineScope.launch {
+                    GlobalConstAndVars.ANSWER_CLICKED=ListItem("","","","","","")
+                    GlobalConstAndVars.RIGHT_ANSWER=ListItem("","","","","","")
+                    GlobalConstAndVars.CHOSEN_LIST_ITEM=ListItem("","","","","","")
+                    /*GlobalConstAndVars.CURRENT_QUESTION=listItem.documentFB*/
+                    binding.image.setImageResource(showImage(listItem.documentFB))
                     viewModel.getQuestionsAndAnswers(GlobalConstAndVars.NAME_VARIANT_FIELD,listItem.documentFB)
                     questionsAdapter.setListItem(GlobalConstAndVars.QUESTIONS_LIST)
                     viewModel.getQuestionsAndAnswers(GlobalConstAndVars.NAME_QUESTION_FIELD,listItem.documentFB)
                     binding.questionsTextTextView.text = GlobalConstAndVars.QUESTION_TEXT
                     binding.theme.text="Билет 1, вопрос ${listItem.documentFB}"
                     viewModel.getQuestionsAndAnswers(GlobalConstAndVars.IMAGE_URL_NAME,listItem.documentFB)
-                    storage.getReferenceFromUrl(GlobalConstAndVars.PICTURES_URL).downloadUrl.addOnSuccessListener {
+                    /*storage.getReferenceFromUrl(GlobalConstAndVars.PICTURES_URL).downloadUrl.addOnSuccessListener {
                         Glide
                             .with(this@MainFragment)
                             .load(it)
                             .into(binding.image)
                     }.addOnFailureListener {
 
-                    }
+                    }*/
 
+                  /*  @BindingAdapter("app:imageUri")
+                    fun loadImageWithUri(imageView: ImageView, imageUri: String){
+                        Glide.with(imageView.context).load(Uri.parse(imageUri)).into(imageView)
+                    }*/
+                 /*   val islandRef = storageRef.child("ТестыПДД/1-10.jpg")
 
+                    val localFile = File.createTempFile("1-12", ".jpg")
 
-
-
+                    islandRef.getFile(localFile).addOnSuccessListener {
+                        // Local temp file has been created
+                    }.addOnFailureListener {
+                        // Handle any errors
+                    }*/
                 }
 
                /* chooseScreenToShow(listItem)*/
@@ -98,7 +124,46 @@ class MainFragment : Fragment() {
         })
         questionsAdapter.setOnItemViewClickListener(object : OnItemViewClickListener {
             override fun onItemViewClick(listItem: ListItem) {
-                viewModel.rememberListOfChosenItemsVM(listItem)
+
+                /*GlobalConstAndVars.CLICKED_LIST_ITEM=LIST*/
+
+
+
+               /* viewModel.rememberListOfChosenItemsVM(listItem)*/
+                appCoroutineScope.launch {
+                    GlobalConstAndVars.ANSWER_CLICKED=ListItem("","","","","","")
+                    GlobalConstAndVars.RIGHT_ANSWER=ListItem("","","","","","")
+                    GlobalConstAndVars.CHOSEN_LIST_ITEM=ListItem("","","","","","")
+
+                    viewModel.getQuestionsAndAnswers(GlobalConstAndVars.NAME_ANSWER_FIELD,listItem.documentFB)
+                    if ( viewModel.isAnswerRight(GlobalConstAndVars.ANSWER_NUMBER,listItem.field)) {
+
+                        GlobalConstAndVars.ANSWER_CLICKED = listItem
+                        GlobalConstAndVars.CHOSEN_LIST_ITEM=listItem
+                        GlobalConstAndVars.RIGHT_ANSWER=listItem
+                        questionsAdapter.setListItem(GlobalConstAndVars.QUESTIONS_LIST)
+
+                    }
+                    else {
+                        GlobalConstAndVars.ANSWER_CLICKED.value="wrong"
+                        GlobalConstAndVars.CHOSEN_LIST_ITEM=listItem
+                        viewModel.detectRightAnswerFromList(GlobalConstAndVars.QUESTIONS_LIST,GlobalConstAndVars.ANSWER_NUMBER)
+                        questionsAdapter.setListItem(GlobalConstAndVars.QUESTIONS_LIST)
+
+
+                    }
+
+
+
+
+
+
+
+                    }
+
+
+
+
 
 
 
@@ -114,6 +179,8 @@ class MainFragment : Fragment() {
         binding.questionsRecycler.adapter = questionsAdapter
        /* viewModel.processTheSelectedItemTicket()*/
         appCoroutineScope.launch {
+            binding.image.setImageResource(showImage(GlobalConstAndVars.START_TICKET))
+          /*  GlobalConstAndVars.CURRENT_QUESTION=GlobalConstAndVars.START_TICKET*/
             viewModel.processTheSelectedItemTicket()
             ticketsAdapter.setListItem(GlobalConstAndVars.TICKETS_LIST)
             viewModel.processTheSelectedItemQuestion(GlobalConstAndVars.NAME_VARIANT_FIELD,GlobalConstAndVars.START_TICKET)
@@ -121,7 +188,7 @@ class MainFragment : Fragment() {
             viewModel.getQuestionsAndAnswers(GlobalConstAndVars.NAME_QUESTION_FIELD,GlobalConstAndVars.START_TICKET)
             binding.questionsTextTextView.text = GlobalConstAndVars.QUESTION_TEXT
             binding.theme.text="Билет 1, вопрос ${GlobalConstAndVars.START_TICKET}"
-            viewModel.getQuestionsAndAnswers(GlobalConstAndVars.IMAGE_URL_NAME,GlobalConstAndVars.START_TICKET)
+           /* viewModel.getQuestionsAndAnswers(GlobalConstAndVars.IMAGE_URL_NAME,GlobalConstAndVars.START_TICKET)
             storage.getReferenceFromUrl(GlobalConstAndVars.PICTURES_URL).downloadUrl.addOnSuccessListener {
                Glide
                    .with(this@MainFragment)
@@ -129,7 +196,12 @@ class MainFragment : Fragment() {
                    .into(binding.image)
                 }.addOnFailureListener {
 
-            }
+            }*/
+
+
+
+
+
 
 
 
@@ -215,6 +287,34 @@ class MainFragment : Fragment() {
         else { GlobalConstAndVars.SWITCH_FOR_ORDERS_LIST=0
             viewModel.getGlobalLIst()
             newInstance()
+        }
+    }
+
+    private suspend fun showImage(questionNumber:String): Int {
+        //это заглушка - переделать метод
+
+        if (questionNumber == "2") {
+            return R.drawable.pdd_1_2
+        }
+        if (questionNumber == "3") {
+            return R.drawable.pdd_1_3
+        }
+        if (questionNumber == "4") {
+            return R.drawable.pdd_1_4
+        }
+        if (questionNumber == "5") {
+            return R.drawable.pdd_1_5
+        }
+        if (questionNumber == "8") {
+            return R.drawable.pdd_1_8
+        }
+        if (questionNumber == "9") {
+            return R.drawable.pdd_1_9
+        } else {
+
+
+            return R.drawable.pdd_0
+
         }
     }
 

@@ -170,6 +170,15 @@ open class MainViewModel(
         suspend fun getQuestionsAndAnswers(fieldsName: String, ticketNumber: String): List<ListItem> {
             return createLists.getQuestionsAndAnswers(fieldsName, ticketNumber)
         }
+    suspend fun isAnswerRight(rightAnswer: String, answerForCheck: String):Boolean {
+        return createLists.isAnswerRight(rightAnswer,answerForCheck)
+
+
+    }
+    suspend fun detectRightAnswerFromList (list:List<ListItem>,rigtAnswerNumber:String){
+        createLists.detectRightAnswerFromList(list,rigtAnswerNumber)
+    }
+
 
 
     }

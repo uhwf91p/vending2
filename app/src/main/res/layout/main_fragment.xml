@@ -5,14 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/margin_left_main"
-    android:layout_marginEnd="@dimen/margin_right_main"
+
     tools:context=".ui.main.MainFragment"
     android:background="#80FAF6F6"
 
 
     >
    <com.google.android.material.textview.MaterialTextView
+
        android:layout_marginStart="30dp"
 
 
@@ -285,7 +285,23 @@
         android:src="@drawable/ic_baseline_skip_next_24"
         >
     </ImageButton>-->
-    <com.google.android.material.textview.MaterialTextView
+        <com.google.android.material.card.MaterialCardView
+
+
+            android:id="@+id/questions_text"
+            android:outlineSpotShadowColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/linear_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_lines"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+   <!-- <com.google.android.material.textview.MaterialTextView
         android:id="@+id/questions_amount"
         android:layout_marginStart="@dimen/margin_views"
         android:layout_marginTop="@dimen/margin_lines"
@@ -295,26 +311,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        tools:text="из 10">
+        tools:text="из 1jhfhcgcghgjhg0">
     </com.google.android.material.textview.MaterialTextView>
+-->
 
 
-        <com.google.android.material.card.MaterialCardView
-
-            android:id="@+id/questions_text"
-            app:layout_constraintTop_toBottomOf="@id/linear_layout"
-            android:layout_marginTop="@dimen/margin_lines"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           >
             <com.google.android.material.textview.MaterialTextView
+                android:layout_marginStart="@dimen/margin_left_main"
+                android:layout_marginEnd="@dimen/margin_right_main"
                 android:id="@+id/questions_text_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_main"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:text="Какой-то вопрос о правилах дорожного движения"
 
-                android:textSize="@dimen/font_size_main"
+
+                android:textSize="@dimen/question_size"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 style="@style/CardView">
 
@@ -322,21 +337,29 @@
             </com.google.android.material.textview.MaterialTextView>
 
 
-        </com.google.android.material.card.MaterialCardView>
+
     <com.google.android.material.imageview.ShapeableImageView
+        android:layout_marginStart="@dimen/margin_left_main"
+        android:layout_marginEnd="@dimen/margin_right_main"
         android:id="@id/image"
         android:layout_marginTop="@dimen/margin_top_main"
-        app:layout_constraintTop_toBottomOf="@id/questions_text"
+        app:layout_constraintTop_toBottomOf="@id/questions_text_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="280dp"
+
+
+        tools:src="@drawable/image3"
 
         android:scaleType="fitStart"
         >
 
 
     </com.google.android.material.imageview.ShapeableImageView>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginStart="@dimen/margin_left_main"
+        android:layout_marginEnd="@dimen/margin_right_main"
 
 
         android:id="@+id/questions_recycler"
@@ -345,6 +368,7 @@
         app:layout_constraintTop_toBottomOf="@+id/image"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
 
 
 
@@ -460,7 +484,34 @@
 
 
 
+            </LinearLayout>
 
+        </com.google.android.material.card.MaterialCardView>
+
+  <!--  <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_next_question"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_vertical"
+
+
+
+
+
+        tools:text="Следующий вопрос"
+        android:text="Следующий вопрос"
+        android:layout_marginStart="@dimen/margin_left_main"
+        android:layout_marginEnd="@dimen/margin_right_main"
+
+        app:cornerRadius="0dp"
+
+
+        android:textColor="@color/white"
+        android:backgroundTint="@color/right_answer_color">
+
+    </com.google.android.material.button.MaterialButton>-->
 
 
 

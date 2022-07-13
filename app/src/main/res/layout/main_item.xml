@@ -21,7 +21,8 @@
          tools:text="1"
          android:minWidth="1dp"
          app:cornerRadius="0dp"
-         android:backgroundTint="#E1DBDB"
+
+         android:backgroundTint="@color/buttons_colour"
          android:textColor="@color/black"
 
          >

@@ -11,7 +11,7 @@ interface DatabaseFrom1CDAO {
         fun all1C():List<DatabaseFrom1CEntity>
 
 
-        @Insert(onConflict = OnConflictStrategy.IGNORE)
+        @Insert(onConflict = OnConflictStrategy.REPLACE)
         fun insert(entity: DatabaseFrom1CEntity)
 
         @Update

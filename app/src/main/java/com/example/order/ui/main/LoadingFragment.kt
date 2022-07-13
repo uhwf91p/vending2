@@ -69,7 +69,7 @@ class LoadingFragment:Fragment() {
 
         )*/
 
-        viewModel.clearDB()
+        /*viewModel.clearDB()*/
         appCoroutineScope.launch{
 
             load.executeDownloadingDataFromFireBaseToLocalDB(fireBase.executeGettingDataFromFirebase("test"))

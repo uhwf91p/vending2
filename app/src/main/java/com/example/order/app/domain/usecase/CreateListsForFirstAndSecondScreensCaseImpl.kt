@@ -51,6 +51,16 @@ class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondS
                     } }
 
             }
+            if (fieldsName == GlobalConstAndVars.NAME_ANSWER_FIELD) {
+                GlobalConstAndVars.ANSWER_LIST=filteredList
+                filteredList.forEach {
+                    if (it.field == fieldsName) {
+                        GlobalConstAndVars.ANSWER_NUMBER=it.value
+
+                    } }
+
+            }
+
            
 
             res.resume(filteredList)
@@ -61,7 +71,33 @@ class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondS
 
 
 
+
+
     }
+
+    override suspend fun isAnswerRight(rightAnswer: String, answerForCheck: String):Boolean {
+
+        return answerForCheck.contains(rightAnswer)
+
+
+
+    }
+    override suspend fun detectRightAnswerFromList (list:List<ListItem>,rigtAnswerNumber:String){
+
+        list.forEach {
+            if (it.field.contains(rigtAnswerNumber)) {
+                GlobalConstAndVars.RIGHT_ANSWER=it
+            }
+
+
+
+            }
+
+
+    }
+
+
+
 
 
 

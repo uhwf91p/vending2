@@ -6,6 +6,10 @@ import com.example.order.app.domain.model.ServerResponseDataFireBase
 import com.google.firebase.firestore.DocumentSnapshot
 
 object GlobalConstAndVars {
+    var CURRENT_QUESTION=ListItem("","","","","","")
+
+    var ANSWER_CLICKED:ListItem=ListItem("","","","","","")
+    var CHOSEN_LIST_ITEM=ListItem("","","","","","")
     val NAME_VARIANT_FIELD="variant"
     val NAME_ANSWER_FIELD="answer"
     val NAME_QUESTION_FIELD="question"
@@ -14,11 +18,16 @@ object GlobalConstAndVars {
     var TICKETS_LIST:List<ListItem> = mutableListOf()
     var QUESTIONS_LIST:List<ListItem> = mutableListOf()
     var QUESTION_TEXT_LIST:List<ListItem> = mutableListOf()
-    var RIGHT_ANSWER=""
+    var RIGHT_ANSWER:ListItem=ListItem("","","","","","")
+
+
     var QUESTION_TEXT=""
     var IMAGE_URL_NAME="picture"
     var PICTURES_URL=""
     var URL_LIST:List<ListItem> = mutableListOf()
+
+    var ANSWER_NUMBER=""
+    var ANSWER_LIST:List<ListItem> = mutableListOf()
 
     var taskList:List<DocumentSnapshot> = listOf()
     var listFromCloud:MutableList<ServerResponseDataFireBase> = mutableListOf()
