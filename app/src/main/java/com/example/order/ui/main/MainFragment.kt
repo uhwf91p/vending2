@@ -89,7 +89,7 @@ class MainFragment : Fragment() {
             ledState.isEnabled = false
         })
 
-        viewModel.usbOperationSuccess.observe(this, Observer {
+        viewModel.usbOperationSuccess.observe(viewLifecycleOwner, Observer {
             showMessage(getString(R.string.connection_state_success))
             connectButton.text = getString(R.string.disconnect_hint)
             buttonState.isEnabled = false
