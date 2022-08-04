@@ -1,5 +1,6 @@
 package com.example.order.viewModel
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,12 @@ import com.example.order.datasource.Server.Retrofit1C
 import com.example.order.datasource.Server.ServerResponseData
 import com.example.order.app.domain.usecase.AppState
 import com.example.order.app.domain.usecase.*
+import com.foxek.usb_custom_hid_demo.device.CustomDeviceImpl
+import com.foxek.usb_custom_hid_demo.hardware.UsbHelperImpl
+import com.foxek.usb_custom_hid_demo.type.Empty
+import com.foxek.usb_custom_hid_demo.type.Error
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,12 +24,16 @@ import retrofit2.Response
 
 open class MainViewModel(
     private val createLists: CreateListsForFirstAndSecondScreensCase = CreateListsForFirstAndSecondScreensCaseImpl(),
-    private val makeResultCase: GetSelectionResultCase = GetSelectionResultCaseImpl()
+    private val makeResultCase: GetSelectionResultCase = GetSelectionResultCaseImpl(),
+            application: Application
 
 
 
 
 ) : ViewModel() {
+    private val customDevice =
+        CustomDeviceImpl(UsbHelperImpl(application.applicationContext))
+
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
     private val retrofit1C: Retrofit1C = Retrofit1C()
     private val converters: Converters = Converters()
@@ -32,93 +43,79 @@ open class MainViewModel(
     var questions: String = "1"
     var variants: List<ListItem> = listOf()
 
+    private val disposable = CompositeDisposable()
 
-    private val viewModelCoroutineScope = CoroutineScope(
-        Dispatchers.Default + SupervisorJob() + CoroutineExceptionHandler { _, _ -> handleError() })
+    val buttonState = MutableLiveData<Boolean>()
+    val usbOperationError = MutableLiveData<Error>()
+    val usbOperationSuccess = MutableLiveData<Empty>()
 
-    private fun handleError() {}
-
-    fun processAppState(): LiveData<AppState> {
-        liveDataToObserve.value = AppState.Loading(null)
-        return liveDataToObserve
+    fun changeLedButtonPressed(state: Boolean) {
+        customDevice.setLedState(state).handle(::handleError, ::handleChangeLed)
     }
 
-    suspend fun processTheSelectedItemTicket() = requestDataTicket()
-    suspend fun processTheSelectedItemQuestion(fieldsName: String, ticketNumber: String) =
-        requestDataQuestion(fieldsName, ticketNumber)
-
-    fun checkCompleteness(
-        referenceListItem: List<ListItem>,
-        listItemForCheck: List<ListItem>,
-        dateOfOrder: String,
-        worked: String
-    ): String {
-        val differences: MutableList<ListItem> = mutableListOf()
-        for (refValue in referenceListItem) {
-            var count = 0
-            for (checkedValue in listItemForCheck) {
-                if (refValue.documentFB == checkedValue.collection) {
-                    count += 1
-                }
-            }
-            if (count < 1) {
-                differences.add(refValue)
-            }
-
+    fun connectButtonPressed() {
+        if (customDevice.isConnected().isSuccess)
+            customDevice.disconnect()
+        else {
+            customDevice.connect().handle(::handleError, ::handleConnect)
         }
-        return if (differences.isNotEmpty() || listItemForCheck.isEmpty() || dateOfOrder == "" || worked == "") {
-            "Данные наряда заполнены не полностью"
-        } else "Данные в наряде заполнены корректно"
     }
 
-    private suspend fun requestDataTicket() {
-       liveDataToObserve.postValue(
-            AppState.SuccessTickets(createLists.getTicketsList(""))
+    private fun handleError(error: Error) {
+        usbOperationError.postValue(error)
+    }
+
+    private fun handleChangeLed(success: Empty){
+        usbOperationSuccess.postValue(success)
+    }
+
+    private fun handleConnect(success: Empty){
+        observeUsbRequest()
+        usbOperationSuccess.postValue(success)
+    }
+
+    private fun handleReport(report: ByteArray){
+        when (report[0]) {
+            CustomDeviceImpl.BUTTON_REPORT_ID.toByte() -> handleButtonResponse(report)
+            /* handle other report ID*/
+        }
+    }
+
+    private fun observeUsbRequest() {
+        disposable.add(
+            customDevice.receive()
+                .observeOn(Schedulers.computation())
+                .repeat()
+                .subscribe({
+                    it.handle(::handleError, ::handleReport)
+                }, {
+                    usbOperationError.postValue(Error.ReadReportError)
+                })
         )
+    }
 
+    private fun handleButtonResponse(response: ByteArray) {
+        if (response[1] == 0.toByte())
+            buttonState.postValue(false)
+        else
+            buttonState.postValue(true)
+    }
 
-
-
+    override fun onCleared() {
+        super.onCleared()
+        customDevice.disconnect()
     }
 
 
-    private suspend fun requestDataQuestion(fieldsName: String, ticketNumber: String) {
-        liveDataToObserve.postValue(
-            AppState.SuccessQuestions(createLists.getQuestionsAndAnswers(fieldsName, ticketNumber))
 
-        )
-
-
-
-    }
-        fun convertMainListToArrayListItem(listItem: List<ListItem>): ArrayList<SearchItem> {
-            return converters.convertListItemToItemStorage(listItem)
-
-        }
-
-        fun convertArrayListItemToMainList(itemList: ArrayList<SearchItem>): List<ListItem> {
-            return converters.convertItemStorageToMainList(itemList)
-
-        }
 
         fun makeOrdersFinishedVM() {
             makeResultCase.makeOrderFinished()
 
         }
 
-        fun rememberListOfChosenItemsVM(itemItem: ListItem) {
-            makeResultCase.rememberListOfChosenItems(itemItem)
-        }
 
-        fun putDataToResultDB(data: MutableList<ListItem>) {
-            makeResultCase.putListOfChosenItemToDB(data)
 
-        }
-
-        fun getAllDataDBResultEntityToListItem(): List<ListItem> {
-            return makeResultCase.getAllDataDBResultEntityToListItem()
-
-        }
 
         fun pullDataToServer(resultListItem: List<ListItem>) {
             liveDataToObserve.value = AppState.Loading(null)
@@ -157,27 +154,7 @@ open class MainViewModel(
 
         }
 
-        suspend fun getOrdersListFromDBResult() {
 
-            createListOfOrdersAndStartListItem.getListForChoice()
-        }
-
-        suspend fun getGlobalLIst() {
-            createListOfOrdersAndStartListItem.getListForChoice()
-
-        }
-
-        suspend fun getQuestionsAndAnswers(fieldsName: String, ticketNumber: String): List<ListItem> {
-            return createLists.getQuestionsAndAnswers(fieldsName, ticketNumber)
-        }
-    suspend fun isAnswerRight(rightAnswer: String, answerForCheck: String):Boolean {
-        return createLists.isAnswerRight(rightAnswer,answerForCheck)
-
-
-    }
-    suspend fun detectRightAnswerFromList (list:List<ListItem>,rigtAnswerNumber:String){
-        createLists.detectRightAnswerFromList(list,rigtAnswerNumber)
-    }
 
 
 

@@ -49,25 +49,7 @@ class LoadingFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loadinglayout.show()
-      /*  viewModel.getDataFromServerForDB().observe(viewLifecycleOwner, { renderData(it) })*/
-       /* val listTest = listOf(
-            ListItem("1","Вариант","1","До моста производство работ не менее 150 метров"),
-            ListItem("2","Вариант","1","До железнодорожного переезда без шлагбаума не менее 50 метров"),
-            ListItem("3","Вариант","1","До железнодорожного переезда со шлагбаумом не менее 150 метров"),
-            ListItem("4","ТекстВопроса","1","О чем предупреждают Вас данные знаки?"),
-            ListItem("5","Ответ","1","3"),
 
-            ListItem("1","Вариант","2","какой-то вариант1"),
-            ListItem("2","Вариант","2","какой-то вариант2"),
-            ListItem("3","Вариант","2","какой-то варинат3"),
-            ListItem("3","Вариант","2","какой-то варинат4"),
-            ListItem("4","ТекстВопроса","2","Какой-то вопрос"),
-            ListItem("5","Ответ","2","3")
-
-
-
-
-        )*/
 
         /*viewModel.clearDB()*/
         appCoroutineScope.launch{

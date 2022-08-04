@@ -1,6 +1,7 @@
 package com.example.order.ui.main
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.order.databinding.MainActivityBinding
 import com.google.firebase.firestore.ktx.firestore
@@ -19,8 +20,11 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(binding.container.id, LoadingFragment.newInstance())
+                .replace(binding.container.id, MainFragment.newInstance())
                 .commitNow()
         }
+    }
+    fun showMessage(message: String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
