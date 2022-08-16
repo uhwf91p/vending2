@@ -1,6 +1,7 @@
 package com.example.order.viewModel
 
 import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,15 +23,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-open class MainViewModel(
-    private val createLists: CreateListsForFirstAndSecondScreensCase = CreateListsForFirstAndSecondScreensCaseImpl(),
-    private val makeResultCase: GetSelectionResultCase = GetSelectionResultCaseImpl(),
-            application: Application
-
-
-
-
-) : ViewModel() {
+open class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val createLists: CreateListsForFirstAndSecondScreensCase = CreateListsForFirstAndSecondScreensCaseImpl()
+    private val makeResultCase: GetSelectionResultCase = GetSelectionResultCaseImpl()
     private val customDevice =
         CustomDeviceImpl(UsbHelperImpl(application.applicationContext))
 

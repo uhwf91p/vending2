@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.order.R
+import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.usecase.*
 import com.example.order.databinding.MainFragmentBinding
 import com.example.order.viewModel.MainViewModel
@@ -27,9 +29,7 @@ class MainFragment : Fragment() {
         get() = _binding!!
 
     private val questionsAdapter = VariantAdapter()
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
-    }
+    private lateinit var viewModel: MainViewModel
    private val fireBase:FireBaseCase=FirebaseCaseImpl()
     private val load:LoadDataFrom1CCase=LoadDataFrom1CCaseImpl()
     private val list:CreateListOfAllItemsFrom1CDBCase=CreateListOfAllItemsFrom1CDBCaseImpl()
@@ -63,6 +63,9 @@ class MainFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProviders.of(this)[MainViewModel::class.java]
 
 
 
@@ -127,7 +130,11 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance()= MainFragment()
         }
- }
+    interface OnItemViewClickListener {
+        fun onItemViewClick(listItem: ListItem)
+    }
+
+}
 
 
 
