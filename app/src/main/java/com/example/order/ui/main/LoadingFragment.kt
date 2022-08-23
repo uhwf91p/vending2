@@ -54,7 +54,7 @@ class LoadingFragment:Fragment() {
         /*viewModel.clearDB()*/
         appCoroutineScope.launch{
 
-            load.executeDownloadingDataFromFireBaseToLocalDB(fireBase.executeGettingDataFromFirebase("test"))
+            load.executeDownloadingDataFromFireBaseToLocalDB(fireBase.executeGettingDataFromFirebase("Novorossiysk"))
 
             viewModel.getGlobalLIst()
             goToMainList(activity?.supportFragmentManager)

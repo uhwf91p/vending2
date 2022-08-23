@@ -2,10 +2,7 @@ package com.example.order.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.order.app.domain.model.SearchItem
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.app.domain.model.ListItem
 import com.example.order.datasource.Server.Retrofit1C
@@ -18,7 +15,6 @@ import com.foxek.usb_custom_hid_demo.type.Empty
 import com.foxek.usb_custom_hid_demo.type.Error
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,6 +39,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
     val buttonState = MutableLiveData<Boolean>()
     val usbOperationError = MutableLiveData<Error>()
     val usbOperationSuccess = MutableLiveData<Empty>()
+    suspend fun processOpeningCells(orderNumber:String) = requestCellsToOpen(orderNumber)
 
     fun changeLedButtonPressed(state: Boolean) {
         customDevice.setLedState(state).handle(::handleError, ::handleChangeLed)
@@ -108,11 +105,26 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
             makeResultCase.makeOrderFinished()
 
         }
+    fun openCell(list:List<ListItem>){
+        customDevice.send(list)
+    }
+
+    private suspend fun requestCellsToOpen(orderNumber:String) {
+        liveDataToObserve.postValue(
+            AppState.SuccessCells(createLists.getCellsToOpen(orderNumber))
+        )
 
 
 
 
-        fun pullDataToServer(resultListItem: List<ListItem>) {
+    }
+
+
+
+
+
+
+    fun pullDataToServer(resultListItem: List<ListItem>) {
             liveDataToObserve.value = AppState.Loading(null)
             val apiKey: String = "BuildConfig.APIKEY_FROM_1C"
             if (apiKey.isBlank()) {

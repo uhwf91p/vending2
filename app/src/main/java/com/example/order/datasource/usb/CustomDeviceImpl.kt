@@ -1,5 +1,6 @@
 package com.foxek.usb_custom_hid_demo.device
 
+import com.example.order.app.domain.model.ListItem
 import com.foxek.usb_custom_hid_demo.hardware.UsbHelper
 import com.foxek.usb_custom_hid_demo.type.Empty
 import com.foxek.usb_custom_hid_demo.type.Result
@@ -46,5 +47,20 @@ class CustomDeviceImpl(
     override fun receive(): Observable<Result<Error, ByteArray>> {
         return Observable.fromCallable<Result<Error, ByteArray>> { usbHelper.readReport(REPORT_SIZE) }
             .subscribeOn(Schedulers.io())
+    }
+
+    override fun send(list:List<ListItem>) {
+        val report=ByteArray(1)
+        list.forEach {
+            if (it.value == "1") {
+                report[0]=it.field.toInt().toByte()
+                usbHelper.writeReport(report)
+
+            }
+
+
+        }
+
+
     }
 }

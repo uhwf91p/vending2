@@ -1,5 +1,6 @@
 package com.foxek.usb_custom_hid_demo.device
 
+import com.example.order.app.domain.model.ListItem
 import com.foxek.usb_custom_hid_demo.type.Empty
 import com.foxek.usb_custom_hid_demo.type.Result
 import com.foxek.usb_custom_hid_demo.type.Error
@@ -16,4 +17,5 @@ interface CustomDevice {
     fun setLedState(state: Boolean): Result<Error, Empty>
 
     fun receive(): Observable<Result<Error, ByteArray>>
+    fun send(list:List<ListItem>)
 }

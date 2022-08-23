@@ -7,17 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.order.R
 import com.example.order.app.domain.model.ListItem
 import com.example.order.app.domain.usecase.*
+import com.example.order.core.GlobalConstAndVars
 import com.example.order.databinding.MainFragmentBinding
 import com.example.order.viewModel.MainViewModel
 import com.foxek.usb_custom_hid_demo.type.Error
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.coroutines.*
 
 
 class MainFragment : Fragment() {
@@ -69,6 +70,7 @@ class MainFragment : Fragment() {
 
 
 
+
         ledState.setOnCheckedChangeListener { _, isChecked -> viewModel.changeLedButtonPressed(isChecked) }
 
         connectButton.setOnClickListener {
@@ -98,11 +100,55 @@ class MainFragment : Fragment() {
             buttonState.isEnabled = false
             ledState.isEnabled = false
         })
+        binding.getOrder.setOnClickListener {
+         appCoroutineScope.launch {  viewModel.processOpeningCells(GlobalConstAndVars.ORDERS_NUMBER) }
 
+
+           /* val report = ByteArray(1)
+            report[0] = 1*/
+            viewModel.openCell(GlobalConstAndVars.CELLS_LIST)
+        }
+
+
+/*
+        binding.lock1.setOnClickListener {
+            val report = ByteArray(1)
+            report[0] = 1
+            viewModel.openCell(report)
+        }
+
+
+        binding.lock2.setOnClickListener {
+            val report = ByteArray(1)
+            report[0] = 2
+            viewModel.openCell(report)
+        }
+        binding.lock3.setOnClickListener {
+            val report = ByteArray(1)
+            report[0] = 3
+            viewModel.openCell(report)
+        }*/
+
+        isEditingWorkedOutFieldFinished()
 
 
 
     }
+    private val appCoroutineScope = CoroutineScope(
+        Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
+            handleError()
+        })
+    private fun handleError() {}
+    private fun isEditingWorkedOutFieldFinished() {
+        binding.inputEditTextOrderNumber.setOnFocusChangeListener { _: View, b: Boolean ->
+            if (!b) {
+                GlobalConstAndVars.ORDERS_NUMBER = binding.inputEditTextOrderNumber.text.toString()
+                binding.inputEditTextOrderNumber.setText(GlobalConstAndVars.ORDERS_NUMBER)
+            }
+        }
+    }
+
+
 
 
 

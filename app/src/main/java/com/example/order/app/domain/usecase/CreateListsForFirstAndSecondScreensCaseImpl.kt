@@ -9,12 +9,13 @@ import kotlin.coroutines.suspendCoroutine
 
 class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondScreensCase {
     @RequiresApi(Build.VERSION_CODES.N)
-    override suspend fun getTicketsList(key: String): List<ListItem> {
+    override suspend fun getCellsToOpen(orderNumber: String): List<ListItem> {
           return suspendCoroutine { res ->
-              val ticketList=GlobalConstAndVars.GLOBAL_LIST.distinctBy { it.documentFB }
-              GlobalConstAndVars.SWITCH=1
-              GlobalConstAndVars.TICKETS_LIST=ticketList
-              res.resume(ticketList)
+              val cellsList=GlobalConstAndVars.GLOBAL_LIST.filter { it.documentFB==orderNumber }.filter { it.value=="1" }
+
+              /*GlobalConstAndVars.SWITCH=1*/
+              GlobalConstAndVars.CELLS_LIST=cellsList
+              res.resume(cellsList)
 
 
 

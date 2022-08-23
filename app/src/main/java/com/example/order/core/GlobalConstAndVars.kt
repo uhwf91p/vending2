@@ -6,6 +6,7 @@ import com.example.order.app.domain.model.ServerResponseDataFireBase
 import com.google.firebase.firestore.DocumentSnapshot
 
 object GlobalConstAndVars {
+    var CELLS_TO_OPEN_BYTE_ARRAY=ByteArray(1)
     var CURRENT_QUESTION=ListItem("","","","","","")
 
     var ANSWER_CLICKED:ListItem=ListItem("","","","","","")
@@ -15,7 +16,7 @@ object GlobalConstAndVars {
     val NAME_QUESTION_FIELD="question"
     val START_TICKET="1"
     var SWITCH=1
-    var TICKETS_LIST:List<ListItem> = mutableListOf()
+    var CELLS_LIST:List<ListItem> = mutableListOf()
     var QUESTIONS_LIST:List<ListItem> = mutableListOf()
     var QUESTION_TEXT_LIST:List<ListItem> = mutableListOf()
     var RIGHT_ANSWER:ListItem=ListItem("","","","","","")
@@ -49,7 +50,7 @@ object GlobalConstAndVars {
     const val DEFAULT_VALUE_FOR_GENERATED_LIST=""
     var LIST_OF_FINISHED_ORDERS = listOf<ServerResponseData>()
     const val MARKER_OF_FINISHED_ORDER="1"
-    var WORKED_OUT:String=""
+    var ORDERS_NUMBER:String=""
     var SWITCH_FOR_ORDERS_LIST=0
 
 }
