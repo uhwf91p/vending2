@@ -7,6 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 object GlobalConstAndVars {
     var CELLS_TO_OPEN_BYTE_ARRAY=ByteArray(1)
+    var CELLS_STRING=""
     var CURRENT_QUESTION=ListItem("","","","","","")
 
     var ANSWER_CLICKED:ListItem=ListItem("","","","","","")

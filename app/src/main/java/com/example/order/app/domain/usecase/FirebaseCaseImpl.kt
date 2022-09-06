@@ -7,7 +7,6 @@ import com.example.order.core.App
 import com.example.order.core.GlobalConstAndVars
 import com.example.order.app.domain.model.ServerResponseDataFireBase
 import com.example.order.datasource.Room.DataBaseFrom1C.DatabaseFrom1CEntity
-import com.example.order.datasource.fireBase.Task
 import com.example.order.repository.LocalRepository
 import com.example.order.repository.LocalRepositoryImpl
 import com.google.firebase.firestore.DocumentSnapshot
@@ -22,6 +21,11 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class FirebaseCaseImpl:FireBaseCase {
+    companion object{
+        private const val TASK_FIELD_TITLE = "title"
+        private const val TASK_FIELD_CREATED = "created"
+    }
+
     private val database: LocalRepository = LocalRepositoryImpl(App.get1CDAO())
     private val converters: Converters = Converters()
 
@@ -30,6 +34,59 @@ class FirebaseCaseImpl:FireBaseCase {
             .setPersistenceEnabled(false)
             .build()
     }
+    override suspend fun executeAddingDataToFirebase(collectionsName: String): MutableList<ListItem> {
+
+        return suspendCoroutine {
+
+            var listItems: MutableList<ListItem> = mutableListOf()
+            var resumed = false
+
+
+
+            for (listItem in GlobalConstAndVars.CELLS_LIST) {
+                val openCellsHashMap = HashMap<String, Any>()
+                openCellsHashMap[listItem.field]=listItem.value
+                remoteDB.collection(collectionsName).document(listItem.documentFB)
+                    .set(openCellsHashMap)
+                    .addOnSuccessListener { result ->
+                        Log.d(TAG, "${listItem.documentFB} => ${listItem.field}:${listItem.value}")
+
+                            if (!resumed) {
+                                it.resume(listItems)
+                                resumed = true
+                            }
+
+
+                            /* database.insertToDB(converters.mapDocumentToRemoteTaskHM(document,collectionsName))
+                        database.insertToDB(converters.mapToDB(converters.mapDocumentToRemoteTask(document)))
+                        listFromCloud.add(converters.mapDocumentToRemoteTask(document))*/
+
+
+
+                    }
+                    .addOnFailureListener { exception ->
+
+                        Log.d(TAG, "Error getting documents: ", exception)
+                        if (!resumed) {
+                            it.resumeWithException(exception)
+                            resumed = true
+                        }
+
+
+                    }
+
+            }
+
+
+            /*var listFromCloud:MutableList<ServerResponseDataFireBase> = mutableListOf()*/
+
+
+            /* appCoroutineScope.launch { delay(5000)  }*/
+        }
+
+    }
+
+
 
 
     override suspend fun executeGettingDataFromFirebase(collectionsName: String): MutableList<ListItem> {
@@ -53,7 +110,11 @@ class FirebaseCaseImpl:FireBaseCase {
                         )
 
                         for (serverResponseDataFireBase in list) {
-                            database.insertToDB(converters.mapServerResponseDataFireBaseToDBEntity(serverResponseDataFireBase))
+                            database.insertToDB(
+                                converters.mapServerResponseDataFireBaseToDBEntity(
+                                    serverResponseDataFireBase
+                                )
+                            )
                             listItems.add(
                                 converters.mapServerResponseDataFireBaseToListItem(
                                     serverResponseDataFireBase
@@ -67,8 +128,6 @@ class FirebaseCaseImpl:FireBaseCase {
                             it.resume(listItems)
                             resumed = true
                         }
-
-
 
 
                         /* database.insertToDB(converters.mapDocumentToRemoteTaskHM(document,collectionsName))
@@ -91,19 +150,8 @@ class FirebaseCaseImpl:FireBaseCase {
             /* appCoroutineScope.launch { delay(5000)  }*/
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
     }
+
 
     private val appCoroutineScope = CoroutineScope(
         Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, _ ->
@@ -135,7 +183,8 @@ class FirebaseCaseImpl:FireBaseCase {
             .toList()
 
     }
-    fun ff(ddd:Single<List<DatabaseFrom1CEntity>>){
+
+    fun ff(ddd: Single<List<DatabaseFrom1CEntity>>) {
 
     }
 
@@ -149,12 +198,15 @@ class FirebaseCaseImpl:FireBaseCase {
             remoteTask.documentFB,
             remoteTask.field,
             value = remoteTask.value,
-            theme = remoteTask.theme,
-            typeOfTests = remoteTask.typeOfTests
+            reserveField1 = remoteTask.theme,
+            reserveField2 = remoteTask.typeOfTests
         )
     }
 
-    private fun mapDocumentToRemoteTask(document: DocumentSnapshot) = document.toObject(ServerResponseDataFireBase::class.java)!!
+    private fun mapDocumentToRemoteTask(document: DocumentSnapshot) =
+        document.toObject(ServerResponseDataFireBase::class.java)!!
+
+
 }
 
 

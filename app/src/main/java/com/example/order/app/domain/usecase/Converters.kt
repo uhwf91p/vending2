@@ -52,16 +52,16 @@ open class Converters : ViewModel() {
         value: String
     ): DatabaseFrom1CEntity {
         val databaseFrom1CEntity = DatabaseFrom1CEntity("", "", "", "", "", "")
-        databaseFrom1CEntity.id1 = id1
-        databaseFrom1CEntity.dataType = id2
-        databaseFrom1CEntity.ticketNumber = name
+        databaseFrom1CEntity.box = id1
+        databaseFrom1CEntity.cell = id2
+        databaseFrom1CEntity.specificationsName = name
         databaseFrom1CEntity.value = value
         return databaseFrom1CEntity
     }
 
     fun convertEntityDB1CToMainList(entityList: List<DatabaseFrom1CEntity>): List<ListItem> {
         return entityList.map {
-            ListItem(it.id1, it.dataType, it.ticketNumber, it.value,it.theme,it.dataType)
+            ListItem(it.box, it.cell, it.specificationsName, it.value,it.reserveField1,it.cell)
 
         }
 
@@ -99,8 +99,8 @@ open class Converters : ViewModel() {
             remoteTask.documentFB,
             remoteTask.field,
             value = remoteTask.value,
-            theme = remoteTask.theme,
-            typeOfTests = remoteTask.typeOfTests
+            reserveField1 = remoteTask.theme,
+            reserveField2 = remoteTask.typeOfTests
 
         )
     }

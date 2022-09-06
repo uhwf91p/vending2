@@ -77,7 +77,7 @@ class MainFragment : Fragment() {
             viewModel.connectButtonPressed()
         }
 
-        viewModel.buttonState.observe(viewLifecycleOwner, Observer {
+        viewModel.answerFromUsbState.observe(viewLifecycleOwner, Observer {
             buttonState.isChecked = true
         })
 
@@ -106,7 +106,10 @@ class MainFragment : Fragment() {
 
            /* val report = ByteArray(1)
             report[0] = 1*/
-            viewModel.openCell(GlobalConstAndVars.CELLS_LIST)
+           /* viewModel.openCellButtonIsPressed(GlobalConstAndVars.CELLS_LIST)*/
+                //заглушка
+
+            showMessage("ячейки ${GlobalConstAndVars.CELLS_STRING} открыты")
         }
 
 

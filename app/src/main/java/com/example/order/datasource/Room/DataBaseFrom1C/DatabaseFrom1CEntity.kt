@@ -3,15 +3,15 @@ package com.example.order.datasource.Room.DataBaseFrom1C
 import androidx.room.Entity
 
 
-@Entity(primaryKeys = ["id1","dataType","ticketNumber"])
+@Entity(primaryKeys = ["box","cell","specificationsName"])
 data class DatabaseFrom1CEntity(
 
-    var id1: String,
-    var dataType: String,
-    var ticketNumber:String,
+    var box: String,
+    var cell: String,
+    var specificationsName:String,
     var value:String,
-    var theme:String,
-    var typeOfTests:String
+    var reserveField1:String,
+    var reserveField2:String
 
 
 )

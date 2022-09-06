@@ -1,6 +1,7 @@
 package com.foxek.usb_custom_hid_demo.device
 
 import com.example.order.app.domain.model.ListItem
+import com.example.order.core.GlobalConstAndVars
 import com.foxek.usb_custom_hid_demo.hardware.UsbHelper
 import com.foxek.usb_custom_hid_demo.type.Empty
 import com.foxek.usb_custom_hid_demo.type.Result
@@ -13,12 +14,15 @@ class CustomDeviceImpl(
 ) : CustomDevice {
 
     companion object {
-        const val VENDOR_ID = 1155
-        const val PRODUCT_ID = 22352
+        const val VENDOR_ID = 4292
+        const val PRODUCT_ID = 60000
         const val CUSTOM_HID_INTERFACE = 0x00
         const val BUTTON_REPORT_ID = 0x01
         const val LED_REPORT_ID = 0x02
-        const val REPORT_SIZE = 2
+        const val REPORT_SIZE = 1
+    }
+    override fun send(report:ByteArray) {
+        usbHelper.writeReport(report)
     }
 
     override fun connect(): Result<Error, Empty> =
@@ -47,20 +51,5 @@ class CustomDeviceImpl(
     override fun receive(): Observable<Result<Error, ByteArray>> {
         return Observable.fromCallable<Result<Error, ByteArray>> { usbHelper.readReport(REPORT_SIZE) }
             .subscribeOn(Schedulers.io())
-    }
-
-    override fun send(list:List<ListItem>) {
-        val report=ByteArray(1)
-        list.forEach {
-            if (it.value == "1") {
-                report[0]=it.field.toInt().toByte()
-                usbHelper.writeReport(report)
-
-            }
-
-
-        }
-
-
     }
 }

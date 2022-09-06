@@ -23,10 +23,10 @@ interface DatabaseFrom1CDAO {
         @Query("DELETE FROM DatabaseFrom1CEntity")
         fun deleteall()
 
-        @Query("SELECT id1, dataType, ticketNumber FROM DatabaseFrom1CEntity")
+        @Query("SELECT box, cell, specificationsName FROM DatabaseFrom1CEntity")
         fun getHistoryCursor(): Cursor
 
-        @Query("SELECT id1, dataType, ticketNumber FROM DatabaseFrom1CEntity WHERE id1 = :id1&dataType=:id2")
+        @Query("SELECT box, cell, specificationsName FROM DatabaseFrom1CEntity WHERE box = :id1&cell=:id2")
         fun getHistoryCursor(id1: Int,id2:Int): Cursor
 
         @Query("SELECT*FROM ResultEntity WHERE value=''")

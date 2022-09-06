@@ -8,6 +8,7 @@ import com.foxek.usb_custom_hid_demo.type.Empty
 import com.foxek.usb_custom_hid_demo.type.Result
 import com.foxek.usb_custom_hid_demo.type.Error
 import java.nio.ByteBuffer
+import java.nio.charset.StandardCharsets
 
 class UsbHelperImpl(context: Context) : UsbHelper {
 
@@ -30,9 +31,17 @@ class UsbHelperImpl(context: Context) : UsbHelper {
     override fun enumerate(vid: Int, pid: Int, nInterface: Int): Result<Error, Empty> {
         usbDevice = findDevice(vid, pid) ?: return Result.Failure(Error.NoDeviceFoundError)
 
+
+
+
         usbInterface = usbDevice.getInterface(nInterface)
 
-        for (num in 0 until usbInterface.endpointCount) {
+
+
+
+
+
+        for (num in 0..usbInterface.endpointCount-1) {
             if (usbInterface.getEndpoint(num).direction == USB_DIR_IN)
                 usbInEndpoint = usbInterface.getEndpoint(num)
             else
@@ -83,7 +92,9 @@ class UsbHelperImpl(context: Context) : UsbHelper {
 
                 buffer.rewind()
                 buffer.get(report, 0, report.size)
+
                 buffer.clear()
+
             }
         } ?: return Result.Failure(Error.UsbConnectionError)
 
@@ -104,4 +115,7 @@ class UsbHelperImpl(context: Context) : UsbHelper {
         }
         return null
     }
+
+
+
 }

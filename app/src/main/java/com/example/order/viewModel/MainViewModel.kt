@@ -36,7 +36,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val disposable = CompositeDisposable()
 
-    val buttonState = MutableLiveData<Boolean>()
+    val answerFromUsbState = MutableLiveData<String>()
     val usbOperationError = MutableLiveData<Error>()
     val usbOperationSuccess = MutableLiveData<Empty>()
     suspend fun processOpeningCells(orderNumber:String) = requestCellsToOpen(orderNumber)
@@ -67,10 +67,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun handleReport(report: ByteArray){
-        when (report[0]) {
-            CustomDeviceImpl.BUTTON_REPORT_ID.toByte() -> handleButtonResponse(report)
-            /* handle other report ID*/
-        }
+        handleUsbResponse(report)
     }
 
     private fun observeUsbRequest() {
@@ -86,11 +83,14 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
         )
     }
 
-    private fun handleButtonResponse(response: ByteArray) {
-        if (response[1] == 0.toByte())
-            buttonState.postValue(false)
-        else
-            buttonState.postValue(true)
+    private fun handleUsbResponse(response: ByteArray) {
+        var str=""
+        for (byte in response) {
+            str += byte.toString()
+
+        }
+
+        answerFromUsbState.postValue(str)
     }
 
     override fun onCleared() {
@@ -105,9 +105,9 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
             makeResultCase.makeOrderFinished()
 
         }
-    fun openCell(list:List<ListItem>){
+   /* fun openCellButtonIsPressed(list:List<ListItem>){
         customDevice.send(list)
-    }
+    }*/
 
     private suspend fun requestCellsToOpen(orderNumber:String) {
         liveDataToObserve.postValue(

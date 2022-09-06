@@ -17,5 +17,5 @@ interface CustomDevice {
     fun setLedState(state: Boolean): Result<Error, Empty>
 
     fun receive(): Observable<Result<Error, ByteArray>>
-    fun send(list:List<ListItem>)
+    fun send(report:ByteArray)
 }
