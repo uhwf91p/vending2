@@ -9,6 +9,7 @@ import com.example.order.datasource.Server.Retrofit1C
 import com.example.order.datasource.Server.ServerResponseData
 import com.example.order.app.domain.usecase.AppState
 import com.example.order.app.domain.usecase.*
+import com.foxek.usb_custom_hid_demo.device.CustomDevice
 import com.foxek.usb_custom_hid_demo.device.CustomDeviceImpl
 import com.foxek.usb_custom_hid_demo.hardware.UsbHelperImpl
 import com.foxek.usb_custom_hid_demo.type.Empty
@@ -22,7 +23,7 @@ import retrofit2.Response
 open class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val createLists: CreateListsForFirstAndSecondScreensCase = CreateListsForFirstAndSecondScreensCaseImpl()
     private val makeResultCase: GetSelectionResultCase = GetSelectionResultCaseImpl()
-    private val customDevice =
+    private val customDevice: CustomDevice =
         CustomDeviceImpl(UsbHelperImpl(application.applicationContext))
 
     private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData()
@@ -39,6 +40,7 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
     val answerFromUsbState = MutableLiveData<String>()
     val usbOperationError = MutableLiveData<Error>()
     val usbOperationSuccess = MutableLiveData<Empty>()
+    val goodArticle= MutableLiveData<String>()
     suspend fun processOpeningCells(orderNumber:String) = requestCellsToOpen(orderNumber)
 
     fun changeLedButtonPressed(state: Boolean) {
@@ -105,9 +107,9 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
             makeResultCase.makeOrderFinished()
 
         }
-   /* fun openCellButtonIsPressed(list:List<ListItem>){
+    fun openCellButtonIsPressed(list:List<ListItem>){
         customDevice.send(list)
-    }*/
+    }
 
     private suspend fun requestCellsToOpen(orderNumber:String) {
         liveDataToObserve.postValue(

@@ -78,7 +78,7 @@ class LoadingViewModel(val liveDataToObserve:MutableLiveData<AppState> = Mutable
     }
 
     suspend fun getGlobalLIst(){
-        createGlobalListCase.getListForChoice()
+        createGlobalListCase.getListWithAllCells()
 
     }
 

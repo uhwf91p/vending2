@@ -20,8 +20,8 @@ class CreateListOfAllItemsFrom1CDBCaseImpl: CreateListOfAllItemsFrom1CDBCase {
        GlobalConstAndVars.STEP_FOR_WORKED_HOURS,"Отработано часов")
     private val converters:Converters= Converters()
 
-    // саделать маски для имен в главном списке
-    override suspend fun getListForChoice(): List<ListItem> {
+
+    override suspend fun getListWithAllCells(): List<ListItem> {
         var startList: List<ListItem> = listOf()
         val dataFrom1C: List<ListItem>
 

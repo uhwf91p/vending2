@@ -29,7 +29,7 @@ class SaveViewModel(
 
     }
     suspend fun getGlobalLIst(){
-        globalList.getListForChoice()
+        globalList.getListWithAllCells()
     }
 
     private val appCoroutineScope = CoroutineScope(

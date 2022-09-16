@@ -106,7 +106,7 @@ class MainFragment : Fragment() {
 
            /* val report = ByteArray(1)
             report[0] = 1*/
-           /* viewModel.openCellButtonIsPressed(GlobalConstAndVars.CELLS_LIST)*/
+            viewModel.openCellButtonIsPressed(GlobalConstAndVars.CELLS_LIST)
                 //заглушка
 
             showMessage("ячейки ${GlobalConstAndVars.CELLS_STRING} открыты")
@@ -132,7 +132,9 @@ class MainFragment : Fragment() {
             viewModel.openCell(report)
         }*/
 
-        isEditingWorkedOutFieldFinished()
+        isEditingGetOrderFinished()
+        //заглушка - переписать после подключения сканера штрих кодов
+        isEditingLoadCellFinished()
 
 
 
@@ -142,11 +144,20 @@ class MainFragment : Fragment() {
             handleError()
         })
     private fun handleError() {}
-    private fun isEditingWorkedOutFieldFinished() {
+    private fun isEditingGetOrderFinished() {
         binding.inputEditTextOrderNumber.setOnFocusChangeListener { _: View, b: Boolean ->
             if (!b) {
                 GlobalConstAndVars.ORDERS_NUMBER = binding.inputEditTextOrderNumber.text.toString()
                 binding.inputEditTextOrderNumber.setText(GlobalConstAndVars.ORDERS_NUMBER)
+            }
+        }
+
+    }
+    private fun isEditingLoadCellFinished() {
+        binding.goodArticleInputEditText.setOnFocusChangeListener { _: View, b: Boolean ->
+            if (!b) {
+                GlobalConstAndVars.GOOD_TO_LOAD = binding.inputEditTextOrderNumber.text.toString()
+                binding.inputEditTextOrderNumber.setText(GlobalConstAndVars.GOOD_TO_LOAD)
             }
         }
     }
@@ -155,9 +166,10 @@ class MainFragment : Fragment() {
 
 
 
-    private fun showMessage(message: String) {
-        (activity as MainActivity).showMessage(message)
-    }
+        private fun showMessage(message: String) {
+            (activity as MainActivity).showMessage(message)
+        }
+
 
 
 

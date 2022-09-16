@@ -49,7 +49,7 @@ class CustomDeviceImpl(
     }
 
     override fun receive(): Observable<Result<Error, ByteArray>> {
-        return Observable.fromCallable<Result<Error, ByteArray>> { usbHelper.readReport(REPORT_SIZE) }
+        return Observable.fromCallable { usbHelper.readReport(REPORT_SIZE) }
             .subscribeOn(Schedulers.io())
     }
 }

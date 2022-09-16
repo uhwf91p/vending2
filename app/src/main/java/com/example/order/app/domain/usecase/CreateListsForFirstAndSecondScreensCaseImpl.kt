@@ -25,6 +25,24 @@ class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondS
 
 
 
+
+    }
+
+    override suspend fun loadCell(goodsArticle: String) {
+        val freeCells=GlobalConstAndVars.GLOBAL_LIST.filter {  }
+
+        val cellsQuantity =12 //заглушка. сделать метод для опроса ардуины о том сколько у нее ячеек
+        val startCell = 2 //заглушка. сделать запрос на ардуину с какой цифры начинать отсчет
+
+
+
+
+
+
+    }
+
+    override suspend fun getFreeCellsList(freeCellsList: List<ListItem>) {
+
     }
 
     override suspend fun getQuestionsAndAnswers(fieldsName: String, ticketNumber:String): List<ListItem> {
