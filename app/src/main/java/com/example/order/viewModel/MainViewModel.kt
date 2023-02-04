@@ -107,8 +107,26 @@ open class MainViewModel(application: Application) : AndroidViewModel(applicatio
             makeResultCase.makeOrderFinished()
 
         }
+
+    private fun convertStringToByteArray (string: String):ByteArray{
+        val report = ByteArray(2)
+        for(char in string.indices){
+            report[char]= string[char].toByte()
+
+
+
+        }
+        return report
+
+    }
+
     fun openCellButtonIsPressed(list:List<ListItem>){
-        customDevice.send(list)
+
+        list.forEach {
+
+            customDevice.send(convertStringToByteArray(it.documentFB))
+        }
+
     }
 
     private suspend fun requestCellsToOpen(orderNumber:String) {

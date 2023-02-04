@@ -28,8 +28,8 @@ class CreateListsForFirstAndSecondScreensCaseImpl: CreateListsForFirstAndSecondS
 
     }
 
-    override suspend fun loadCell(goodsArticle: String) {
-        val freeCells=GlobalConstAndVars.GLOBAL_LIST.filter {  }
+    override suspend fun openCellForLoading(goodsArticle: String) {
+        val freeCells=GlobalConstAndVars.GLOBAL_LIST
 
         val cellsQuantity =12 //заглушка. сделать метод для опроса ардуины о том сколько у нее ячеек
         val startCell = 2 //заглушка. сделать запрос на ардуину с какой цифры начинать отсчет

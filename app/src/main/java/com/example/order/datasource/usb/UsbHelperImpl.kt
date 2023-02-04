@@ -3,6 +3,7 @@ package com.foxek.usb_custom_hid_demo.hardware
 import android.content.Context
 import android.hardware.usb.*
 import android.hardware.usb.UsbConstants.USB_DIR_IN
+import com.example.order.core.GlobalConstAndVars
 
 import com.foxek.usb_custom_hid_demo.type.Empty
 import com.foxek.usb_custom_hid_demo.type.Result
@@ -97,6 +98,8 @@ class UsbHelperImpl(context: Context) : UsbHelper {
 
             }
         } ?: return Result.Failure(Error.UsbConnectionError)
+        GlobalConstAndVars.DATA_FROM_USB=String(report,StandardCharsets.UTF_8)
+        return Result.Success(report)
 
         return Result.Success(report)
     }

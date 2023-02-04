@@ -6,10 +6,11 @@ import com.example.order.app.domain.model.ServerResponseDataFireBase
 import com.google.firebase.firestore.DocumentSnapshot
 
 object GlobalConstAndVars {
+    const val UID="123456"
     var CELLS_TO_OPEN_BYTE_ARRAY=ByteArray(1)
     var CELLS_STRING=""
     var CURRENT_QUESTION=ListItem("","","","","","")
-
+    var DATA_FROM_USB=""
     var ANSWER_CLICKED:ListItem=ListItem("","","","","","")
     var CHOSEN_LIST_ITEM=ListItem("","","","","","")
     val NAME_VARIANT_FIELD="variant"
@@ -17,7 +18,9 @@ object GlobalConstAndVars {
     val NAME_QUESTION_FIELD="question"
     val START_TICKET="1"
     var SWITCH=1
-    var CELLS_LIST:List<ListItem> = mutableListOf()
+    var CELLS_LIST:List<ListItem> = mutableListOf(
+        ListItem(UID,"5","123456","","",""),
+            ListItem(UID,"12","123456","","",""))
     var QUESTIONS_LIST:List<ListItem> = mutableListOf()
     var QUESTION_TEXT_LIST:List<ListItem> = mutableListOf()
     var RIGHT_ANSWER:ListItem=ListItem("","","","","","")
