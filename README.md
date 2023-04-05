@@ -1,17 +1,12 @@
-Vending multiplatform application
+Что нужно для сборки проекта:
 
-### Running desktop application
+Android: gradle android:build
 
-* To run, launch command: `./gradlew :desktop:run`
-* Or choose **desktop** configuration in IDE and run it.
+Linux:
+ - В desktop/build.gradle.kts указать implementation(compose.desktop.currentOs) (если указано другое).
+ - gradle desktop:run
 
-### Building native desktop distribution
-```
-./gradlew :desktop:packageDistributionForCurrentOS
-# outputs are written to desktop/build/compose/binaries
-```
-
-### Installing Android application on device/emulator
-```
-./gradlew installDebug
-```
+Raspberry:
+ - В desktop/build.gradle.kts указать implementation(compose.desktop.linux_arm64) (если указано другое).
+ - gradle desktop:packageUberJarForCurrentOS
+ 
