@@ -1,0 +1,4 @@
+application:
+  domain: localhost:8000
+  access_token: test
+  eof_symbol: \n

@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
@@ -22,6 +24,15 @@ fun MainScreen(mainViewModel: MainViewModel) {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+
+        TextField(
+            value = state.qrInput,
+            onValueChange = { mainViewModel.onQrInputChange(it) },
+            label = { Text("QR код:") },
+            modifier = Modifier.fillMaxWidth()
+                .height(100.dp)
+                .focusRequester(FocusRequester()) // TODO: конструирование FocusRequester вынести за пределы
+        )
 
         Button(
             onClick = { mainViewModel.onConnect() },

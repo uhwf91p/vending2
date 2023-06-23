@@ -7,6 +7,8 @@ expect class MainViewModel{
 
     fun onConnect()
 
+    fun onQrInputChange(value: String)
+
     fun onInputChange(value: String)
 
     fun onOpen()
