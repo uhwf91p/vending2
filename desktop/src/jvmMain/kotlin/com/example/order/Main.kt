@@ -8,7 +8,6 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
 import com.example.order.infrastructure.SerialConnection
 import com.example.order.provider.CellProviderImpl
-import com.example.order.service.CellService
 import com.example.order.service.CellServiceImpl
 import com.example.order.service.SerialServiceImpl
 import com.example.order.ui.MainScreen

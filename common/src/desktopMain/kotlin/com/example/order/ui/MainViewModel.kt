@@ -47,7 +47,7 @@ actual class MainViewModel(
             qrInput = value,
         )
         if (_uiState.value.qrInput.contains(AppConfig.eofSymbol)) {
-            val code = _uiState.value.qrInput
+            val code = _uiState.value.qrInput.split(AppConfig.eofSymbol).first()
             val opened = !_uiState.value.opened
             viewModelScope.launch(Dispatchers.IO) {
                 cellService.openCellByCode(

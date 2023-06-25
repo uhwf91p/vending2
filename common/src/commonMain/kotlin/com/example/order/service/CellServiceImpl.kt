@@ -9,14 +9,15 @@ class CellServiceImpl(
 ) : CellService {
 
     override suspend fun openCellByCode(code: String, opened: Boolean) {
-        val checkCodeResult = cellProvider.checkCode(
+        cellProvider.checkCode(
             CheckCodeRequest(code = code)
-        )
-        cellProvider.switchCell(
-            SwitchCellRequest(
-                cell = checkCodeResult.openCell,
-                opened = opened
+        )?.let {
+            cellProvider.switchCell(
+                SwitchCellRequest(
+                    cell = it.openCell,
+                    opened = opened
+                )
             )
-        )
+        }
     }
 }

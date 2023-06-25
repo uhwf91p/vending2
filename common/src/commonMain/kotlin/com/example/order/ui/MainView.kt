@@ -5,9 +5,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -17,6 +15,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MainScreen(mainViewModel: MainViewModel) {
     val state by mainViewModel.uiState.collectAsState()
+    val focusRequester = remember { FocusRequester() }
 
     Column(
         modifier = Modifier
@@ -31,7 +30,7 @@ fun MainScreen(mainViewModel: MainViewModel) {
             label = { Text("QR код:") },
             modifier = Modifier.fillMaxWidth()
                 .height(100.dp)
-                .focusRequester(FocusRequester()) // TODO: конструирование FocusRequester вынести за пределы
+                .focusRequester(focusRequester)
         )
 
         Button(
@@ -59,5 +58,9 @@ fun MainScreen(mainViewModel: MainViewModel) {
         ) {
             Text("Открыть")
         }
+    }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
     }
 }

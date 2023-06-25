@@ -5,7 +5,7 @@ import com.example.order.dto.CheckCodeResponse
 import com.example.order.dto.SwitchCellRequest
 
 interface CellProvider {
-    suspend fun checkCode(checkCodeRequest: CheckCodeRequest): CheckCodeResponse
+    suspend fun checkCode(checkCodeRequest: CheckCodeRequest): CheckCodeResponse?
 
     suspend fun switchCell(switchCellRequest: SwitchCellRequest)
 }
