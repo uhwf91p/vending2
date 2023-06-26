@@ -12,7 +12,9 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import java.util.logging.Logger
 
-class CellProviderImpl() : CellProvider {
+class CellProviderImpl(
+    private val appConfig: AppConfig
+) : CellProvider {
 
     private val logger = Logger.getLogger(this::class.qualifiedName)
 
@@ -20,9 +22,9 @@ class CellProviderImpl() : CellProvider {
     private val client: HttpClient = httpClient()
 
     override suspend fun checkCode(checkCodeRequest: CheckCodeRequest): CheckCodeResponse? {
-        val response = client.post("${AppConfig.domain}/${ApiConstant.CHECK_CODE_API}") {
+        val response = client.post("${appConfig.domain}/${ApiConstant.CHECK_CODE_API}") {
             headers {
-                append(HttpHeaders.Authorization, AppConfig.accessToken)
+                append(HttpHeaders.Authorization, appConfig.accessToken)
             }
             contentType(ContentType.Application.Json)
             setBody(checkCodeRequest)
@@ -36,9 +38,9 @@ class CellProviderImpl() : CellProvider {
     }
 
     override suspend fun switchCell(switchCellRequest: SwitchCellRequest) {
-        val response = client.post("${AppConfig.domain}/${ApiConstant.SWITCH_CELL_API}") {
+        val response = client.post("${appConfig.domain}/${ApiConstant.SWITCH_CELL_API}") {
             headers {
-                append(HttpHeaders.Authorization, AppConfig.accessToken)
+                append(HttpHeaders.Authorization, appConfig.accessToken)
             }
             contentType(ContentType.Application.Json)
             setBody(switchCellRequest)

@@ -12,7 +12,8 @@ import kotlinx.coroutines.launch
 
 actual class MainViewModel(
     private val serialService: SerialService,
-    private val cellService: CellService
+    private val cellService: CellService,
+    private val appConfig: AppConfig
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MainState())
     actual val uiState: StateFlow<MainState> = _uiState
@@ -27,7 +28,7 @@ actual class MainViewModel(
         _uiState.value = _uiState.value.copy(
             qrInput = value,
         )
-        if (_uiState.value.qrInput.contains(AppConfig.eofSymbol)) {
+        if (_uiState.value.qrInput.contains(appConfig.eofSymbol)) {
             val code = _uiState.value.qrInput
             val opened = !_uiState.value.opened
             viewModelScope.launch(Dispatchers.IO) {

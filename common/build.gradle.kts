@@ -12,6 +12,7 @@ kotlin {
     sourceSets {
         val ktor_version = "2.3.1"
         val serializationVersion = "1.5.1"
+        val kotlinVersion = extra["kotlin.version"] as String
 
         val commonMain by getting {
             dependencies {
@@ -41,6 +42,7 @@ kotlin {
             dependencies {
                 implementation("com.fazecast:jSerialComm:2.9.3")
                 implementation("io.ktor:ktor-client-java:$ktor_version")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
                 api(compose.desktop.common)
             }
         }

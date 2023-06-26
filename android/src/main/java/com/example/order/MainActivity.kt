@@ -15,7 +15,7 @@ import com.example.order.ui.MainViewModel
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val appConfig = appConfig()
         // TODO: Добавить DI
         setContent {
             MainScreen(
@@ -26,8 +26,11 @@ class MainActivity : AppCompatActivity() {
                         )
                     ),
                     CellServiceImpl(
-                        CellProviderImpl()
-                    )
+                        CellProviderImpl(
+                            appConfig
+                        )
+                    ),
+                    appConfig
                 )
             )
         }
