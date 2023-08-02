@@ -24,7 +24,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.AppImage)
             packageName = "com.example.order"
-            packageVersion = "1.0.0"
+            packageVersion = "1.1.0"
         }
     }
 }
