@@ -1,5 +1,5 @@
 package com.example.order.service
 
 interface CellService {
-    suspend fun openCellByCode(code: String, opened: Boolean)
+    suspend fun openCellByCode(code: String)
 }

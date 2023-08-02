@@ -47,18 +47,18 @@ actual class MainViewModel(
         _uiState.value = _uiState.value.copy(
             qrInput = value,
         )
+        if (_uiState.value.connectionState == ConnectionState.Disconnected) {
+            onConnect()
+        }
         if (_uiState.value.qrInput.contains(appConfig.eofSymbol)) {
             val code = _uiState.value.qrInput.split(appConfig.eofSymbol).first()
-            val opened = !_uiState.value.opened
             viewModelScope.launch(Dispatchers.IO) {
                 cellService.openCellByCode(
-                    code = code,
-                    opened = opened
+                    code = code
                 )
             }
             _uiState.value = _uiState.value.copy(
-                qrInput = "",
-                opened = opened
+                qrInput = ""
             )
         }
     }

@@ -9,6 +9,7 @@ import com.example.order.httpClient
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import java.util.logging.Logger
 
@@ -24,7 +25,14 @@ class CellProviderImpl(
     override suspend fun checkCode(checkCodeRequest: CheckCodeRequest): CheckCodeResponse? {
         val response = client.post("${appConfig.domain}/${ApiConstant.CHECK_CODE_API}") {
             headers {
-                append(HttpHeaders.Authorization, appConfig.accessToken)
+                val bearerToken = if (appConfig.accessToken.isNotEmpty()) {
+                    "Bearer ${appConfig.accessToken}"
+                } else {
+                    "Bearer"
+                }
+                if (appConfig.accessToken.isNotEmpty()) {
+                    append(HttpHeaders.Authorization, bearerToken)
+                }
             }
             contentType(ContentType.Application.Json)
             setBody(checkCodeRequest)
@@ -32,7 +40,8 @@ class CellProviderImpl(
         return if (response.status.isSuccess()) {
             response.body<CheckCodeResponse>()
         } else {
-            logger.warning("Received not success code from check_code: $response")
+            val body = response.bodyAsText()
+            logger.warning("Received not success code from check_code: $response body = $body")
             null
         }
     }
@@ -40,7 +49,12 @@ class CellProviderImpl(
     override suspend fun switchCell(switchCellRequest: SwitchCellRequest) {
         val response = client.post("${appConfig.domain}/${ApiConstant.SWITCH_CELL_API}") {
             headers {
-                append(HttpHeaders.Authorization, appConfig.accessToken)
+                val bearerToken = if (appConfig.accessToken.isNotEmpty()) {
+                    "Bearer ${appConfig.accessToken}"
+                } else {
+                    "Bearer"
+                }
+                append(HttpHeaders.Authorization, bearerToken)
             }
             contentType(ContentType.Application.Json)
             setBody(switchCellRequest)

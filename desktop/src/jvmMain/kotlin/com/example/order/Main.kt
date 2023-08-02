@@ -20,13 +20,15 @@ fun main() = singleWindowApplication(
     icon = BitmapPainter(useResource("ic_launcher.png", ::loadImageBitmap)),
 ) {
     val config = appConfig()
+    val serialService = SerialServiceImpl(
+        SerialConnection()
+    )
     MainScreen(
         MainViewModel(
-            SerialServiceImpl(
-                SerialConnection()
-            ),
+            serialService,
             CellServiceImpl(
-                CellProviderImpl(config)
+                CellProviderImpl(config),
+                serialService
             ),
             config
         )

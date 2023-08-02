@@ -6,6 +6,7 @@ import io.ktor.client.engine.java.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
+import java.io.File
 
 actual fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient = HttpClient(Java) {
     install(ContentNegotiation) {
@@ -14,9 +15,7 @@ actual fun httpClient(config: HttpClientConfig<*>.() -> Unit): HttpClient = Http
 }
 
 actual fun appConfig(): AppConfig {
-    val resourcePath = "/config.json"
-    val inputStream = AppConfig::class.java.getResourceAsStream(resourcePath)
-        ?: throw IllegalArgumentException("Resource not found: $resourcePath")
-    val jsonString = inputStream.bufferedReader().use { it.readText() }
-    return Json.decodeFromString<AppConfig>(jsonString)
+    val configPath = "./config.json"
+    val text = File(configPath).readText()
+    return Json.decodeFromString<AppConfig>(text)
 }
